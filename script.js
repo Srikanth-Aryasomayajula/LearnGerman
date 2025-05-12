@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.querySelector("#vocabTable tbody");
-  const levelSelect = document.getElementById("levelSelect"); // Ensure this ID exists in your HTML
+  const dropdownHeader = document.getElementById("dropdownHeader");
+  const dropdownOptions = document.getElementById("dropdownOptions");
+  const checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
+  const clearBtn = document.getElementById("clearSelection");
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
@@ -14,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const workbook = XLSX.read(arrayBuffer, { type: "array" });
       const worksheet = workbook.Sheets[SHEET_NAME];
       if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-
       allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
     })
     .catch(error => {
@@ -22,10 +24,22 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(error);
     });
 
-  // Handle change
+  // Toggle dropdown visibility
+  dropdownHeader.addEventListener("click", () => {
+    dropdownOptions.classList.toggle("hidden");
+  });
+
+  // Close dropdown if clicked outside
+  document.addEventListener("click", (e) => {
+    if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
+      dropdownOptions.classList.add("hidden");
+    }
+  });
+
+  // Handle change (Level selection)
   levelSelect.addEventListener("change", () => {
     const selectedOptions = Array.from(levelSelect.selectedOptions).map(opt => opt.value);
-
+    
     if (selectedOptions.includes("all")) {
       levelSelect.selectedIndex = 0; // Keep only "all" selected
       renderTable(allData);
@@ -35,48 +49,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const filtered = allData.filter(row =>
       selectedOptions.includes((row["Level"] || "").trim())
     );
-
+    
     renderTable(filtered);
   });
 
-  // Mouse click on dropdown
-  levelSelect.addEventListener("click", function (e) {
-    const option = e.target;
-    if (option.tagName === "OPTION") {
-      // Prevent "all" from being selected with others
-      if (option.value === "all") {
-        for (const opt of this.options) opt.selected = false;
-        option.selected = true;
-      } else {
-        const allSelected = this.querySelector('option[value="all"]').selected;
-        if (allSelected) this.querySelector('option[value="all"]').selected = false;
-      }
-
-      // Trigger change
-      const event = new Event("change", { bubbles: true });
-      this.dispatchEvent(event);
-    }
+  // Display the table
+  displayTableBtn.addEventListener("click", () => {
+    // Make sure the table is visible when the button is clicked
+    const table = document.getElementById("vocabTable");
+    table.style.display = "table"; // Display the table
   });
 
-  // Display table after filter
-  document.getElementById("displayTableBtn").addEventListener("click", () => {
-    const selectedOptions = Array.from(levelSelect.selectedOptions).map(opt => opt.value);
-    if (selectedOptions.length === 0 || selectedOptions.includes("all")) {
-      renderTable(allData);
-    } else {
-      const filtered = allData.filter(row =>
-        selectedOptions.includes((row["Level"] || "").trim())
-      );
-      renderTable(filtered);
-    }
-  });
-
-  // Clear selection listener
-  document.getElementById("clearSelection").addEventListener("click", () => {
-    for (const option of levelSelect.options) {
-      option.selected = false;
-    }
-    tableBody.innerHTML = ""; // Clear table
+  // Clear selection
+  clearBtn.addEventListener("click", () => {
+    checkboxes.forEach(cb => cb.checked = false);
+    tableBody.innerHTML = "";
+    dropdownHeader.textContent = "Select Level(s)";
   });
 
   function renderTable(data) {
