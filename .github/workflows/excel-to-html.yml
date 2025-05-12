@@ -23,12 +23,12 @@ jobs:
         run: |
           pip install xlwings  # Install the xlwings package
              
-      # Step 5: Run the conversion script to generate HTML from Excel
+      # Step 4: Run the conversion script to generate HTML from Excel
       - name: Convert sheet to HTML
         run: |
           python convert_to_html.py
 
-      # Step 6: Commit and Push the generated HTML file
+      # Step 5: Commit and Push the generated HTML file
       - name: Commit and Push
         run: |
           git config user.name "github-actions"
