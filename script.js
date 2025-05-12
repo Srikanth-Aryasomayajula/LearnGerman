@@ -39,16 +39,25 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTable(filtered);
   });
 
-  // 👇 Move mousedown listener here
-  levelSelect.addEventListener("mousedown", function (e) {
-    e.preventDefault();
-    const option = e.target;
-    option.selected = !option.selected;
+  // Mouse click on dropdown
+  levelSelect.addEventListener("click", function (e) {
+  const option = e.target;
+  if (option.tagName === "OPTION") {
+    // Prevent "all" from being selected with others
+    if (option.value === "all") {
+      for (const opt of this.options) opt.selected = false;
+      option.selected = true;
+    } else {
+      const allSelected = this.querySelector('option[value="all"]').selected;
+      if (allSelected) this.querySelector('option[value="all"]').selected = false;
+    }
 
-    // Trigger change event manually
-    const event = new Event("change");
+    // Trigger change
+    const event = new Event("change", { bubbles: true });
     this.dispatchEvent(event);
-  });
+  }
+});
+
 
   // 👇 Move clearSelection listener here
   document.getElementById("clearSelection").addEventListener("click", () => {
