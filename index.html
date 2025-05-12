@@ -20,16 +20,17 @@
   <main class="main-content">
     <h1 class="main-title">Vocabulary Sheet</h1>
 
-  <label for="levelSelect">Select Level:</label>
-  <select id="levelSelect" multiple>
-    <option value="all" selected>All Levels</option>
-    <option value="A1">A1</option>
-    <option value="A2">A2</option>
-    <option value="B1">B1</option>
-    <option value="B2">B2</option>
-    <option value="C1">C1</option>
-  </select>
-
+  <div class="custom-dropdown">
+    <div class="dropdown-header" id="dropdownHeader">Select Level(s)</div>
+    <div class="dropdown-options hidden" id="dropdownOptions">
+      <label><input type="checkbox" value="all" /> All</label>
+      <label><input type="checkbox" value="A1" /> A1</label>
+      <label><input type="checkbox" value="A2" /> A2</label>
+      <label><input type="checkbox" value="B1" /> B1</label>
+      <label><input type="checkbox" value="B2" /> B2</label>
+    </div>
+  </div>
+    
   <button id="clearSelection">Clear Selection</button>
     
     <table id="vocabTable" class="vocab-table">
