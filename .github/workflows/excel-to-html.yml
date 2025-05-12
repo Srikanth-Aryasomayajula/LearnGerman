@@ -1,0 +1,33 @@
+name: Convert Excel to HTML
+
+on:
+  push:
+    paths:
+      - 'Vocabulary.xlsx'
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas openpyxl
+
+      - name: Convert sheet to HTML
+        run: |
+          python convert_to_html.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add grammatik_table.html
+          git commit -m "Update HTML from Excel"
+          git push
