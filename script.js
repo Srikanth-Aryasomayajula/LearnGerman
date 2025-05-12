@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTable(filtered);
   });
 
-
   function renderTable(data) {
     tableBody.innerHTML = "";
     data.forEach(row => {
@@ -83,4 +82,11 @@ document.getElementById("levelSelect").addEventListener("mousedown", function (e
   // Trigger change event manually
   const event = new Event("change");
   this.dispatchEvent(event);
+});
+
+document.getElementById("clearSelection").addEventListener("click", () => {
+  for (const option of levelSelect.options) {
+    option.selected = false;
+  }
+  tableBody.innerHTML = ""; // Clear table
 });
