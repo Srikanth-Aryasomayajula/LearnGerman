@@ -28,7 +28,21 @@ jobs:
         run: |
           python check_html_uploaded.py
 
-      # Step 5: Commit and Push HTML file (only if HTML file is uploaded after Excel)
+      # Step 5: Prompt to upload HTML file if it was not uploaded after Excel
+      - name: Prompt for HTML file upload
+        if: failure()  # Only run this step if the previous step failed (HTML file is missing or uploaded before Excel)
+        run: |
+          echo "Please upload the HTML file after running the batch script to convert the Excel file to HTML."
+          echo "Once uploaded, the workflow will continue automatically."
+
+      # Step 6: Wait for the HTML file to be uploaded and then proceed to commit and push
+      - name: Wait for HTML file upload
+        if: failure()  # This step will be skipped until the HTML file is uploaded
+        run: |
+          echo "Waiting for the HTML file to be uploaded..."
+          exit 1  # Make the workflow pause here so you can upload the HTML file manually
+
+      # Step 7: Commit and Push the generated HTML file (if HTML file is uploaded after Excel)
       - name: Commit and Push HTML file
         if: success()  # Only run this step if the check passed
         run: |
