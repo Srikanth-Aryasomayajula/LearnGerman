@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (index === 0) {
             cb.checked = true;  // Check the "all" checkbox
           }
-        });
+        })
         checkboxes.forEach(cb => cb.checked = true);  // Select all checkboxes
         
         //checkboxes[0].checked = true;  // Ensure the "all" checkbox is also checked
