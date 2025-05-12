@@ -9,25 +9,30 @@ jobs:
   convert:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the repository
       - uses: actions/checkout@v3
 
+      # Step 2: Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           pip install pandas openpyxl
 
+      # Step 4: Run the conversion script to generate HTML from Excel
       - name: Convert sheet to HTML
         run: |
           python convert_to_html.py
 
-      - name: Commit and push changes
+      # Step 5: Commit and Push the generated HTML file
+      - name: Commit and Push
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add grammatik_table.html
-          git commit -m "Update HTML from Excel"
-          git push
+          git add grammatik_table.html  # Ensure this is the file you want to commit
+          git commit -m "Update HTML from Excel" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
