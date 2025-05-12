@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const table = document.getElementById("vocabTable");
-  const tableBody = table.querySelector("tbody");
-  const tableHead = table.querySelector("thead");
-  const SHEET_NAME = "Grammatik";
-  let allData = [];
+  const tableContainer = document.querySelector("main");
 
   fetch("Vocabulary.xlsx")
     .then(response => {
@@ -12,49 +8,24 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(arrayBuffer => {
       const workbook = XLSX.read(arrayBuffer, { type: "array" });
-      const worksheet = workbook.Sheets[SHEET_NAME];
-      if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-      allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+      const sheet = workbook.Sheets["Grammatik"];
+      if (!sheet) throw new Error(`Sheet "Grammatik" not found.`);
 
-      if (allData.length > 0) {
-        // Generate table headers dynamically
-        const firstRow = allData[0];
-        const headers = Object.keys(firstRow);
+      // Convert the sheet to an HTML string with borders
+      const html = XLSX.utils.sheet_to_html(sheet, {
+        id: "vocabTable",
+        editable: false
+      });
 
-        tableHead.innerHTML = "";
-        const tr = document.createElement("tr");
-        headers.forEach(header => {
-          const th = document.createElement("th");
-          th.textContent = header;
-          tr.appendChild(th);
-        });
-        tableHead.appendChild(tr);
-      }
+      // Insert the HTML table directly into the page
+      tableContainer.insertAdjacentHTML("beforeend", html);
 
-      renderTable(allData);
-      table.style.display = "table";
+      // Optionally style the table
+      const table = document.getElementById("vocabTable");
+      table.classList.add("vocab-table"); // you can style this in CSS
     })
     .catch(error => {
-      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+      tableContainer.innerHTML += `<p>Error loading data: ${error.message}</p>`;
       console.error(error);
     });
-
-  function renderTable(data) {
-    tableBody.innerHTML = "";
-    data.forEach(row => {
-      const tr = document.createElement("tr");
-      Object.values(row).forEach(value => {
-        const td = document.createElement("td");
-        td.textContent = value;
-        tr.appendChild(td);
-      });
-      tableBody.appendChild(tr);
-    });
-
-    if (data.length === 0) {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td colspan="12">No entries found.</td>`;
-      tableBody.appendChild(tr);
-    }
-  }
 });
