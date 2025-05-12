@@ -23,12 +23,12 @@ jobs:
         run: |
           pip install gitpython
 
-      # Step 4: Check if HTML file exists
-      - name: Check if HTML file exists
+      # Step 4: Check if HTML file was uploaded after the Excel file
+      - name: Check if HTML file was uploaded after Excel
         run: |
           python check_html_uploaded.py
 
-      # Step 5: Commit and Push (only if HTML file is uploaded)
+      # Step 5: Commit and Push HTML file (only if HTML file is uploaded after Excel)
       - name: Commit and Push HTML file
         if: success()  # Only run this step if the check passed
         run: |
