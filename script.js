@@ -24,17 +24,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Only render when level is selected
   levelSelect.addEventListener("change", () => {
-    const selectedLevel = levelSelect.value;
-
-    if (!allData.length) return;
-
-    const filtered =
-      selectedLevel === "all"
-        ? allData
-        : allData.filter(row => (row["Level"] || "").trim() === selectedLevel);
-
+    const selectedOptions = Array.from(levelSelect.selectedOptions).map(opt => opt.value);
+  
+    // If "all" is selected, deselect everything else and show all data
+    if (selectedOptions.includes("all")) {
+      levelSelect.selectedIndex = 0; // Keep only "all" selected
+      renderTable(allData);
+      return;
+    }
+  
+    const filtered = allData.filter(row =>
+      selectedOptions.includes((row["Level"] || "").trim())
+    );
+  
     renderTable(filtered);
   });
+
 
   function renderTable(data) {
     tableBody.innerHTML = "";
