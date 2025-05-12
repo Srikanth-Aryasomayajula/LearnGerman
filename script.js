@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropdownOptions = document.getElementById("dropdownOptions");
   const checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
   const clearBtn = document.getElementById("clearSelection");
+  const displayTableBtn = document.getElementById("displayTableBtn");
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
@@ -36,29 +37,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Handle change (Level selection)
-  levelSelect.addEventListener("change", () => {
-    const selectedOptions = Array.from(levelSelect.selectedOptions).map(opt => opt.value);
-    
-    if (selectedOptions.includes("all")) {
-      levelSelect.selectedIndex = 0; // Keep only "all" selected
-      renderTable(allData);
-      return;
-    }
+  // Handle checkbox change for level selection
+  dropdownHeader.addEventListener("click", () => {
+    // Gather selected levels from checked checkboxes
+    const selectedLevels = [];
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        selectedLevels.push(checkbox.value);
+      }
+    });
 
-    const filtered = allData.filter(row =>
-      selectedOptions.includes((row["Level"] || "").trim())
-    );
-    
-    renderTable(filtered);
+    if (selectedLevels.includes("all")) {
+      // If 'All' is selected, render all data
+      renderTable(allData);
+    } else {
+      // Filter based on selected levels
+      const filteredData = allData.filter(row => 
+        selectedLevels.includes((row["Level"] || "").trim())
+      );
+      renderTable(filteredData);
+    }
   });
 
-  // Display the table
-  const displayTableBtn = document.getElementById("displayTableBtn");
+  // Display the table when the button is clicked
   displayTableBtn.addEventListener("click", () => {
-    // Make sure the table is visible when the button is clicked
     const table = document.getElementById("vocabTable");
-    table.style.display = "table"; // Display the table
+    table.style.display = "table"; // Show the table when display button is clicked
   });
 
   // Clear selection
