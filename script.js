@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Futur I",
         "Futur II",
         "Prepositions that go together with the verb/Noun/Adj.",
-        "Example statement with the preposition."
+        "Example statement with the preposition"
       ];
       columns.forEach(col => {
         const td = document.createElement("td");
