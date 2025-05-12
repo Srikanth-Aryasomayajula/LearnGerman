@@ -73,6 +73,12 @@ document.addEventListener("DOMContentLoaded", () => {
         checkboxes[0].checked = false;  // Uncheck the "all" checkbox
         dropdownHeader.textContent = selectedLevels.length > 0 ? selectedLevels.join(", ") : "Select Level(s)";
       }
+
+      // Ensure that clicking on any level other than "all" will uncheck "all" and the clicked level
+      checkboxes.forEach((cb, index) => {
+        if (index !== 0 && cb.checked) { // If it's not "all" and is checked
+          checkboxes[0].checked = false;  // Uncheck "all"
+        }
     });
   });
 
@@ -81,13 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const table = document.getElementById("vocabTable");
     table.style.display = "table"; // Show the table when display button is clicked
   });
-
-  // Clear selection
- // clearBtn.addEventListener("click", () => {
- //   checkboxes.forEach(cb => cb.checked = false);
- //   tableBody.innerHTML = "";
- //   dropdownHeader.textContent = "Select Level(s)";
- // });
 
   // Clear selection
   clearBtn.addEventListener("click", () => {
