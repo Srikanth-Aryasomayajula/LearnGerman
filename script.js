@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "Article, Word and Plural",
         "Part of Speech",
         "Meaning",
-        "example",
+        "Usage",
         "Past (Präteritum)",
         "Perfect (Partizip II)",
         "Plusquamperfekt",
