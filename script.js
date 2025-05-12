@@ -22,22 +22,40 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(error);
     });
 
-  // Only render when level is selected
+  // Handle change
   levelSelect.addEventListener("change", () => {
     const selectedOptions = Array.from(levelSelect.selectedOptions).map(opt => opt.value);
-  
-    // If "all" is selected, deselect everything else and show all data
+
     if (selectedOptions.includes("all")) {
       levelSelect.selectedIndex = 0; // Keep only "all" selected
       renderTable(allData);
       return;
     }
-  
+
     const filtered = allData.filter(row =>
       selectedOptions.includes((row["Level"] || "").trim())
     );
-  
+
     renderTable(filtered);
+  });
+
+  // 👇 Move mousedown listener here
+  levelSelect.addEventListener("mousedown", function (e) {
+    e.preventDefault();
+    const option = e.target;
+    option.selected = !option.selected;
+
+    // Trigger change event manually
+    const event = new Event("change");
+    this.dispatchEvent(event);
+  });
+
+  // 👇 Move clearSelection listener here
+  document.getElementById("clearSelection").addEventListener("click", () => {
+    for (const option of levelSelect.options) {
+      option.selected = false;
+    }
+    tableBody.innerHTML = ""; // Clear table
   });
 
   function renderTable(data) {
@@ -72,21 +90,4 @@ document.addEventListener("DOMContentLoaded", () => {
       tableBody.appendChild(tr);
     }
   }
-});
-
-document.getElementById("levelSelect").addEventListener("mousedown", function (e) {
-  e.preventDefault();
-  const option = e.target;
-  option.selected = !option.selected;
-
-  // Trigger change event manually
-  const event = new Event("change");
-  this.dispatchEvent(event);
-});
-
-document.getElementById("clearSelection").addEventListener("click", () => {
-  for (const option of levelSelect.options) {
-    option.selected = false;
-  }
-  tableBody.innerHTML = ""; // Clear table
 });
