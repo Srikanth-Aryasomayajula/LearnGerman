@@ -54,7 +54,7 @@ body {
 
 .vocab-table th,
 .vocab-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #000;
   padding: 10px 12px;
   text-align: left;
   vertical-align: top;
