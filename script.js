@@ -37,53 +37,54 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Handle checkbox change for level selection
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener("change", () => {
-      // Gather selected levels from checked checkboxes
-      const selectedLevels = [];
-      checkboxes.forEach(cb => {
-        if (cb.checked) {
-          selectedLevels.push(cb.value);
-        }
-      });
+	// Handle checkbox change for level selection
+	checkboxes.forEach(checkbox => {
+	  checkbox.addEventListener("change", () => {
+		const isAllBoxClicked = checkbox.value === "all";
+		const allCheckboxesExceptAll = Array.from(checkboxes).slice(1);
 
-      // Update the dropdown header text to show selected levels
-      if (selectedLevels.length > 0) {
-        dropdownHeader.textContent = selectedLevels.join(", ");
-      } else {
-        dropdownHeader.textContent = "Select Level(s)";
-      }
+		if (isAllBoxClicked) {
+		  const allChecked = allCheckboxesExceptAll.every(cb => cb.checked);
+		  if (allChecked) {
+			// If all are already checked and 'all' is clicked again → uncheck all
+			checkboxes.forEach(cb => cb.checked = false);
+		  } else {
+			// Otherwise → check all
+			checkboxes.forEach(cb => cb.checked = true);
+		  }
+		} else {
+		  // Any individual checkbox is clicked
+		  if (!checkbox.checked && checkboxes[0].checked) {
+			// If a level is unchecked and 'all' is checked → uncheck 'all'
+			checkboxes[0].checked = false;
+		  } else {
+			// If all others are now checked → check 'all' automatically
+			const allSelected = allCheckboxesExceptAll.every(cb => cb.checked);
+			checkboxes[0].checked = allSelected;
+		  }
+		}
 
-      // If 'All' is selected, render all data
-      if (selectedLevels.includes("all")) {
-        checkboxes.forEach(cb => cb.checked = true);  // Select all checkboxes
-        checkboxes[0].checked = true;  // Ensure the "all" checkbox is also checked
-        dropdownHeader.textContent = "All";  // Update the header text to show "All"
-        renderTable(allData);
-      } else {
-        // Filter based on selected levels
-        const filteredData = allData.filter(row => 
-          selectedLevels.includes((row["Level"] || "").trim())
-        );
-        renderTable(filteredData);
-      }
+		// Now collect selected levels and render table
+		const selectedLevels = Array.from(checkboxes)
+		  .filter(cb => cb.checked)
+		  .map(cb => cb.value);
 
-      // If any level is unchecked, uncheck the "all" checkbox
-      if (!selectedLevels.includes("all")) {
-        checkboxes[0].checked = false;  // Uncheck the "all" checkbox
-        dropdownHeader.textContent = selectedLevels.length > 0 ? selectedLevels.join(", ") : "Select Level(s)";
-      }
-
-      // Ensure that clicking on any level other than "all" will uncheck "all" and the clicked level
-      checkboxes.forEach((cb, index) => {
-        if (index !== 0 && cb.checked) { // If it's not "all" and is checked
-          checkboxes[0].checked = false;  // Uncheck "all"
-        }
-      });
-    });
-  });
-
+		if (selectedLevels.length === 0) {
+		  dropdownHeader.textContent = "Select Level(s)";
+		  renderTable([]);
+		} else if (selectedLevels.length === checkboxes.length) {
+		  dropdownHeader.textContent = "All";
+		  renderTable(allData);
+		} else {
+		  dropdownHeader.textContent = selectedLevels.join(", ");
+		  const filteredData = allData.filter(row =>
+			selectedLevels.includes((row["Level"] || "").trim())
+		  );
+		  renderTable(filteredData);
+		}
+	  });
+	});
+  
   // Display the table when the button is clicked
   displayTableBtn.addEventListener("click", () => {
     const table = document.getElementById("vocabTable");
