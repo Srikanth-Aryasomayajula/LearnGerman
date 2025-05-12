@@ -38,25 +38,34 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Handle checkbox change for level selection
-  dropdownHeader.addEventListener("click", () => {
-    // Gather selected levels from checked checkboxes
-    const selectedLevels = [];
-    checkboxes.forEach(checkbox => {
-      if (checkbox.checked) {
-        selectedLevels.push(checkbox.value);
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", () => {
+      // Gather selected levels from checked checkboxes
+      const selectedLevels = [];
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          selectedLevels.push(cb.value);
+        }
+      });
+
+      // Update the dropdown header text to show selected levels
+      if (selectedLevels.length > 0) {
+        dropdownHeader.textContent = selectedLevels.join(", ");
+      } else {
+        dropdownHeader.textContent = "Select Level(s)";
+      }
+
+      // If 'All' is selected, render all data
+      if (selectedLevels.includes("all")) {
+        renderTable(allData);
+      } else {
+        // Filter based on selected levels
+        const filteredData = allData.filter(row => 
+          selectedLevels.includes((row["Level"] || "").trim())
+        );
+        renderTable(filteredData);
       }
     });
-
-    if (selectedLevels.includes("all")) {
-      // If 'All' is selected, render all data
-      renderTable(allData);
-    } else {
-      // Filter based on selected levels
-      const filteredData = allData.filter(row => 
-        selectedLevels.includes((row["Level"] || "").trim())
-      );
-      renderTable(filteredData);
-    }
   });
 
   // Display the table when the button is clicked
