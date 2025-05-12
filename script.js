@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         })
         checkboxes.forEach(cb => cb.checked = true);  // Select all checkboxes
-        console.log(index)
+
         //checkboxes[0].checked = true;  // Ensure the "all" checkbox is also checked
         dropdownHeader.textContent = "All";  // Update the header text to show "All"
         renderTable(allData);
