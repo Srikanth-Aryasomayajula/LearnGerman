@@ -3,11 +3,12 @@ name: Convert Excel to HTML
 on:
   push:
     paths:
-      - 'Vocabulary.xlsx'
+      - 'Vocabulary.xlsx'  # Trigger the action when the Vocabulary.xlsx file is updated
 
 jobs:
   convert:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest  # Use a GitHub Actions runner (use linux environment)
+
     steps:
       # Step 1: Checkout the repository
       - uses: actions/checkout@v3
@@ -21,19 +22,14 @@ jobs:
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
-          pip install gitpython xlwings requests  # Ensure gitpython, xlwings, and requests are installed
+          pip install requests xlwings
 
-      # Step 4: Download the Excel file
-      - name: Download Vocabulary.xlsx from GitHub
-        run: |
-          curl -L -o Vocabulary.xlsx "https://raw.githubusercontent.com/Srikanth-Aryasomayajula/LearnGerman/main/Vocabulary.xlsx"
-
-      # Step 5: Run the conversion script to generate HTML from Excel
-      - name: Convert sheet to HTML
+      # Step 4: Run the conversion script to generate HTML from Excel
+      - name: Convert Excel to HTML
         run: |
           python convert_to_html.py
 
-      # Step 6: Commit and Push the generated HTML file
+      # Step 5: Commit and Push the generated HTML file
       - name: Commit and Push
         run: |
           git config user.name "github-actions"
