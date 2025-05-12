@@ -14,25 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const worksheet = workbook.Sheets[SHEET_NAME];
       if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
       allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+      renderTable(allData); // ✅ Only call this after data is loaded
     })
     .catch(error => {
       tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
       console.error(error);
     });
-	
-  renderTable(allData);
 
-  //Function to render the table
+  // Function to render the table
   function renderTable(data) {
     tableBody.innerHTML = "";
     data.forEach(row => {
       const tr = document.createElement("tr");
-      const columns = [
-        "German",
-        "English",
-        "Example",
-        "Remarks"
-      ];
+      const columns = ["German", "English", "Example", "Remarks"];
       columns.forEach(col => {
         const td = document.createElement("td");
         td.textContent = row[col] || "";
