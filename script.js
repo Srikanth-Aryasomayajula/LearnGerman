@@ -36,43 +36,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Handle checkbox selection
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener("change", () => {
-      const selectedValues = Array.from(checkboxes)
-        .filter(cb => cb.checked)
-        .map(cb => cb.value);
-  
-      if (selectedValues.includes("all")) {
-        checkboxes.forEach(cb => {
-          if (cb.value !== "all") cb.checked = false;
-        });
-      } else {
-        checkboxes.forEach(cb => {
-          if (cb.value === "all") cb.checked = false;
-        });
-      }
-  
-      dropdownHeader.textContent = selectedValues.length > 0
-        ? selectedValues.join(", ")
-        : "Select Level(s)";
-    });
+// Handle change (Level selection)
+  levelSelect.addEventListener("change", () => {
+    const selectedOptions = Array.from(levelSelect.selectedOptions).map(opt => opt.value);
+    
+    if (selectedOptions.includes("all")) {
+      levelSelect.selectedIndex = 0; // Keep only "all" selected
+      renderTable(allData);
+      return;
+    }
+
+    const filtered = allData.filter(row =>
+      selectedOptions.includes((row["Level"] || "").trim())
+    );
+    
+    renderTable(filtered);
   });
 
   // Display the table
-  document.getElementById("displayTableBtn").addEventListener("click", () => {
-    const selectedValues = Array.from(checkboxes)
-      .filter(cb => cb.checked)
-      .map(cb => cb.value);
-  
-    if (selectedValues.includes("all") || selectedValues.length === 0) {
-      renderTable(allData);
-    } else {
-      const filtered = allData.filter(row =>
-        selectedValues.includes((row["Level"] || "").trim())
-      );
-      renderTable(filtered);
-    }
+  displayTableBtn.addEventListener("click", () => {
+    // Make sure the table is visible when the button is clicked
+    const table = document.getElementById("vocabTable");
+    table.style.display = "table"; // Display the table
   });
 
   // Clear selection
