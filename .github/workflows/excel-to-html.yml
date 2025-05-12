@@ -21,7 +21,7 @@ jobs:
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
-          pip install xlwings  # Install the xlwings package
+          pip install gitpython xlwings  # Ensure gitpython is installed for git operations along with xlwings
              
       # Step 4: Run the conversion script to generate HTML from Excel
       - name: Convert sheet to HTML
