@@ -4,7 +4,7 @@ import git
 import requests
 
 # GitHub repository URL (raw file URL)
-file_url = "https://github.com/Srikanth-Aryasomayajula/LearnGerman/Vocabulary.xlsx"  # Change to your file URL
+file_url = "https://github.com/Srikanth-Aryasomayajula/LearnGerman/raw/refs/heads/main/Vocabulary.xlsx"  # Change to your file URL
 
 # Local paths
 download_path = r"C:\Users\srika\Downloads\Vocabulary.xlsx"
