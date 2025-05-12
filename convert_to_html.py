@@ -1,28 +1,30 @@
 import xlwings as xw
 import os
+import git
+from datetime import datetime
 
-# Define paths
-input_file = "Vocabulary.xlsx"
-output_file = "grammatik_table.html"
-sheet_to_export = "Grammatik"
+# Path to the local GitHub repo
+repo_dir = os.getcwd()  # This assumes the script is run inside the repo directory
+excel_file = os.path.join(repo_dir, "Vocabulary.xlsx")
+html_file = os.path.join(repo_dir, "grammatik_table.html")
 
-# Open Excel in background
+# Open Excel and the specific sheet
 app = xw.App(visible=False)
-try:
-    # Open workbook and get sheet
-    wb = app.books.open(input_file)
-    sht = wb.sheets[sheet_to_export]
-    
-    # Save just the selected sheet as a separate workbook
-    temp_wb = xw.Book()  # Create new temporary workbook
-    sht.api.Copy(Before=temp_wb.sheets[0].api)  # Copy sheet into temp workbook
-    temp_wb.sheets[0].delete()  # Delete default empty sheet
+wb = app.books.open(excel_file)
 
-    # Save as HTML (this preserves Excel styles like colors, borders, etc.)
-    temp_wb.save(output_file)  # Auto-detects .html from extension
+# Save the "Grammatik" sheet as HTML
+sheet = wb.sheets["Grammatik"]
+sheet.api.SaveAs(html_file, FileFormat=44)  # FileFormat=44 is for saving as HTML
 
-    # Clean up
-    temp_wb.close()
-    wb.close()
-finally:
-    app.quit()
+# Close the workbook and Excel
+wb.close()
+app.quit()
+
+# Git operations to commit and push the HTML file
+repo = git.Repo(repo_dir)
+repo.git.add(html_file)
+repo.index.commit(f"Update HTML from Excel on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+origin = repo.remotes.origin
+origin.push()
+
+print(f"HTML file {html_file} pushed successfully!")
