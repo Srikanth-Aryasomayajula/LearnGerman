@@ -4,16 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
-document.getElementById("levelSelect").addEventListener("mousedown", function (e) {
-  e.preventDefault();
-  const option = e.target;
-  option.selected = !option.selected;
-
-  // Trigger change event manually
-  const event = new Event("change");
-  this.dispatchEvent(event);
-});
-
   // Fetch and parse Excel
   fetch("Vocabulary.xlsx")
     .then(response => {
@@ -83,4 +73,14 @@ document.getElementById("levelSelect").addEventListener("mousedown", function (e
       tableBody.appendChild(tr);
     }
   }
+});
+
+document.getElementById("levelSelect").addEventListener("mousedown", function (e) {
+  e.preventDefault();
+  const option = e.target;
+  option.selected = !option.selected;
+
+  // Trigger change event manually
+  const event = new Event("change");
+  this.dispatchEvent(event);
 });
