@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.querySelector("#vocabTable tbody");
-  const levelSelect = document.getElementById("levelSelect");
+  const dropdownHeader = document.getElementById("dropdownHeader");
+  const dropdownOptions = document.getElementById("dropdownOptions");
+  const checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
+  const clearBtn = document.getElementById("clearSelection");
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
@@ -14,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const workbook = XLSX.read(arrayBuffer, { type: "array" });
       const worksheet = workbook.Sheets[SHEET_NAME];
       if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-
       allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
     })
     .catch(error => {
@@ -22,49 +24,51 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(error);
     });
 
-  // Handle change
-  levelSelect.addEventListener("change", () => {
-    const selectedOptions = Array.from(levelSelect.selectedOptions).map(opt => opt.value);
-
-    if (selectedOptions.includes("all")) {
-      levelSelect.selectedIndex = 0; // Keep only "all" selected
-      renderTable(allData);
-      return;
-    }
-
-    const filtered = allData.filter(row =>
-      selectedOptions.includes((row["Level"] || "").trim())
-    );
-
-    renderTable(filtered);
+  // Toggle dropdown visibility
+  dropdownHeader.addEventListener("click", () => {
+    dropdownOptions.classList.toggle("hidden");
   });
 
-  // Mouse click on dropdown
-  levelSelect.addEventListener("click", function (e) {
-  const option = e.target;
-  if (option.tagName === "OPTION") {
-    // Prevent "all" from being selected with others
-    if (option.value === "all") {
-      for (const opt of this.options) opt.selected = false;
-      option.selected = true;
-    } else {
-      const allSelected = this.querySelector('option[value="all"]').selected;
-      if (allSelected) this.querySelector('option[value="all"]').selected = false;
+  // Close dropdown if clicked outside
+  document.addEventListener("click", (e) => {
+    if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
+      dropdownOptions.classList.add("hidden");
     }
+  });
 
-    // Trigger change
-    const event = new Event("change", { bubbles: true });
-    this.dispatchEvent(event);
-  }
-});
+  // Handle checkbox selection
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", () => {
+      const selectedValues = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
 
+      if (selectedValues.includes("all")) {
+        checkboxes.forEach(cb => {
+          if (cb.value !== "all") cb.checked = false;
+        });
+        renderTable(allData);
+      } else {
+        checkboxes.forEach(cb => {
+          if (cb.value === "all") cb.checked = false;
+        });
+        const filtered = allData.filter(row =>
+          selectedValues.includes((row["Level"] || "").trim())
+        );
+        renderTable(filtered);
+      }
 
-  // 👇 Move clearSelection listener here
-  document.getElementById("clearSelection").addEventListener("click", () => {
-    for (const option of levelSelect.options) {
-      option.selected = false;
-    }
-    tableBody.innerHTML = ""; // Clear table
+      dropdownHeader.textContent = selectedValues.length > 0
+        ? selectedValues.join(", ")
+        : "Select Level(s)";
+    });
+  });
+
+  // Clear selection
+  clearBtn.addEventListener("click", () => {
+    checkboxes.forEach(cb => cb.checked = false);
+    tableBody.innerHTML = "";
+    dropdownHeader.textContent = "Select Level(s)";
   });
 
   function renderTable(data) {
