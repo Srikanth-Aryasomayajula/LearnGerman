@@ -7,9 +7,9 @@ import requests
 file_url = "https://github.com/Srikanth-Aryasomayajula/LearnGerman/raw/refs/heads/main/Vocabulary.xlsx"  # Change to your file URL
 
 # Local paths
-# download_path = r"C:\Users\srika\Downloads\Vocabulary.xlsx"
+download_path = r"C:\Users\srika\Downloads\Vocabulary.xlsx"
 html_file_path = r"C:\Users\srika\Downloads\grammatik_table.html"
-download_path = os.path.join(os.path.expanduser('~'), 'Downloads', 'Vocabulary.xlsx')  # Save to Downloads folder
+#download_path = os.path.join('Vocabulary.xlsx')  # Save to Downloads folder
 
 # Step 1: Download the Excel file from GitHub
 response = requests.get(file_url)
