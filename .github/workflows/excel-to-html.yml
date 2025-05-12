@@ -26,7 +26,7 @@ jobs:
       # Step 4: Check if HTML file was uploaded after the Excel file
       - name: Check if HTML file was uploaded after Excel
         run: |
-          python check_html_uploaded.py
+          python convert_to_html.py
 
       # Step 5: Commit and Push HTML file (only if HTML file is uploaded after Excel)
       - name: Commit and Push HTML file
