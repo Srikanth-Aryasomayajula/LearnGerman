@@ -67,6 +67,12 @@ document.addEventListener("DOMContentLoaded", () => {
         );
         renderTable(filteredData);
       }
+
+      // If any level is unchecked, uncheck the "all" checkbox
+      if (!selectedLevels.includes("all")) {
+        checkboxes[0].checked = false;  // Uncheck the "all" checkbox
+        dropdownHeader.textContent = selectedLevels.length > 0 ? selectedLevels.join(", ") : "Select Level(s)";
+      }
     });
   });
 
