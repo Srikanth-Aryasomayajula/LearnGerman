@@ -59,6 +59,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Display the table
+  document.getElementById("displayTableBtn").addEventListener("click", () => {
+    const selectedValues = Array.from(checkboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value);
+  
+    if (selectedValues.includes("all") || selectedValues.length === 0) {
+      renderTable(allData);
+    } else {
+      const filtered = allData.filter(row =>
+        selectedValues.includes((row["Level"] || "").trim())
+      );
+      renderTable(filtered);
+    }
+  });
+
   // Clear selection
   clearBtn.addEventListener("click", () => {
     checkboxes.forEach(cb => cb.checked = false);
