@@ -76,7 +76,7 @@ body {
 
 /* Dropdown style */
 #levelSelect {
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   padding: 8px 12px;
   font-size: 1rem;
   border: 1px solid #aaa;
@@ -87,10 +87,22 @@ body {
 .custom-dropdown {
   position: relative;
   width: 250px;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   font-size: 1rem;
 }
 
+/* Container for dropdown and buttons */
+.dropdown-container {
+  display: flex;
+  flex-direction: row; /* Align items horizontally */
+  align-items: center; /* Vertically center the items */
+  gap: 10px; /* Space between dropdown and buttons */
+  padding: 0px;
+  margin: 0;
+  flex-wrap: wrap; /* Allow wrapping if needed */
+}
+
+/* Style for the dropdown header */
 .dropdown-header {
   background: #fff;
   border: 1px solid #aaa;
@@ -98,6 +110,9 @@ body {
   padding: 8px 12px;
   cursor: pointer;
   user-select: none;
+  display: flex;
+  align-items: center; /* Vertically center the content inside */
+  justify-content: space-between; /* Align text to the left if needed */
 }
 
 .dropdown-options {
@@ -123,32 +138,24 @@ body {
   margin-right: 8px;
 }
 
-/* Container for dropdown and buttons */
-.dropdown-container {
-  display: flex;
-  flex-direction: row; /* Align items horizontally */
-  align-items: center; /* Vertically center the items */
-  gap: 10px; /* Space between dropdown and buttons */
-  padding: 0px;
-  margin: 0;
-  flex-wrap: wrap; /* Allow wrapping if needed */
-}
-
 /* Style for the buttons next to the dropdown */
 .dropdown-buttons {
   display: flex;
   align-items: center;  /* Vertically align items */
-  gap: 10px;            /* Space between dropdown and buttons */
+  gap: 20px;            /* Space between dropdown and buttons */
   flex-wrap: wrap;      /* Optional: Wrap on small screens */
 }
 
+/* Optional: Adjust the button size and font */
 .dropdown-buttons button {
-  padding: 8px 12px;
+  padding: 12px 18px; /* Increase padding for larger button */
   background-color: #2563eb;
   color: white;
   border: 1px solid #2563eb;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 1.2rem; /* Increase font size */
+  line-height: 1.5; /* Adjust line height if needed for better alignment */
 }
 
 .dropdown-buttons button:hover {
@@ -162,4 +169,3 @@ body {
 .hidden {
   display: none;
 }
-
