@@ -3,7 +3,7 @@
 </main>
 
 <script>
-  fetch("grammatik_table.htm")
+  fetch("grammatik_table.html")
     .then(res => res.text())
     .then(html => {
       document.getElementById("html-container").insertAdjacentHTML("beforeend", html);
