@@ -123,23 +123,33 @@ body {
   margin-right: 8px;
 }
 
-/* Container to hold dropdown and buttons */
+/* Container for dropdown and buttons */
 .dropdown-container {
   display: flex;
-  flex-direction: row; /* Change to row to align items horizontally */
+  flex-direction: row; /* Align items horizontally */
   align-items: center; /* Vertically center the items */
-  gap: 10px; /* Add space between the dropdown and buttons */
-  padding: 0px 0px;
+  gap: 10px; /* Space between dropdown and buttons */
+  padding: 0px;
   margin: 0;
+  flex-wrap: wrap; /* Allow wrapping if needed */
 }
 
 /* Style for the buttons next to the dropdown */
-.dropdown-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start; /* Align buttons to the left of the container */
-  padding: 0px 0px;
-  margin: 0;
+.dropdown-buttons button {
+  padding: 8px 12px;
+  background-color: #2563eb;
+  color: white;
+  border: 1px solid #2563eb;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdown-buttons button:hover {
+  background-color: #1e40af;
+}
+
+.dropdown-buttons button:focus {
+  outline: none;
 }
 
 .hidden {
