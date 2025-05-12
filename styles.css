@@ -123,18 +123,19 @@ body {
   margin-right: 8px;
 }
 
+/* Container to hold dropdown and buttons */
 .dropdown-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  flex-direction: row; /* Change to row to align items horizontally */
+  align-items: center; /* Vertically center the items */
+  gap: 10px; /* Add space between the dropdown and buttons */
 }
 
+/* Style for the buttons next to the dropdown */
 .dropdown-buttons {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
-  width: 100%;
+  justify-content: flex-start; /* Align buttons to the left of the container */
 }
 
 .hidden {
