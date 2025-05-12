@@ -79,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (index !== 0 && cb.checked) { // If it's not "all" and is checked
           checkboxes[0].checked = false;  // Uncheck "all"
         }
+      });
     });
   });
 
