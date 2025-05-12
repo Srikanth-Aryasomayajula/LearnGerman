@@ -21,7 +21,7 @@ else:
     exit(1)
 
 # Step 2: Open the Excel file using xlwings
-app = xw.App(visible=False)
+app = xw.App(visible=True)
 wb = app.books.open(download_path)
 
 # Step 3: Save the 'Grammatik' sheet as HTML
