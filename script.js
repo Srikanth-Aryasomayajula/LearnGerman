@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // If 'All' is selected, render all data
       if (selectedLevels.includes("all")) {
-        checkboxes.forEach(cb => cb.checked = true);  // Select all checkboxes
+        //checkboxes.forEach(cb => cb.checked = true);  // Select all checkboxes
         checkboxes.forEach((cb, index) => {
           if (index === 0) {
             cb.checked = true;  // Check the "all" checkbox
