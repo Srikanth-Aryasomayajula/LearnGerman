@@ -7,11 +7,14 @@ body {
 }
 
 .navbar {
-  background-color: #2563eb;
+  background-color: #000000;
   color: white;
   padding: 1rem;
   display: flex;
   gap: 1.5rem;
+  justify-content: center; /* Centers the navbar items horizontally */
+  align-items: center;     /* Ensures vertical alignment in case the navbar is taller */
+  width: 100%;             /* Make sure the navbar stretches across the full width */
 }
 
 .nav-link {
@@ -25,6 +28,48 @@ body {
 
 .nav-link.active {
   font-weight: bold;
+}
+
+/* Custom background and text colors */
+.bg-text {
+  background-color: #f3f4f6;  /* Similar to bg-gray-100 */
+  color: #1f2937;  /* Similar to text-gray-800 */
+}
+
+/* Menu link styles */
+.menu-link {
+  display: inline-block;
+  background-color: #2563eb; /* Blue background */
+  color: white; /* White text */
+  padding: 8px 16px; /* Padding around the text */
+  border-radius: 4px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  text-decoration: none; /* Remove underline from the link */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.menu-link:hover {
+  background-color: #1d4ed8; /* Darker blue on hover */
+}
+
+/* Menu button styles */
+.menu-button {
+  display: inline-block;
+  background-color: #2563eb; /* Blue background */
+  color: white; /* White text */
+  padding: 8px 16px; /* Padding around the text */
+  border-radius: 4px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  text-decoration: none; /* Remove underline from the link */
+  font-size: 20px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.menu-button:hover {
+  background-color: #1d4ed8; /* Darker blue on hover */
 }
 
 .main-content {
