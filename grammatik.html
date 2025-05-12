@@ -4,23 +4,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="styles.css" />
   <title>Deutsch lernen</title>
-  <style>
-    iframe {
-      width: 98vw;        /* Adjust to viewport width */
-      height: 80vh;       /* Adjust to viewport height */
-      border: none;       /* Remove the border */
-      display: block;     /* Ensures no extra inline spacing */
-      overflow: hidden;   /* Prevent inner scrollbars */
-      margin-top: 0;      /* Remove any unwanted margin */
-    }
-
-    body, html {
-      margin: 0;          /* Remove default margin */
-      padding: 0;         /* Remove default padding */
-      overflow: hidden;   /* Prevent outer scrollbars */
-      height: 100%;       /* Ensure body takes up the full height */
-    }
-  </style>
+	<style>
+	  iframe {
+		width: 98vw;
+		height: 80vh;
+		border: none;
+		display: block;
+	  }
+  
+	  body, html {
+		margin-top: 0px;
+		padding: 0;
+		overflow: hidden;   /* Prevent outer scrollbars */
+	  }
+	</style>
 </head>
 
 <body class="bg-text">
@@ -35,17 +32,25 @@
   <main class="main-content">
     <h1 class="main-title">Grammatik</h1>
 
-    <!-- Embed iframe with grammatik_table.html -->
-    <iframe id="grammatikFrame" src="grammatik_table.html" onload="resizeIframe(this)"></iframe>
+    <!-- Embed iframe -->
+    try {
+      <iframe id="grammatikFrame" src="grammatik_table.html" onload="resizeIframe(this)"></iframe>
+    } catch (w) {
+        console.log('Could not find grammatik_table.html', w);
+      }
+    try {
+      <iframe id="grammatikFrame" src="grammatik_table-Dateien/sheet001.html" onload="resizeIframe(this)"></iframe>
+    } catch (w) {
+        console.log('Could not find sheet001.html in grammatik_table-Dateien', w);
+      }
   </main>
 
   <script>
     function resizeIframe(iframe) {
       try {
-        // Try to auto-resize the iframe based on its content
         const doc = iframe.contentDocument || iframe.contentWindow.document;
-        iframe.style.height = doc.body.scrollHeight + 'px';  // Adjust height based on content
-        iframe.style.width = doc.body.scrollWidth + 'px';    // Adjust width based on content
+        iframe.style.height = doc.body.scrollHeight + 'px';
+        iframe.style.width = doc.body.scrollWidth + 'px'; // Optional, only if needed
       } catch (e) {
         console.error('Could not auto-resize iframe:', e);
       }
