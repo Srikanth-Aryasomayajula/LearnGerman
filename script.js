@@ -75,12 +75,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Clear selection
+ // clearBtn.addEventListener("click", () => {
+ //   checkboxes.forEach(cb => cb.checked = false);
+ //   tableBody.innerHTML = "";
+ //   dropdownHeader.textContent = "Select Level(s)";
+ // });
+
+  // Clear selection
   clearBtn.addEventListener("click", () => {
     checkboxes.forEach(cb => cb.checked = false);
-    tableBody.innerHTML = "";
-    dropdownHeader.textContent = "Select Level(s)";
+    tableBody.innerHTML = "";  // Clear the table body
+    const table = document.getElementById("vocabTable");
+    table.style.display = "none";  // Hide the table
+    dropdownHeader.textContent = "Select Level(s)";  // Reset dropdown header text
   });
-
+  
+  //Function to render the table
   function renderTable(data) {
     tableBody.innerHTML = "";
     data.forEach(row => {
