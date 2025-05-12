@@ -1,14 +1,13 @@
-name: Convert Excel to HTML
+name: Check HTML File Upload
 
 on:
   push:
     paths:
-      - 'Vocabulary.xlsx'  # Trigger the action when the Vocabulary.xlsx file is updated
+      - 'Vocabulary.xlsx'  # Trigger the workflow when Vocabulary.xlsx is pushed to the repo
 
 jobs:
-  convert:
-    runs-on: ubuntu-latest  # Use a GitHub Actions runner (use linux environment)
-
+  check_html_file:
+    runs-on: ubuntu-latest
     steps:
       # Step 1: Checkout the repository
       - uses: actions/checkout@v3
@@ -22,18 +21,19 @@ jobs:
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
-          pip install requests xlwings
+          pip install gitpython
 
-      # Step 4: Run the conversion script to generate HTML from Excel
-      - name: Convert Excel to HTML
+      # Step 4: Check if HTML file exists
+      - name: Check if HTML file exists
         run: |
-          python convert_to_html.py
+          python check_html_uploaded.py
 
-      # Step 5: Commit and Push the generated HTML file
-      - name: Commit and Push
+      # Step 5: Commit and Push (only if HTML file is uploaded)
+      - name: Commit and Push HTML file
+        if: success()  # Only run this step if the check passed
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add grammatik_table.html  # Ensure this is the file you want to commit
-          git commit -m "Update HTML from Excel" || echo "No changes to commit"
+          git commit -m "Add updated HTML file from Excel conversion" || echo "No changes to commit"
           git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
