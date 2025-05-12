@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // If 'All' is selected, render all data
       if (selectedLevels.includes("all")) {
         checkboxes.forEach(cb => cb.checked = true);  // Select all checkboxes
-        checkboxes[0].checked = true;  // Ensure the "all" checkbox is also checked
+        //checkboxes[0].checked = true;  // Ensure the "all" checkbox is also checked
         dropdownHeader.textContent = "All";  // Update the header text to show "All"
         renderTable(allData);
       } else {
