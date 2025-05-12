@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Display the table
+  const displayTableBtn = document.getElementById("displayTableBtn");
   displayTableBtn.addEventListener("click", () => {
     // Make sure the table is visible when the button is clicked
     const table = document.getElementById("vocabTable");
