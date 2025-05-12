@@ -42,22 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const selectedValues = Array.from(checkboxes)
         .filter(cb => cb.checked)
         .map(cb => cb.value);
-
+  
       if (selectedValues.includes("all")) {
         checkboxes.forEach(cb => {
           if (cb.value !== "all") cb.checked = false;
         });
-        renderTable(allData);
       } else {
         checkboxes.forEach(cb => {
           if (cb.value === "all") cb.checked = false;
         });
-        const filtered = allData.filter(row =>
-          selectedValues.includes((row["Level"] || "").trim())
-        );
-        renderTable(filtered);
       }
-
+  
       dropdownHeader.textContent = selectedValues.length > 0
         ? selectedValues.join(", ")
         : "Select Level(s)";
