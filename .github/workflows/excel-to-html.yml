@@ -3,7 +3,7 @@ name: Check HTML File Upload
 on:
   push:
     paths:
-      - 'Vocabulary.xlsx'  # Trigger the workflow when Vocabulary.xlsx is pushed to the repo
+      - 'Vocabulary1.xlsx'  # Trigger the workflow when Vocabulary.xlsx is pushed to the repo
 
 jobs:
   check_html_file:
