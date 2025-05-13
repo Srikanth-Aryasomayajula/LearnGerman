@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
-	console.log(allData[0]);
+
   // Fetch and parse Excel
 fetch("Vocabulary.xlsx")
   .then(response => {
@@ -267,5 +267,5 @@ function showFlashcard(row) {
   flashcardContainer.appendChild(buttonWrapper);
 }
 
-	
+	console.log(allData[0]);	
 });
