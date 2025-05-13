@@ -4,132 +4,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const practiceArea = document.getElementById("practiceArea");
 
   let filteredData = [];
-  let selectedLevels = [];
   let currentIndex = 0;
 
   loadButton.addEventListener("click", () => {
-    const selectedTopics = Array.from(checkboxes)
+    const selected = Array.from(checkboxes)
       .filter(cb => cb.checked)
       .map(cb => cb.value);
 
-    if (selectedTopics.length === 0) {
+    if (selected.length === 0) {
       alert("Please select at least one topic.");
       return;
     }
 
     const vocabData = window.vocabData || [];
     filteredData = vocabData.filter(row =>
-      selectedTopics.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
+      selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
     );
 
     if (filteredData.length > 0) {
-      renderLevelSelector(filteredData);
+      currentIndex = 0;
+      renderPracticeFlashcard(filteredData[currentIndex]);
     } else {
       practiceArea.innerHTML = "No data loaded.";
     }
   });
 
-function renderLevelSelector(data) {
-  const dropdownHeader = document.getElementById("dropdownHeader");
-  const dropdownOptions = document.getElementById("dropdownOptions");
-  const startButton = document.getElementById("startPracticeBtn");
-  let checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
-
-  // Extract unique levels
-  const levels = [...new Set(data.map(row => (row["Level"] || "").trim()).filter(Boolean))].sort();
-
-  // Clear existing checkboxes and rebuild
-  dropdownOptions.innerHTML = "";
-
-  const allLabel = document.createElement("label");
-  const allCheckbox = document.createElement("input");
-  allCheckbox.type = "checkbox";
-  allCheckbox.value = "all";
-  allLabel.appendChild(allCheckbox);
-  allLabel.appendChild(document.createTextNode("All"));
-  dropdownOptions.appendChild(allLabel);
-
-  levels.forEach(level => {
-    const label = document.createElement("label");
-    const input = document.createElement("input");
-    input.type = "checkbox";
-    input.value = level;
-    label.appendChild(input);
-    label.appendChild(document.createTextNode(level));
-    dropdownOptions.appendChild(label);
-  });
-
-  // Re-query after building checkboxes
-  checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
-
-  let selectedLevels = [];
-
-  // Toggle dropdown visibility
-  dropdownHeader.addEventListener("click", () => {
-    dropdownOptions.classList.toggle("hidden");
-  });
-
-  // Close dropdown if clicked outside
-  document.addEventListener("click", (e) => {
-    if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
-      dropdownOptions.classList.add("hidden");
-    }
-  });
-
-  // Handle checkbox logic
-  checkboxes.forEach(cb => {
-    cb.addEventListener("change", () => {
-      const isAllBox = cb.value === "all";
-      const individualCheckboxes = Array.from(checkboxes).slice(1);
-
-      if (isAllBox) {
-        const allChecked = individualCheckboxes.every(c => c.checked);
-        checkboxes.forEach(c => c.checked = !allChecked);
-      } else {
-        if (!cb.checked && checkboxes[0].checked) {
-          checkboxes[0].checked = false;
-        } else {
-          const allSelected = individualCheckboxes.every(c => c.checked);
-          checkboxes[0].checked = allSelected;
-        }
-      }
-
-      selectedLevels = Array.from(checkboxes)
-        .filter(c => c.checked && c.value !== "all")
-        .map(c => c.value);
-
-      dropdownHeader.textContent = selectedLevels.length === 0
-        ? "Select Level(s)"
-        : (selectedLevels.length === individualCheckboxes.length ? "All" : selectedLevels.join(", "));
-    });
-  });
-
-  // Start flashcards
-  startButton.addEventListener("click", () => {
-    if (selectedLevels.length === 0) {
-      alert("Please select at least one level.");
-      return;
-    }
-
-    const levelFiltered = filteredData.filter(row =>
-      selectedLevels.includes((row["Level"] || "").trim())
-    );
-
-    const practiceArea = document.getElementById("practiceArea");
-    if (levelFiltered.length === 0) {
-      practiceArea.innerHTML = "No flashcards match your selection.";
-    } else {
-      currentIndex = 0;
-      renderPracticeFlashcard(levelFiltered[currentIndex], levelFiltered);
-    }
-  });
-}
-
-  function renderPracticeFlashcard(entry, dataArray) {
+  function renderPracticeFlashcard(entry) {
     practiceArea.innerHTML = "";
 
     const container = document.createElement("div");
     container.className = "flashcard-container";
+    
+    const wrapper = document.createElement("div");
+    wrapper.className = "button-wrapper";
 
     const card = document.createElement("div");
     card.className = "flashcard";
@@ -138,9 +45,18 @@ function renderLevelSelector(data) {
     table.className = "flashcard-table";
 
     const columns = [
-      "Level", "Article, Word and Plural", "Part of Speech", "Meaning", "Usage",
-      "Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II",
-      "Prepositions that go together with the verb/Noun/Adj.", "Example statement with the preposition"
+      "Level",
+      "Article, Word and Plural",
+      "Part of Speech",
+      "Meaning",
+      "Usage",
+      "Past (Präteritum)",
+      "Perfect (Partizip II)",
+      "Plusquamperfekt",
+      "Futur I",
+      "Futur II",
+      "Prepositions that go together with the verb/Noun/Adj.",
+      "Example statement with the preposition"
     ];
 
     columns.forEach(col => {
@@ -157,8 +73,10 @@ function renderLevelSelector(data) {
           const correctWord = words[randomIndex];
           const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
           const options = generateOptions(correctWord, window.vocabData || [], col);
+
           words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
-          td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, options)}`;
+          const sentenceWithBlank = words.join(" ");
+          td.innerHTML = `${sentenceWithBlank}<br>${createOptionsHTML(blankId, correctWord, options)}`;
         } else {
           td.innerHTML = value.replace(/\r?\n/g, "<br>");
         }
@@ -183,11 +101,11 @@ function renderLevelSelector(data) {
     const prevBtn = document.createElement("button");
     prevBtn.textContent = "Previous";
     prevBtn.className = "nav-button";
-    prevBtn.style.display = currentIndex === 0 ? "none" : "inline-block";
+    prevBtn.style.display = "none";
     prevBtn.addEventListener("click", () => {
       if (currentIndex > 0) {
         currentIndex--;
-        renderPracticeFlashcard(dataArray[currentIndex], dataArray);
+        renderPracticeFlashcard(filteredData[currentIndex]);
       }
     });
 
@@ -200,9 +118,9 @@ function renderLevelSelector(data) {
     nextBtn.className = "nav-button";
     nextBtn.style.display = "none";
     nextBtn.addEventListener("click", () => {
-      if (currentIndex < dataArray.length - 1) {
+      if (currentIndex < filteredData.length - 1) {
         currentIndex++;
-        renderPracticeFlashcard(dataArray[currentIndex], dataArray);
+        renderPracticeFlashcard(filteredData[currentIndex]);
       }
     });
 
@@ -210,22 +128,25 @@ function renderLevelSelector(data) {
     buttonRow.appendChild(submitBtn);
     buttonRow.appendChild(nextBtn);
     container.appendChild(buttonRow);
-
+    
     practiceArea.innerHTML = "";
     practiceArea.appendChild(container);
 
+    // Submission logic
     submitBtn.addEventListener("click", () => {
       const selected = document.querySelectorAll("input[type='radio']:checked");
       let correct = 0;
+
       selected.forEach(input => {
         if (input.dataset.correct === "true") correct++;
       });
 
       const total = document.querySelectorAll("input[type='radio']").length / 4;
       resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
+
       submitBtn.style.display = "none";
       if (currentIndex > 0) prevBtn.style.display = "inline-block";
-      if (currentIndex < dataArray.length - 1) nextBtn.style.display = "inline-block";
+      if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
     });
   }
 
