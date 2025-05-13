@@ -62,8 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
     practiceArea.appendChild(dropdownWrapper);
 
     const startButton = document.createElement("button");
-    startButton.textContent = "loadPracticeBtn";
-    startButton.className = "start-practice";
+    startButton.textContent = "Start";
+    startButton.className = "loadPracticeBtn";
     practiceArea.appendChild(startButton);
 
     // Toggle dropdown
