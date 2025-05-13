@@ -29,6 +29,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  function renderLevelSelector(data) {
+      // Toggle dropdown visibility
+  dropdownHeader.addEventListener("click", () => {
+    dropdownOptions.classList.toggle("hidden");
+  });
+
+  // Close dropdown if clicked outside
+  document.addEventListener("click", (e) => {
+    if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
+      dropdownOptions.classList.add("hidden");
+    }
+  });
+
+	// Handle checkbox change for level selection
+	let selectedLevels = [];
+	
+	checkboxes.forEach(checkbox => {
+	  checkbox.addEventListener("change", () => {
+		const isAllBoxClicked = checkbox.value === "all";
+		const allCheckboxesExceptAll = Array.from(checkboxes).slice(1);
+
+		if (isAllBoxClicked) {
+		  const allChecked = allCheckboxesExceptAll.every(cb => cb.checked);
+		  if (allChecked) {
+			// If all are already checked and 'all' is clicked again → uncheck all
+			checkboxes.forEach(cb => cb.checked = false);
+		  } else {
+			// Otherwise → check all
+			checkboxes.forEach(cb => cb.checked = true);
+		  }
+		} else {
+		  // Any individual checkbox is clicked
+		  if (!checkbox.checked && checkboxes[0].checked) {
+			// If a level is unchecked and 'all' is checked → uncheck 'all'
+			checkboxes[0].checked = false;
+		  } else {
+			// If all others are now checked → check 'all' automatically
+			const allSelected = allCheckboxesExceptAll.every(cb => cb.checked);
+			checkboxes[0].checked = allSelected;
+		  }
+		}
+  }
+  
   function renderPracticeFlashcard(entry) {
     practiceArea.innerHTML = "";
 
