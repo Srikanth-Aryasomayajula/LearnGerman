@@ -53,15 +53,21 @@ function renderPracticeFlashcard(entry) {
     const value = entry[col]?.trim();
     if (value && value !== "-") {
       const tr = document.createElement("tr");
-
       const th = document.createElement("th");
       th.textContent = col;
 
       const td = document.createElement("td");
 
       if (col === "Meaning" || col === "Usage") {
-        // Insert blanks with MC options
-        td.innerHTML = createBlanksWithOptionsHTML(value);
+        const processed = value.replace(/\b(\w+)\b/g, (match, word) => {
+          if (Math.random() > 0.8) {
+            const blankId = `blank_${Math.random().toString(36).substring(2, 8)}`;
+            const options = generateOptions(word);
+            return createBlankHTML(blankId, word, options);
+          }
+          return word;
+        });
+        td.innerHTML = processed;
       } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
@@ -89,12 +95,27 @@ function renderPracticeFlashcard(entry) {
       if (input.dataset.correct === "true") correct++;
     });
 
-    const total = document.querySelectorAll("input[type='radio']").length / 4; // 4 options each
-    alert(`You got ${correct} out of ${total} correct.`);
+    const total = document.querySelectorAll("input[type='radio']").length / 4; // assuming 4 options
+    alert(`You got ${correct} of ${total} correct.`);
   });
 }
 
-  function createBlankWithOptions(blankId, correctWord, options) {
+function createBlankHTML(blankId, correctWord, options) {
+  const html = `
+    <span style="display:inline-block; border-bottom: 1px solid #000; min-width: 60px;">&nbsp;</span>
+    <div style="margin-top: 5px;">
+      ${options.map((opt, i) => `
+        <label style="margin-right: 10px;">
+          <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}">
+          ${opt}
+        </label>
+      `).join("")}
+    </div>
+  `;
+  return html;
+}
+
+function createBlankWithOptions(blankId, correctWord, options) {
     return `
       <span class="blank-group">
         ${options
@@ -104,9 +125,12 @@ function renderPracticeFlashcard(entry) {
     `;
   }
 
-  function generateOptions(correct) {
-    const dummyWords = ["laufen", "machen", "essen", "lesen", "schreiben", "sehen", "haben"];
-    const shuffled = [correct, ...dummyWords.filter(w => w !== correct).sort(() => 0.5 - Math.random()).slice(0, 4)];
-    return shuffled.sort(() => 0.5 - Math.random());
-  }
-});
+function generateOptions(correctWord) {
+  const allWords = vocabData.flatMap(entry => 
+    [entry["Meaning"], entry["Usage"]].join(" ").match(/\b\w+\b/g) || []
+  );
+  const filtered = allWords.filter(word => word !== correctWord);
+  const shuffled = filtered.sort(() => 0.5 - Math.random());
+  const unique = Array.from(new Set(shuffled)).slice(0, 3);
+  return [...unique, correctWord].sort(() => 0.5 - Math.random());
+}
