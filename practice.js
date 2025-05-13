@@ -59,17 +59,9 @@ function renderPracticeFlashcard(entry) {
 
       const td = document.createElement("td");
 
-      if (col === "Usage" || col === "Example statement with the preposition") {
-        // Generate blanks with multiple choice
-        const processed = value.replace(/\b(\w+)\b/g, (match, word) => {
-          if (Math.random() > 0.8) {
-            const blankId = `blank_${Math.random().toString(36).substring(2, 8)}`;
-            const options = generateOptions(word);
-            return createBlankWithOptions(blankId, word, options);
-          }
-          return word;
-        });
-        td.innerHTML = processed;
+      if (col === "Meaning" || col === "Usage") {
+        // Insert blanks with MC options
+        td.innerHTML = createBlanksWithOptionsHTML(value);
       } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
@@ -97,11 +89,10 @@ function renderPracticeFlashcard(entry) {
       if (input.dataset.correct === "true") correct++;
     });
 
-    const total = document.querySelectorAll("input[type='radio']").length / 5;
-    alert(`You got ${correct} of ${total} correct.`);
+    const total = document.querySelectorAll("input[type='radio']").length / 4; // 4 options each
+    alert(`You got ${correct} out of ${total} correct.`);
   });
 }
-
 
   function createBlankWithOptions(blankId, correctWord, options) {
     return `
