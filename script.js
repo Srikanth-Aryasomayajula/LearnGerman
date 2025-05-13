@@ -40,7 +40,22 @@ fetch("Vocabulary.xlsx")
 	
   const worksheet = workbook.Sheets[SHEET_NAME];
   if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-  
+
+// Clean each cell in the worksheet to force using .t (plain text)
+for (const cellAddress in worksheet) {
+  if (!cellAddress.startsWith('!')) {
+    const cell = worksheet[cellAddress];
+    if (cell.t === 's' && typeof cell.v === 'string') {
+      // Replace ø with ß
+      cell.v = cell.v.replace(/ø/g, "ß");
+
+      // Ensure .w and .h are not used (just use .v)
+      delete cell.w;
+      delete cell.h;
+    }
+  }
+}
+
 
 	allData = XLSX.utils.sheet_to_json(worksheet, {
 	  defval: "",
