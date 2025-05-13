@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const filtered = vocabData.filter(row => selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()));
 
     if (filtered.length > 0) {
-      renderPracticeFlashcard(filtered[0]); // Show one for now
+      renderPracticeFlashcard(filtered[0], vocabData); // Show one for now
     } else {
       practiceArea.innerHTML = "No data loaded.";
     }
