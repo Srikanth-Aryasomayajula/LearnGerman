@@ -22,15 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(arrayBuffer => {
       const workbook = XLSX.read(arrayBuffer, { type: "array" });
       const worksheet = workbook.Sheets[SHEET_NAME];
-      if (!worksheet) throw new Error(Sheet "${SHEET_NAME}" not found.);
+      if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
       allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
     })
     .catch(error => {
-      tableBody.innerHTML = <tr><td colspan="12">Error loading data: ${error.message}</td></tr>;
+      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
       console.error(error);
     });
 	
-		
   // Toggle dropdown visibility
   dropdownHeader.addEventListener("click", () => {
     dropdownOptions.classList.toggle("hidden");
