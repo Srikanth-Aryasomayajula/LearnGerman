@@ -215,7 +215,14 @@ body {
   display: none;
 }
 
-
+.flashcard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 20px;
+}
 
 .flashcard {
   background-color: #fff;
