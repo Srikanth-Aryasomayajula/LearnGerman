@@ -38,11 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropdownWrapper = document.createElement("div");
     dropdownWrapper.className = "custom-dropdown";
 
+    levelSelectorStartWrapper.appendChild(dropdownWrapper);
+    
     const dropdownHeader = document.createElement("div");
     dropdownHeader.id = "dropdownHeader";
     dropdownHeader.className = "dropdown-header";
     dropdownHeader.textContent = "Select Level(s)";
-    dropdownWrapper.appendChild(dropdownHeader);
+    levelSelectorStartWrapper.appendChild(dropdownHeader);
 
     const dropdownOptions = document.createElement("div");
     dropdownOptions.id = "dropdownOptions";
