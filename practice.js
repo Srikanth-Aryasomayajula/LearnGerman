@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(resultDisplay);
 
     const buttonRow = document.createElement("div");
-    buttonRow.className = "button-wrapper";
+    buttonRow.className = "dropdown-buttons";
 
     const prevBtn = document.createElement("button");
     prevBtn.textContent = "Previous";
