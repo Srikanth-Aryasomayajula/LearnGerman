@@ -21,7 +21,7 @@ jobs:
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
-          pip install gitpython
+          pip install gitpython xlwings
 
       # Step 4: Check if HTML file was uploaded after the Excel file
       - name: Check if HTML file was uploaded after Excel
