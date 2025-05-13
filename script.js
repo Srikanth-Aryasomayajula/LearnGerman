@@ -16,29 +16,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Fetch and parse Excel
 fetch("Vocabulary.xlsx")
-  .then(response => {
-    if (!response.ok) throw new Error("Failed to load Excel file.");
-    return response.arrayBuffer();
+  .then(response => response.blob())
+  .then(blob => {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const binaryStr = e.target.result;
+      const workbook = XLSX.read(binaryStr, { type: "binary", WTF: true });
+      console.log("Workbook:", workbook);
+      const worksheet = workbook.Sheets[SHEET_NAME];
+      if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
+      allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+      renderTable(allData);
+    };
+    reader.readAsBinaryString(blob);
   })
-.then(arrayBuffer => {
-  const workbook = XLSX.read(arrayBuffer, {
-    type: "array",
-    codepage: 65001,
-    WTF: true // Add this here
-  });
-  console.log("Workbook:", workbook); // Now it can access the variable correctly
-
-  const worksheet = workbook.Sheets[SHEET_NAME];
-  if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-  
-  allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-  renderTable(allData);
-})
-
   .catch(error => {
     tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
     console.error(error);
   });
+
 	
 	
   // Toggle dropdown visibility
