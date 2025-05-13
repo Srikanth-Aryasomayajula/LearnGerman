@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 	// Handle checkbox change for level selection
+	let selectedLevels = [];
+	
 	checkboxes.forEach(checkbox => {
 	  checkbox.addEventListener("change", () => {
 		const isAllBoxClicked = checkbox.value === "all";
@@ -65,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 
 		// Now collect selected levels and render table
-		const selectedLevels = Array.from(checkboxes)
+		selectedLevels = Array.from(checkboxes)
 		  .filter(cb => cb.checked)
 		  .map(cb => cb.value);
 
@@ -89,13 +91,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Display the table when the button is clicked
 	displayTableBtn.addEventListener("click", () => {
-	  if (selectedLevels.length !== 0) {  
+	  if (selectedLevels.length !== 0) {
 	    const table = document.getElementById("vocabTable");
-	    table.style.display = "table"; // Show the table when display button is clicked
+	    table.style.display = "table";
 	  } else {
 	    alert("Please select the level");
 	  }
 	});
+
 
   // Clear selection
   clearBtn.addEventListener("click", () => {
