@@ -37,7 +37,8 @@ fetch("Vocabulary.xlsx")
   }
 	
   console.log("Workbook:", workbook); // Now it can access the variable correctly
-
+  console.log("Final parsed data:", allData);
+	
   const worksheet = workbook.Sheets[SHEET_NAME];
   if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
   
