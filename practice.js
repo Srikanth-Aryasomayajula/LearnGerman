@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     practiceArea.innerHTML = "";
 
     const dropdownWrapper = document.createElement("div");
-    dropdownWrapper.className = "custom-dropdown";
+    dropdownWrapper.className = "dropdown-header";
 
     const dropdownHeader = document.createElement("div");
     dropdownHeader.id = "dropdownHeader";
