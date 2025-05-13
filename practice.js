@@ -98,7 +98,16 @@ function renderPracticeFlashcard(entry, vocabData) {
     });
 
     const total = document.querySelectorAll("input[type='radio']").length / 4;
-    alert(`You got ${correct} of ${total} correct.`);
+
+    let resultDisplay = document.getElementById("practiceResult");
+    if (!resultDisplay) {
+      resultDisplay = document.createElement("div");
+      resultDisplay.id = "practiceResult";
+      resultDisplay.className = "flashcard-progress";
+      practiceArea.appendChild(resultDisplay);
+    }
+    resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
+    
   });
 }
 
