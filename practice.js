@@ -104,6 +104,7 @@ function renderPracticeFlashcard(entry, vocabData) {
 function createBlankHTML(blankId, correctWord, options) {
   return `
     <span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <br>
     <div class="option-group">
       ${options.map(opt => `
         <label>
