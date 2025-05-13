@@ -33,16 +33,19 @@
     <h1 class="main-title">Grammatik</h1>
 
     <!-- Embed iframe -->
+    // Try to load grammatik_table.html first
     try {
-      <iframe id="grammatikFrame" src="grammatik_table.html" onload="resizeIframe(this)"></iframe>
+      loadIframe('grammatik_table.html');
     } catch (w) {
-        console.log('Could not find grammatik_table.html', w);
-      }
+      console.log('Could not find grammatik_table.html', w);
+    }
+
+    // If the first attempt fails, try to load sheet001.html
     try {
-      <iframe id="grammatikFrame" src="grammatik_table-Dateien/sheet001.html" onload="resizeIframe(this)"></iframe>
+      loadIframe('grammatik_table-Dateien/sheet001.html');
     } catch (w) {
-        console.log('Could not find sheet001.html in grammatik_table-Dateien', w);
-      }
+      console.log('Could not find sheet001.html in grammatik_table-Dateien', w);
+    }
   </main>
 
   <script>
