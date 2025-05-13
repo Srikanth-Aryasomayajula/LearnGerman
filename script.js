@@ -214,24 +214,32 @@ function showFlashcard(row) {
   const buttonWrapper = document.createElement("div");
   buttonWrapper.className = "button-wrapper";
 
+  // Previous Button
   const prevBtn = document.createElement("button");
   prevBtn.textContent = "Previous";
+  prevBtn.style.display = currentFlashcardIndex === 0 ? "none" : "inline-block";
   prevBtn.disabled = currentFlashcardIndex === 0; // Disable if first card
   prevBtn.addEventListener("click", () => {
     if (currentFlashcardIndex > 0) {
       currentFlashcardIndex--;
       showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
-    }
+    } else {
+	    prevBtn.style.display = "none"; // Hide the button
+	  }
   });
 
+  // Next Button
   const nextBtn = document.createElement("button");
   nextBtn.textContent = "Next";
+  nextBtn.style.display = currentFlashcardIndex === shuffledFlashcards.length - 1 ? "none" : "inline-block";
   nextBtn.disabled = currentFlashcardIndex === shuffledFlashcards.length - 1; // Disable if last card
   nextBtn.addEventListener("click", () => {
     if (currentFlashcardIndex < shuffledFlashcards.length - 1) {
       currentFlashcardIndex++;
       showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
-    }
+    } else {
+	    nextBtn.style.display = "none"; // Hide the button
+	  }
   });
 
   buttonWrapper.appendChild(prevBtn);
