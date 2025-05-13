@@ -123,3 +123,13 @@ function generateOptions(correctWord, vocabData) {
   const unique = Array.from(new Set(filtered)).sort(() => 0.5 - Math.random()).slice(0, 3);
   return [...unique, correctWord].sort(() => 0.5 - Math.random());
 }
+
+function createBlankWithOptions(blankId, correctWord, options) {
+    return `
+      <span class="blank-group">
+        ${options
+          .map(opt => `<label><input type="radio" name="${blankId}" data-correct="${opt === correctWord}" /> ${opt}</label>`)
+          .join(" ")}
+      </span>
+    `;
+  }
