@@ -31,7 +31,7 @@ fetch("Vocabulary.xlsx")
   if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
     workbook.Strings.forEach(entry => {
       if (entry.t && typeof entry.t === "string") {
-        entry.t = entry.t.replace(/φ/g, "ß");
+        entry.t = entry.t.replace(/ø/g, "ß");
       }
     });
   }
