@@ -20,29 +20,25 @@ fetch("Vocabulary.xlsx")
     if (!response.ok) throw new Error("Failed to load Excel file.");
     return response.arrayBuffer();
   })
-  .then(arrayBuffer => {
-    const workbook = XLSX.read(arrayBuffer, {
-      type: "array",
-      codepage: 65001 // Ensures UTF-8 decoding
-    });
-    const worksheet = workbook.Sheets[SHEET_NAME];
-    if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-    allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-    renderTable(allData); // Add this if needed to populate table initially
-  })
+.then(arrayBuffer => {
+  const workbook = XLSX.read(arrayBuffer, {
+    type: "array",
+    codepage: 65001,
+    WTF: true // Add this here
+  });
+  console.log("Workbook:", workbook); // Now it can access the variable correctly
+
+  const worksheet = workbook.Sheets[SHEET_NAME];
+  if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
+  
+  allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+  renderTable(allData);
+})
+
   .catch(error => {
     tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
     console.error(error);
   });
-
-// Step 1: Add Debug Logging
-const workbook = XLSX.read(arrayBuffer, {
-  type: "array",
-  codepage: 65001, // You can keep this
-  WTF: true        // Enables verbose output and warnings
-});
-console.log("Workbook:", workbook);
-
 	
 	
   // Toggle dropdown visibility
