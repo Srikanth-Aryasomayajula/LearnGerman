@@ -128,3 +128,15 @@ function generateOptions(correctWord, vocabData, column) {
   return [...unique, correctWord].sort(() => 0.5 - Math.random());
 }
 
+function createOptionsHTML(blankId, correctWord, options) {
+  return `
+    <div class="option-group">
+      ${options.map(opt => `
+        <label>
+          <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}">
+          ${opt}
+        </label>
+      `).join("")}
+    </div>
+  `;
+}
