@@ -205,16 +205,37 @@ function showFlashcard(row) {
 
   flashcardContainer.appendChild(card);
 
-  // Add "Next" button
-  const nextBtn = document.createElement("button");
-  nextBtn.textContent = "Next";
-  nextBtn.style.marginTop = "1rem";
-  nextBtn.addEventListener("click", () => {
-    currentFlashcardIndex = (currentFlashcardIndex + 1) % shuffledFlashcards.length;
-    showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
-  });
+  // Create a container for both buttons
+  const buttonWrapper = document.createElement("div");
+  buttonWrapper.style.display = "flex";
+  buttonWrapper.style.justifyContent = "center";
+  buttonWrapper.style.gap = "1rem";
+  buttonWrapper.style.marginTop = "1rem";
 
-  flashcardContainer.appendChild(nextBtn);
+// Create Previous button
+const prevBtn = document.createElement("button");
+prevBtn.textContent = "Previous";
+prevBtn.addEventListener("click", () => {
+  currentFlashcardIndex =
+    (currentFlashcardIndex - 1 + shuffledFlashcards.length) % shuffledFlashcards.length;
+  showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
+});
+
+	// Create Next button
+const nextBtn = document.createElement("button");
+nextBtn.textContent = "Next";
+nextBtn.addEventListener("click", () => {
+  currentFlashcardIndex = (currentFlashcardIndex + 1) % shuffledFlashcards.length;
+  showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
+});
+
+// Append buttons to wrapper
+buttonWrapper.appendChild(prevBtn);
+buttonWrapper.appendChild(nextBtn);
+	
+// Append the button wrapper to the container
+flashcardContainer.appendChild(buttonWrapper);
+	
 }
 	
 });
