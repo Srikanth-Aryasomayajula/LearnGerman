@@ -242,9 +242,21 @@ body {
   margin: 0.5rem 0;
 }
 
+
+
 #flashcardsContainer button {
-  display: block;
-  margin: 1rem auto 0 auto;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
+#flashcardsContainer div {
+  width: 100%;
+}
+
+#flashcardsContainer .button-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
