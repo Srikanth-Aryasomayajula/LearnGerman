@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     practiceArea.appendChild(dropdownWrapper);
 
     const startButton = document.createElement("button");
-    startButton.textContent = "Start Flashcards";
+    startButton.textContent = "loadPracticeBtn";
     startButton.className = "start-practice";
     practiceArea.appendChild(startButton);
 
