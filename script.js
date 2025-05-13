@@ -183,7 +183,6 @@ function showFlashcard(row) {
   const card = document.createElement("div");
   card.className = "flashcard";
 
-  // Loop over columns
   const columns = [
     "Level",
     "Article, Word and Plural",
@@ -205,34 +204,40 @@ function showFlashcard(row) {
 
   flashcardContainer.appendChild(card);
 
-  // Create a container for both buttons
+  // --- Progress Text ---
+  const progress = document.createElement("p");
+  progress.className = "progress-indicator";
+  progress.textContent = `Card ${currentFlashcardIndex + 1} of ${shuffledFlashcards.length}`;
+  flashcardContainer.appendChild(progress);
+
+  // --- Navigation Buttons ---
   const buttonWrapper = document.createElement("div");
   buttonWrapper.className = "button-wrapper";
 
-// Create Previous button
-const prevBtn = document.createElement("button");
-prevBtn.textContent = "Previous";
-prevBtn.addEventListener("click", () => {
-  currentFlashcardIndex =
-    (currentFlashcardIndex - 1 + shuffledFlashcards.length) % shuffledFlashcards.length;
-  showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
-});
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "Previous";
+  prevBtn.disabled = currentFlashcardIndex === 0; // Disable if first card
+  prevBtn.addEventListener("click", () => {
+    if (currentFlashcardIndex > 0) {
+      currentFlashcardIndex--;
+      showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
+    }
+  });
 
-	// Create Next button
-const nextBtn = document.createElement("button");
-nextBtn.textContent = "Next";
-nextBtn.addEventListener("click", () => {
-  currentFlashcardIndex = (currentFlashcardIndex + 1) % shuffledFlashcards.length;
-  showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
-});
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "Next";
+  nextBtn.disabled = currentFlashcardIndex === shuffledFlashcards.length - 1; // Disable if last card
+  nextBtn.addEventListener("click", () => {
+    if (currentFlashcardIndex < shuffledFlashcards.length - 1) {
+      currentFlashcardIndex++;
+      showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
+    }
+  });
 
-// Append buttons to wrapper
-buttonWrapper.appendChild(prevBtn);
-buttonWrapper.appendChild(nextBtn);
-	
-// Append the button wrapper to the container
-flashcardContainer.appendChild(buttonWrapper);
-	
+  buttonWrapper.appendChild(prevBtn);
+  buttonWrapper.appendChild(nextBtn);
+  flashcardContainer.appendChild(buttonWrapper);
 }
+
 	
 });
