@@ -267,3 +267,10 @@ body {
   gap: 1rem;
   margin-top: 1rem;
 }
+
+.progress-indicator {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
