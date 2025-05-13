@@ -26,13 +26,35 @@ fetch("Vocabulary.xlsx")
     codepage: 65001,
     WTF: true // Add this here
   });
-  console.log("Workbook:", workbook); // Now it can access the variable correctly
 
+  // Manually fix: Replace all 'φ' with 'ß'
+  if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
+    workbook.Strings.forEach(entry => {
+      if (entry.t && typeof entry.t === "string") {
+        entry.t = entry.t.replace(/ø/g, "ß");
+      }
+    });
+  }
+	
+  console.log("Workbook:", workbook); // Now it can access the variable correctly
+	
   const worksheet = workbook.Sheets[SHEET_NAME];
   if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
   
-  allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+	allData = XLSX.utils.sheet_to_json(worksheet, {
+	  defval: "",
+	  raw: false,     // Ensure text is parsed
+	  rawNumbers: false,
+	  // 👇 Ensure rich-text HTML isn't used
+	  // This prevents it from using `h` field if present
+	  cellText: true,
+	  cellHTML: false
+	});
+	
   renderTable(allData);
+  console.log("Final parsed data:", allData);
+  console.log("Workbook:", workbook); // Now it can access the variable correctly
 })
 
   .catch(error => {
