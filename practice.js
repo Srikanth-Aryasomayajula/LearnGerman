@@ -60,15 +60,16 @@ function renderPracticeFlashcard(entry, vocabData) {
       const td = document.createElement("td");
 
       if (col === "Meaning" || col === "Usage") {
-        const processed = value.replace(/\b([\wäöüÄÖÜß]+)\b/g, (match) => {
-          if (Math.random() > 0.8) {
-            const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
-            const options = generateOptions(match, vocabData, col); // Pass the column
-            return createBlankHTML(blankId, match, options);
-          }
-          return match;
-        });
-        td.innerHTML = processed;
+        const words = value.split(/\s+/);
+        const randomIndex = Math.floor(Math.random() * words.length);
+        const correctWord = words[randomIndex];
+        const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+        const options = generateOptions(correctWord, vocabData, col);
+        
+        words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+        const sentenceWithBlank = words.join(" ");
+        
+        td.innerHTML = `${sentenceWithBlank}<br>${createOptionsHTML(blankId, correctWord, options)}`;
       } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
