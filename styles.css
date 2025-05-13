@@ -226,10 +226,12 @@ body {
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 1rem;
-  max-width: 800px;
+  width: 800px;
+  max-width: 100%;
   border-radius: 8px;
-  margin: auto;
+  margin: 1rem auto;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
 
 .flashcard p {
