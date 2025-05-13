@@ -63,8 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
       dropdownOptions.appendChild(label);
     });
 
-    dropdownWrapper.appendChild(dropdownOptions);
-    practiceArea.appendChild(dropdownWrapper);
+    levelSelectorStartWrapper.appendChild(dropdownOptions);
+    practiceArea.appendChild(levelSelectorStartWrapper);
 
     const startButton = document.createElement("button");
     startButton.textContent = "Start";
