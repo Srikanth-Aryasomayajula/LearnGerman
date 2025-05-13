@@ -8,9 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropdownHeader = document.getElementById("dropdownHeader");
   const dropdownOptions = document.getElementById("dropdownOptions");
   
-  if (dropdownOptions) {
-	const checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
-  }
+  const checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
+
   const clearBtn = document.getElementById("clearSelection");
   const displayTableBtn = document.getElementById("displayTableBtn");
   const SHEET_NAME = "Vokabular";
