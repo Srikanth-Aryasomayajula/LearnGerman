@@ -238,6 +238,15 @@ body {
   margin: 0.5rem 0;
 }
 
+#flashcardsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 100%;
+  padding: 1rem;
+}
+
 #flashcardContainer button {
   display: block;
   margin: 1rem auto 0 auto;
