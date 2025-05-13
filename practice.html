@@ -22,7 +22,15 @@
     <h1 class="main-title">Üben</h1>
 	<!-- Dummy element to prevent script.js from crashing -->
 	<div id="dropdownOptions" style="display: none;"></div>
-	
+
+	<!-- Dummy dropdownHeader to prevent event listener crash -->
+	<div id="dropdownHeader" style="display: none;">Header</div>
+
+	<!-- Dummy vocabTable to avoid null tableBody reference -->
+	<table id="vocabTable" style="display: none;">
+	  <tbody></tbody>
+	</table>
+	  
 	<div id="sourceSelector">
 	<div class="checkbox-row">
 		<label><input type="checkbox" value="Vokabular" /> Vokabular</label>
