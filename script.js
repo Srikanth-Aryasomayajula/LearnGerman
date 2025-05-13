@@ -207,6 +207,7 @@ function showFlashcard(row) {
 
   // Create a container for both buttons
   const buttonWrapper = document.createElement("div");
+  buttonWrapper.className = "button-wrapper";
 
 // Create Previous button
 const prevBtn = document.createElement("button");
