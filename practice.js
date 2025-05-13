@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Access data from script.js
     const vocabData = window.vocabData || [];
+    console.log(vocabData);
     const filtered = vocabData.filter(row => selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()));
 
     if (filtered.length > 0) {
