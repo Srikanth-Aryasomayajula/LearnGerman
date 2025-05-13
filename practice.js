@@ -4,26 +4,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const practiceArea = document.getElementById("practiceArea");
 
   let filteredData = [];
+  let selectedLevels = [];
   let currentIndex = 0;
 
   loadButton.addEventListener("click", () => {
-    const selected = Array.from(checkboxes)
+    const selectedTopics = Array.from(checkboxes)
       .filter(cb => cb.checked)
       .map(cb => cb.value);
 
-    if (selected.length === 0) {
+    if (selectedTopics.length === 0) {
       alert("Please select at least one topic.");
       return;
     }
 
     const vocabData = window.vocabData || [];
     filteredData = vocabData.filter(row =>
-      selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
+      selectedTopics.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
     );
 
     if (filteredData.length > 0) {
-      currentIndex = 0;
-      renderPracticeFlashcard(filteredData[currentIndex]);
+      renderLevelSelector(filteredData);
     } else {
       practiceArea.innerHTML = "No data loaded.";
     }
