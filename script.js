@@ -14,21 +14,26 @@ document.addEventListener("DOMContentLoaded", () => {
   let allData = [];
 
   // Fetch and parse Excel
-  fetch("Vocabulary.xlsx")
-    .then(response => {
-      if (!response.ok) throw new Error("Failed to load Excel file.");
-      return response.arrayBuffer();
-    })
-	.then(arrayBuffer => {
-	  const workbook = XLSX.read(arrayBuffer, { type: "array" });
-	  const worksheet = workbook.Sheets[SHEET_NAME];
-	  if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-	  allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-	})
-    .catch(error => {
-      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-      console.error(error);
+fetch("Vocabulary.xlsx")
+  .then(response => {
+    if (!response.ok) throw new Error("Failed to load Excel file.");
+    return response.arrayBuffer();
+  })
+  .then(arrayBuffer => {
+    const workbook = XLSX.read(arrayBuffer, {
+      type: "array",
+      codepage: 65001 // Ensures UTF-8 decoding
     });
+    const worksheet = workbook.Sheets[SHEET_NAME];
+    if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
+    allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+    renderTable(allData); // Add this if needed to populate table initially
+  })
+  .catch(error => {
+    tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+    console.error(error);
+  });
+
 	
   // Toggle dropdown visibility
   dropdownHeader.addEventListener("click", () => {
