@@ -32,6 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderLevelSelector(data) {
     practiceArea.innerHTML = "";
 
+    const levelSelectorStartWrapper = document.createElement("div");
+    levelSelectorStartWrapper.className = "dropdown-buttons";
+    
     const dropdownWrapper = document.createElement("div");
     dropdownWrapper.className = "custom-dropdown";
 
