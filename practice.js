@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function renderLevelSelector(data) {
-      // Toggle dropdown visibility
+  // Toggle dropdown visibility
   dropdownHeader.addEventListener("click", () => {
     dropdownOptions.classList.toggle("hidden");
   });
@@ -70,6 +70,27 @@ document.addEventListener("DOMContentLoaded", () => {
 			checkboxes[0].checked = allSelected;
 		  }
 		}
+
+		// Now collect selected levels and render table
+		selectedLevels = Array.from(checkboxes)
+		  .filter(cb => cb.checked)
+		  .map(cb => cb.value);
+
+		if (selectedLevels.length === 0) {
+		  dropdownHeader.textContent = "Select Level(s)";
+		  renderTable([]);
+		} else if (selectedLevels.length === checkboxes.length) {
+		  dropdownHeader.textContent = "All";
+		  renderTable(allData);
+		} else {
+		  dropdownHeader.textContent = selectedLevels.join(", ");
+		  const filteredData = allData.filter(row =>
+			selectedLevels.includes((row["Level"] || "").trim())
+		  );
+		  renderTable(filteredData);
+		}
+	  });
+	});
   }
   
   function renderPracticeFlashcard(entry) {
