@@ -25,36 +25,83 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  function renderPracticeFlashcard(entry) {
-    practiceArea.innerHTML = ""; // Clear existing
+function renderPracticeFlashcard(entry) {
+  practiceArea.innerHTML = "";
 
-    const container = document.createElement("div");
-    container.className = "practice-card";
+  const card = document.createElement("div");
+  card.className = "flashcard";
 
-    const questionText = (entry["Usage"] || "").replace(/\b(\w+)\b/g, (match, word) => {
-      if (Math.random() > 0.8) { // randomly create blanks
-        const blankId = `blank_${Math.random().toString(36).substring(2, 8)}`;
-        const options = generateOptions(word);
-        return createBlankWithOptions(blankId, word, options);
+  const table = document.createElement("table");
+  table.className = "flashcard-table";
+
+  const columns = [
+    "Level",
+    "Article, Word and Plural",
+    "Part of Speech",
+    "Meaning",
+    "Usage",
+    "Past (Präteritum)",
+    "Perfect (Partizip II)",
+    "Plusquamperfekt",
+    "Futur I",
+    "Futur II",
+    "Prepositions that go together with the verb/Noun/Adj.",
+    "Example statement with the preposition"
+  ];
+
+  columns.forEach(col => {
+    const value = entry[col]?.trim();
+    if (value && value !== "-") {
+      const tr = document.createElement("tr");
+
+      const th = document.createElement("th");
+      th.textContent = col;
+
+      const td = document.createElement("td");
+
+      if (col === "Usage" || col === "Example statement with the preposition") {
+        // Generate blanks with multiple choice
+        const processed = value.replace(/\b(\w+)\b/g, (match, word) => {
+          if (Math.random() > 0.8) {
+            const blankId = `blank_${Math.random().toString(36).substring(2, 8)}`;
+            const options = generateOptions(word);
+            return createBlankWithOptions(blankId, word, options);
+          }
+          return word;
+        });
+        td.innerHTML = processed;
+      } else {
+        td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
-      return word;
+
+      tr.appendChild(th);
+      tr.appendChild(td);
+      table.appendChild(tr);
+    }
+  });
+
+  card.appendChild(table);
+  practiceArea.appendChild(card);
+
+  const submitBtn = document.createElement("button");
+  submitBtn.textContent = "Submit";
+  submitBtn.id = "submitAnswers";
+  submitBtn.style.marginTop = "1rem";
+  practiceArea.appendChild(submitBtn);
+
+  submitBtn.addEventListener("click", () => {
+    const selected = document.querySelectorAll("input[type='radio']:checked");
+    let correct = 0;
+
+    selected.forEach(input => {
+      if (input.dataset.correct === "true") correct++;
     });
 
-    container.innerHTML = `<p>${questionText}</p><button id="submitAnswers">Submit</button>`;
-    practiceArea.appendChild(container);
+    const total = document.querySelectorAll("input[type='radio']").length / 5;
+    alert(`You got ${correct} of ${total} correct.`);
+  });
+}
 
-    document.getElementById("submitAnswers").addEventListener("click", () => {
-      const selected = document.querySelectorAll("input[type='radio']:checked");
-      let correct = 0;
-
-      selected.forEach(input => {
-        if (input.dataset.correct === "true") correct++;
-      });
-
-      const total = document.querySelectorAll("input[type='radio']").length / 5;
-      alert(`You got ${correct} of ${total} correct.`);
-    });
-  }
 
   function createBlankWithOptions(blankId, correctWord, options) {
     return `
