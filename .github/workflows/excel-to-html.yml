@@ -22,7 +22,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install gitpython xlwings
-
+          pip install xlwings
+          pip install gitpython
+          
       # Step 4: Check if HTML file was uploaded after the Excel file
       - name: Check if HTML file was uploaded after Excel
         run: |
