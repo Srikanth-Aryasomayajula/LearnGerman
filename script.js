@@ -267,5 +267,5 @@ function showFlashcard(row) {
   flashcardContainer.appendChild(buttonWrapper);
 }
 
-	console.log(allData[0]);	
+	
 });
