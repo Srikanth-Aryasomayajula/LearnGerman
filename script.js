@@ -43,6 +43,8 @@ fetch("Vocabulary.xlsx")
   
   allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
   renderTable(allData);
+
+  console.log("Workbook:", workbook); // Now it can access the variable correctly
 })
 
   .catch(error => {
