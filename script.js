@@ -193,7 +193,7 @@ for (const cellAddress in worksheet) {
       ];
       columns.forEach(col => {
         const td = document.createElement("td");
-        td.textContent = row[col] || "";
+        td.innerHTML = (row[col] || "").replace(/\r?\n/g, "<br>");
         tr.appendChild(td);
       });
       tableBody.appendChild(tr);
@@ -259,7 +259,7 @@ function showFlashcard(row) {
       th.textContent = col;
 
       const td = document.createElement("td");
-      td.textContent = value;
+      td.innerHTML = value.replace(/\r?\n/g, "<br>");
 
       tr.appendChild(th);
       tr.appendChild(td);
