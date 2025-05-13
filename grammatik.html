@@ -4,20 +4,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="styles.css" />
   <title>Deutsch lernen</title>
-  <style>
-    iframe {
-      width: 98vw;
-      height: 80vh;
-      border: none;
-      display: block;
-    }
+	<style>
+	  iframe {
+		width: 98vw;
+		height: 80vh;
+		border: none;
+		display: block;
+	  }
   
-    body, html {
-      margin-top: 0px;
-      padding: 0;
-      overflow: hidden;   /* Prevent outer scrollbars */
-    }
-  </style>
+	  body, html {
+		margin-top: 0px;
+		padding: 0;
+		overflow: hidden;   /* Prevent outer scrollbars */
+	  }
+	</style>
 </head>
 
 <body class="bg-text">
@@ -33,19 +33,10 @@
     <h1 class="main-title">Grammatik</h1>
 
     <!-- Embed iframe -->
-    <div id="iframe-container"></div>
+    <iframe id="grammatikFrame" src="grammatik_table.html" onload="resizeIframe(this)"></iframe>
   </main>
 
   <script>
-    function loadIframe(src) {
-      const iframe = document.createElement('iframe');
-      iframe.src = src;
-      iframe.onload = function() {
-        resizeIframe(iframe);
-      };
-      document.getElementById('iframe-container').appendChild(iframe);
-    }
-
     function resizeIframe(iframe) {
       try {
         const doc = iframe.contentDocument || iframe.contentWindow.document;
@@ -54,20 +45,6 @@
       } catch (e) {
         console.error('Could not auto-resize iframe:', e);
       }
-    }
-
-    // Try to load grammatik_table.html first
-    try {
-      loadIframe('grammatik_table.html');
-    } catch (w) {
-      console.log('Could not find grammatik_table.html', w);
-    }
-
-    // If the first attempt fails, try to load sheet001.html
-    try {
-      loadIframe('grammatik_table-Dateien/sheet001.html');
-    } catch (w) {
-      console.log('Could not find sheet001.html in grammatik_table-Dateien', w);
     }
   </script>
 </body>
