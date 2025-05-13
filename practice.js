@@ -24,9 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
       practiceArea.innerHTML = "No data loaded.";
     }
   });
-});
 
-function renderPracticeFlashcard(entry, vocabData) {
+function renderPracticeFlashcard(entry) {
   practiceArea.innerHTML = "";
 
   const card = document.createElement("div");
@@ -60,13 +59,13 @@ function renderPracticeFlashcard(entry, vocabData) {
       const td = document.createElement("td");
 
       if (col === "Meaning" || col === "Usage") {
-        const processed = value.replace(/\b([\wäöüÄÖÜß]+)\b/g, (match) => {
+        const processed = value.replace(/\b(\w+)\b/g, (match, word) => {
           if (Math.random() > 0.8) {
-            const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
-            const options = generateOptions(match, vocabData);
-            return createBlankHTML(blankId, match, options);
+            const blankId = `blank_${Math.random().toString(36).substring(2, 8)}`;
+            const options = generateOptions(word);
+            return createBlankHTML(blankId, word, options);
           }
-          return match;
+          return word;
         });
         td.innerHTML = processed;
       } else {
@@ -96,32 +95,24 @@ function renderPracticeFlashcard(entry, vocabData) {
       if (input.dataset.correct === "true") correct++;
     });
 
-    const total = document.querySelectorAll("input[type='radio']").length / 4;
+    const total = document.querySelectorAll("input[type='radio']").length / 4; // assuming 4 options
     alert(`You got ${correct} of ${total} correct.`);
   });
 }
 
 function createBlankHTML(blankId, correctWord, options) {
-  return `
-    <span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <div class="option-group">
-      ${options.map(opt => `
-        <label>
+  const html = `
+    <span style="display:inline-block; border-bottom: 1px solid #000; min-width: 60px;">&nbsp;</span>
+    <div style="margin-top: 5px;">
+      ${options.map((opt, i) => `
+        <label style="margin-right: 10px;">
           <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}">
           ${opt}
         </label>
       `).join("")}
     </div>
   `;
-}
-
-function generateOptions(correctWord, vocabData) {
-  const allWords = vocabData.flatMap(entry => 
-    [entry["Meaning"], entry["Usage"]].join(" ").match(/\b([\wäöüÄÖÜß]+)\b/g) || []
-  );
-  const filtered = allWords.filter(word => word !== correctWord);
-  const unique = Array.from(new Set(filtered)).sort(() => 0.5 - Math.random()).slice(0, 3);
-  return [...unique, correctWord].sort(() => 0.5 - Math.random());
+  return html;
 }
 
 function createBlankWithOptions(blankId, correctWord, options) {
@@ -133,3 +124,13 @@ function createBlankWithOptions(blankId, correctWord, options) {
       </span>
     `;
   }
+
+function generateOptions(correctWord) {
+  const allWords = vocabData.flatMap(entry => 
+    [entry["Meaning"], entry["Usage"]].join(" ").match(/\b\w+\b/g) || []
+  );
+  const filtered = allWords.filter(word => word !== correctWord);
+  const shuffled = filtered.sort(() => 0.5 - Math.random());
+  const unique = Array.from(new Set(shuffled)).slice(0, 3);
+  return [...unique, correctWord].sort(() => 0.5 - Math.random());
+}
