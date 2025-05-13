@@ -66,7 +66,8 @@ for (const cellAddress in worksheet) {
 	  cellText: true,
 	  cellHTML: false
 	});
-	
+  
+  window.vocabData = allData;
   renderTable(allData);
   console.log("Final parsed data:", allData);
   console.log("Workbook:", workbook); // Now it can access the variable correctly
