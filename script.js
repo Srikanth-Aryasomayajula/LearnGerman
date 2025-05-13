@@ -183,6 +183,10 @@ function showFlashcard(row) {
   const card = document.createElement("div");
   card.className = "flashcard";
 
+  // Create a table to hold content
+  const table = document.createElement("table");
+  table.className = "flashcard-table";
+
   const columns = [
     "Level",
     "Article, Word and Plural",
@@ -198,48 +202,58 @@ function showFlashcard(row) {
     "Example statement with the preposition"
   ];
 
-  card.innerHTML = columns.map(col => `
-    <p><strong>${col}:</strong> ${row[col] || "-"}</p>
-  `).join("");
+  columns.forEach(col => {
+    const value = row[col]?.trim();
+    if (value && value !== "-") {
+      const tr = document.createElement("tr");
 
+      const th = document.createElement("th");
+      th.textContent = col;
+
+      const td = document.createElement("td");
+      td.textContent = value;
+
+      tr.appendChild(th);
+      tr.appendChild(td);
+      table.appendChild(tr);
+    }
+  });
+
+  card.appendChild(table);
   flashcardContainer.appendChild(card);
 
-  // --- Progress Text ---
+  // Progress indicator
   const progress = document.createElement("p");
-  progress.className = "progress-indicator";
+  progress.className = "flashcard-progress";
   progress.textContent = `Card ${currentFlashcardIndex + 1} of ${shuffledFlashcards.length}`;
   flashcardContainer.appendChild(progress);
 
-  // --- Navigation Buttons ---
+  // Button wrapper
   const buttonWrapper = document.createElement("div");
   buttonWrapper.className = "button-wrapper";
 
-  // Previous Button
   const prevBtn = document.createElement("button");
   prevBtn.textContent = "Previous";
   prevBtn.style.display = currentFlashcardIndex === 0 ? "none" : "inline-block";
-  prevBtn.disabled = currentFlashcardIndex === 0; // Disable if first card
   prevBtn.addEventListener("click", () => {
     if (currentFlashcardIndex > 0) {
       currentFlashcardIndex--;
       showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
     } else {
-	    prevBtn.style.display = "none"; // Hide the button
-	  }
+      prevBtn.style.display = "none";
+    }
   });
 
-  // Next Button
   const nextBtn = document.createElement("button");
   nextBtn.textContent = "Next";
   nextBtn.style.display = currentFlashcardIndex === shuffledFlashcards.length - 1 ? "none" : "inline-block";
-  nextBtn.disabled = currentFlashcardIndex === shuffledFlashcards.length - 1; // Disable if last card
   nextBtn.addEventListener("click", () => {
     if (currentFlashcardIndex < shuffledFlashcards.length - 1) {
       currentFlashcardIndex++;
       showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
     } else {
-	    nextBtn.style.display = "none"; // Hide the button
-	  }
+      nextBtn.style.display = "none";
+    }
   });
 
   buttonWrapper.appendChild(prevBtn);
