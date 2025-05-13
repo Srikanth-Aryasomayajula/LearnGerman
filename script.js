@@ -87,11 +87,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  // Display the table when the button is clicked
-  displayTableBtn.addEventListener("click", () => {
-    const table = document.getElementById("vocabTable");
-    table.style.display = "table"; // Show the table when display button is clicked
-  });
+	// Display the table when the button is clicked
+	displayTableBtn.addEventListener("click", () => {
+	  if (selectedLevels.length !== 0) {  
+	    const table = document.getElementById("vocabTable");
+	    table.style.display = "table"; // Show the table when display button is clicked
+	  } else {
+	    alert("Please select the level");
+	  }
+	});
 
   // Clear selection
   clearBtn.addEventListener("click", () => {
