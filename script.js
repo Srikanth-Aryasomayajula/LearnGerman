@@ -24,10 +24,10 @@ fetch("Vocabulary.xlsx")
   const workbook = XLSX.read(arrayBuffer, {
     type: "array",
     codepage: 65001,
-    WTF: true // Add this here
+    WTF: true
   });
 
-  // Manually fix: Replace all 'φ' with 'ß'
+  // Manually fix: Replace all 'ø' with 'ß'
   if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
     workbook.Strings.forEach(entry => {
       if (entry.t && typeof entry.t === "string") {
@@ -35,24 +35,42 @@ fetch("Vocabulary.xlsx")
       }
     });
   }
-	
-  console.log("Workbook:", workbook); // Now it can access the variable correctly
-	
+
+  console.log("Workbook:", workbook); 
+
   const worksheet = workbook.Sheets[SHEET_NAME];
   if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-  
 
-	allData = XLSX.utils.sheet_to_json(worksheet, {
-	  defval: "",
-	  raw: false,     // Ensure text is parsed
-	  rawNumbers: false,	  // Ensure rich-text HTML isn't used // This prevents it from using `h` field if present
-	  cellText: true,
-	  cellHTML: false
-	});
-	
+  // Custom function to parse each cell ensuring `t` is used
+  function parseRow(row) {
+    const parsedRow = {};
+    for (const key in row) {
+      if (row[key] && row[key].t) {
+        // Use the `t` field for plain text, fall back to `h` if needed
+        parsedRow[key] = row[key].t || row[key].h || "";
+      } else {
+        parsedRow[key] = row[key];
+      }
+    }
+    return parsedRow;
+  }
+
+  // Now parse and transform the sheet manually
+  const rows = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); // Get the raw rows as array
+  allData = rows.map(row => {
+    const parsedRow = {};
+    row.forEach((cell, index) => {
+      const header = worksheet["!ref"].split(":")[0];  // Get the column names (for the first row)
+      const key = header[index];
+      parsedRow[key] = cell;
+    });
+    return parsedRow;
+  });
+
+  // Now render the table
   renderTable(allData);
   console.log("Final parsed data:", allData);
-  console.log("Workbook:", workbook); // Now it can access the variable correctly
+  console.log("Workbook:", workbook);
 })
 
   .catch(error => {
