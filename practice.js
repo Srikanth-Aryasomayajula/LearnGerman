@@ -29,6 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderPracticeFlashcard(entry, vocabData) {
   practiceArea.innerHTML = "";
 
+  // Create wrapper
+  const wrapper = document.createElement("div");
+  wrapper.className = "button-wrapper"; // Wrap everything in here
+
+  // Create card
   const card = document.createElement("div");
   card.className = "flashcard";
 
@@ -81,14 +86,43 @@ function renderPracticeFlashcard(entry, vocabData) {
   });
 
   card.appendChild(table);
-  practiceArea.appendChild(card);
+  wrapper.appendChild(card); // Add card to wrapper
+
+  // Result display
+  const resultDisplay = document.createElement("div");
+  resultDisplay.id = "practiceResult";
+  resultDisplay.className = "flashcard-progress";
+  wrapper.appendChild(resultDisplay);
+
+  // Button row
+  const buttonRow = document.createElement("div");
+  buttonRow.style.display = "flex";
+  buttonRow.style.justifyContent = "center";
+  buttonRow.style.gap = "1rem";
+  buttonRow.style.marginTop = "1rem";
+
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "Previous";
+  prevBtn.className = "nav-button";
+  // Add logic later
 
   const submitBtn = document.createElement("button");
   submitBtn.textContent = "Submit";
   submitBtn.id = "submitAnswers";
-  submitBtn.style.marginTop = "1rem";
-  practiceArea.appendChild(submitBtn);
 
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "Next";
+  nextBtn.className = "nav-button";
+  // Add logic later
+
+  buttonRow.appendChild(prevBtn);
+  buttonRow.appendChild(submitBtn);
+  buttonRow.appendChild(nextBtn);
+  wrapper.appendChild(buttonRow);
+
+  practiceArea.appendChild(wrapper); // Add everything to the page
+
+  // Submission logic
   submitBtn.addEventListener("click", () => {
     const selected = document.querySelectorAll("input[type='radio']:checked");
     let correct = 0;
@@ -98,16 +132,7 @@ function renderPracticeFlashcard(entry, vocabData) {
     });
 
     const total = document.querySelectorAll("input[type='radio']").length / 4;
-
-    let resultDisplay = document.getElementById("practiceResult");
-    if (!resultDisplay) {
-      resultDisplay = document.createElement("div");
-      resultDisplay.id = "practiceResult";
-      resultDisplay.className = "flashcard-progress";
-      practiceArea.appendChild(resultDisplay);
-    }
     resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
-    
   });
 }
 
