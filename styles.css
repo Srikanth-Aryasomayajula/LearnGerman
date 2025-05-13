@@ -301,3 +301,56 @@ body {
   margin-top: 0.5rem;
   font-weight: bold;
 }
+
+#sourceSelector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 20px;
+}
+
+.checkbox-row {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.checkbox-row label {
+  font-size: 1.2rem;
+  margin: 5px;
+}
+
+.loadPracticeBtn {
+  padding: 8px 18px;
+  background-color: #2563eb;
+  color: white;
+  border: 1px solid #2563eb;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.loadPracticeBtn:hover {
+  background-color: #1e40af;
+  border-color: #1e40af;
+}
+
+
+
+.blank-group {
+  display: inline-block;
+  margin: 0 5px;
+}
+.blank-group label {
+  display: block;
+  margin: 2px 0;
+}
+.practice-card {
+  padding: 1rem;
+  background: #f4f4f4;
+  border-radius: 5px;
+  margin-top: 1rem;
+}
