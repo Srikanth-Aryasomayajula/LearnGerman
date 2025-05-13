@@ -336,7 +336,23 @@ body {
   border-color: #1e40af;
 }
 
+.blank-line {
+  display: inline-block;
+  border-bottom: 1px solid #000;
+  min-width: 60px;
+  margin-right: 10px;
+}
 
+.option-group {
+  margin: 5px 0 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.option-group label {
+  cursor: pointer;
+}
 
 .blank-group {
   display: inline-block;
