@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
       practiceArea.innerHTML = "No data loaded.";
     }
   });
-
+});
 function renderPracticeFlashcard(entry) {
   practiceArea.innerHTML = "";
 
