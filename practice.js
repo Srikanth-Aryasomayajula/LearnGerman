@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .map(cb => cb.value);
 
     if (selected.length === 0) {
-      alert("Please select at least one source.");
+      alert("Please select at least one topic.");
       return;
     }
 
