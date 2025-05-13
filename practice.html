@@ -20,15 +20,17 @@
 
   <main class="main-content">
     <h1 class="main-title">Üben</h1>
+	<!-- Dummy element to prevent script.js from crashing -->
+	<div id="dropdownOptions" style="display: none;"></div>
 	
 	<div id="sourceSelector">
-	  <div class="checkbox-row">
+	<div class="checkbox-row">
 		<label><input type="checkbox" value="Vokabular" /> Vokabular</label>
 		<label><input type="checkbox" value="Grammatik" /> Grammatik</label>
 		<label><input type="checkbox" value="Maschinenbau" /> Maschinenbau</label>
 		<label><input type="checkbox" value="Führerschein" /> Führerschein</label>
-	  </div>
-	  <button id="loadPracticeBtn" class="loadPracticeBtn">Start Practice</button>
+	</div>
+		<button id="loadPracticeBtn" class="loadPracticeBtn">Start Practice</button>
 	</div>
     
 	<div id="practiceArea"></div>
