@@ -35,6 +35,15 @@ fetch("Vocabulary.xlsx")
     console.error(error);
   });
 
+// Step 1: Add Debug Logging
+const workbook = XLSX.read(arrayBuffer, {
+  type: "array",
+  codepage: 65001, // You can keep this
+  WTF: true        // Enables verbose output and warnings
+});
+console.log("Workbook:", workbook);
+
+	
 	
   // Toggle dropdown visibility
   dropdownHeader.addEventListener("click", () => {
