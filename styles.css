@@ -274,3 +274,29 @@ body {
   font-weight: bold;
   font-size: 1rem;
 }
+
+.flashcard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.flashcard-table th,
+.flashcard-table td {
+  padding: 0.5rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #ddd;
+}
+
+.flashcard-table th {
+  width: 30%;
+  font-weight: 600;
+  color: #333;
+}
+
+.flashcard-progress {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
