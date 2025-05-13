@@ -207,6 +207,10 @@ function showFlashcard(row) {
 
   // Create a container for both buttons
   const buttonWrapper = document.createElement("div");
+  buttonWrapper.style.display = "flex";
+  buttonWrapper.style.justifyContent = "center";
+  buttonWrapper.style.gap = "1rem";
+  buttonWrapper.style.marginTop = "1rem";
 
 // Create Previous button
 const prevBtn = document.createElement("button");
