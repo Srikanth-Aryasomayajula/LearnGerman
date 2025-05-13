@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkboxes = document.querySelectorAll("#sourceSelector input[type='checkbox']");
   const practiceArea = document.getElementById("practiceArea");
 
+  let filteredData = [];
+  let currentIndex = 0;
+
   loadButton.addEventListener("click", () => {
     const selected = Array.from(checkboxes)
       .filter(cb => cb.checked)
@@ -13,164 +16,157 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Access data from script.js
     const vocabData = window.vocabData || [];
-    console.log(vocabData);
-    const filtered = vocabData.filter(row => selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()));
+    filteredData = vocabData.filter(row =>
+      selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
+    );
 
-    if (filtered.length > 0) {
-      renderPracticeFlashcard(filtered[0], vocabData); // Show one for now
+    if (filteredData.length > 0) {
+      currentIndex = 0;
+      renderPracticeFlashcard(filteredData[currentIndex]);
     } else {
       practiceArea.innerHTML = "No data loaded.";
     }
   });
-});
 
-function renderPracticeFlashcard(entry, vocabData) {
-  practiceArea.innerHTML = "";
+  function renderPracticeFlashcard(entry) {
+    practiceArea.innerHTML = "";
 
-  // Create wrapper
-  const wrapper = document.createElement("div");
-  wrapper.className = "button-wrapper"; // Wrap everything in here
+    const wrapper = document.createElement("div");
+    wrapper.className = "button-wrapper";
 
-  // Create card
-  const card = document.createElement("div");
-  card.className = "flashcard";
+    const card = document.createElement("div");
+    card.className = "flashcard";
 
-  const table = document.createElement("table");
-  table.className = "flashcard-table";
+    const table = document.createElement("table");
+    table.className = "flashcard-table";
 
-  const columns = [
-    "Level",
-    "Article, Word and Plural",
-    "Part of Speech",
-    "Meaning",
-    "Usage",
-    "Past (Präteritum)",
-    "Perfect (Partizip II)",
-    "Plusquamperfekt",
-    "Futur I",
-    "Futur II",
-    "Prepositions that go together with the verb/Noun/Adj.",
-    "Example statement with the preposition"
-  ];
+    const columns = [
+      "Level",
+      "Article, Word and Plural",
+      "Part of Speech",
+      "Meaning",
+      "Usage",
+      "Past (Präteritum)",
+      "Perfect (Partizip II)",
+      "Plusquamperfekt",
+      "Futur I",
+      "Futur II",
+      "Prepositions that go together with the verb/Noun/Adj.",
+      "Example statement with the preposition"
+    ];
 
-  columns.forEach(col => {
-    const value = entry[col]?.trim();
-    if (value && value !== "-") {
-      const tr = document.createElement("tr");
-      const th = document.createElement("th");
-      th.textContent = col;
+    columns.forEach(col => {
+      const value = entry[col]?.trim();
+      if (value && value !== "-") {
+        const tr = document.createElement("tr");
+        const th = document.createElement("th");
+        th.textContent = col;
+        const td = document.createElement("td");
 
-      const td = document.createElement("td");
+        if (col === "Meaning" || col === "Usage") {
+          const words = value.split(/\s+/);
+          const randomIndex = Math.floor(Math.random() * words.length);
+          const correctWord = words[randomIndex];
+          const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+          const options = generateOptions(correctWord, window.vocabData || [], col);
 
-      if (col === "Meaning" || col === "Usage") {
-        const words = value.split(/\s+/);
-        const randomIndex = Math.floor(Math.random() * words.length);
-        const correctWord = words[randomIndex];
-        const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
-        const options = generateOptions(correctWord, vocabData, col);
-        
-        words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
-        const sentenceWithBlank = words.join(" ");
-        
-        td.innerHTML = `${sentenceWithBlank}<br>${createOptionsHTML(blankId, correctWord, options)}`;
-      } else {
-        td.innerHTML = value.replace(/\r?\n/g, "<br>");
+          words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+          const sentenceWithBlank = words.join(" ");
+          td.innerHTML = `${sentenceWithBlank}<br>${createOptionsHTML(blankId, correctWord, options)}`;
+        } else {
+          td.innerHTML = value.replace(/\r?\n/g, "<br>");
+        }
+
+        tr.appendChild(th);
+        tr.appendChild(td);
+        table.appendChild(tr);
       }
-
-      tr.appendChild(th);
-      tr.appendChild(td);
-      table.appendChild(tr);
-    }
-  });
-
-  card.appendChild(table);
-  wrapper.appendChild(card); // Add card to wrapper
-
-  // Result display
-  const resultDisplay = document.createElement("div");
-  resultDisplay.id = "practiceResult";
-  resultDisplay.className = "flashcard-progress";
-  wrapper.appendChild(resultDisplay);
-
-  // Button row
-  const buttonRow = document.createElement("div");
-  buttonRow.style.display = "flex";
-  buttonRow.style.justifyContent = "center";
-  buttonRow.style.gap = "1rem";
-  buttonRow.style.marginTop = "1rem";
-
-  const prevBtn = document.createElement("button");
-  prevBtn.textContent = "Previous";
-  prevBtn.className = "nav-button";
-  // Add logic later
-
-  const submitBtn = document.createElement("button");
-  submitBtn.textContent = "Submit";
-  submitBtn.id = "submitAnswers";
-
-  const nextBtn = document.createElement("button");
-  nextBtn.textContent = "Next";
-  nextBtn.className = "nav-button";
-  // Add logic later
-
-  buttonRow.appendChild(prevBtn);
-  buttonRow.appendChild(submitBtn);
-  buttonRow.appendChild(nextBtn);
-  wrapper.appendChild(buttonRow);
-
-  practiceArea.appendChild(wrapper); // Add everything to the page
-
-  // Submission logic
-  submitBtn.addEventListener("click", () => {
-    const selected = document.querySelectorAll("input[type='radio']:checked");
-    let correct = 0;
-
-    selected.forEach(input => {
-      if (input.dataset.correct === "true") correct++;
     });
 
-    const total = document.querySelectorAll("input[type='radio']").length / 4;
-    resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
-  });
-}
+    card.appendChild(table);
+    wrapper.appendChild(card);
 
-function createBlankHTML(blankId, correctWord, options) {
-  return `
-    <span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <br>
-    <div class="option-group">
-      ${options.map(opt => `
-        <label>
-          <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}">
-          ${opt}
-        </label>
-      `).join("")}
-    </div>
-  `;
-}
+    const resultDisplay = document.createElement("div");
+    resultDisplay.id = "practiceResult";
+    resultDisplay.className = "flashcard-progress";
+    wrapper.appendChild(resultDisplay);
 
-function generateOptions(correctWord, vocabData, column) {
-  const wordsFromSameColumn = vocabData
-    .map(entry => entry[column])                // get values from that column
-    .filter(value => value && value !== "-")    // skip empty or dash
-    .flatMap(value => value.match(/\b([\wäöüÄÖÜß]+)\b/g) || []) // extract words
-    .filter(word => word !== correctWord);      // exclude the correct word
+    const buttonRow = document.createElement("div");
+    buttonRow.className = "button-wrapper";
 
-  const unique = Array.from(new Set(wordsFromSameColumn)).sort(() => 0.5 - Math.random()).slice(0, 3);
-  return [...unique, correctWord].sort(() => 0.5 - Math.random());
-}
+    const prevBtn = document.createElement("button");
+    prevBtn.textContent = "Previous";
+    prevBtn.className = "nav-button";
+    prevBtn.style.display = "none";
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderPracticeFlashcard(filteredData[currentIndex]);
+      }
+    });
 
-function createOptionsHTML(blankId, correctWord, options) {
-  return `
-    <div class="option-group">
-      ${options.map(opt => `
-        <label>
-          <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}">
-          ${opt}
-        </label>
-      `).join("")}
-    </div>
-  `;
-}
+    const submitBtn = document.createElement("button");
+    submitBtn.textContent = "Submit";
+    submitBtn.id = "submitAnswers";
+
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next";
+    nextBtn.className = "nav-button";
+    nextBtn.style.display = "none";
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < filteredData.length - 1) {
+        currentIndex++;
+        renderPracticeFlashcard(filteredData[currentIndex]);
+      }
+    });
+
+    buttonRow.appendChild(prevBtn);
+    buttonRow.appendChild(submitBtn);
+    buttonRow.appendChild(nextBtn);
+    wrapper.appendChild(buttonRow);
+
+    practiceArea.appendChild(wrapper);
+
+    // Submission logic
+    submitBtn.addEventListener("click", () => {
+      const selected = document.querySelectorAll("input[type='radio']:checked");
+      let correct = 0;
+
+      selected.forEach(input => {
+        if (input.dataset.correct === "true") correct++;
+      });
+
+      const total = document.querySelectorAll("input[type='radio']").length / 4;
+      resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
+
+      submitBtn.style.display = "none";
+      if (currentIndex > 0) prevBtn.style.display = "inline-block";
+      if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
+    });
+  }
+
+  function generateOptions(correctWord, vocabData, column) {
+    const wordsFromSameColumn = vocabData
+      .map(entry => entry[column])
+      .filter(value => value && value !== "-")
+      .flatMap(value => value.match(/\b([\wäöüÄÖÜß]+)\b/g) || [])
+      .filter(word => word !== correctWord);
+
+    const unique = Array.from(new Set(wordsFromSameColumn)).sort(() => 0.5 - Math.random()).slice(0, 3);
+    return [...unique, correctWord].sort(() => 0.5 - Math.random());
+  }
+
+  function createOptionsHTML(blankId, correctWord, options) {
+    return `
+      <div class="option-group">
+        ${options.map(opt => `
+          <label>
+            <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}">
+            ${opt}
+          </label>
+        `).join("")}
+      </div>
+    `;
+  }
+});
