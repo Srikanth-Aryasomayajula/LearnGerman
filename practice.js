@@ -29,108 +29,101 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  function renderLevelSelector(data) {
-    practiceArea.innerHTML = "";
+function renderLevelSelector(data) {
+  const dropdownHeader = document.getElementById("dropdownHeader");
+  const dropdownOptions = document.getElementById("dropdownOptions");
+  const startButton = document.getElementById("startPracticeBtn");
+  let checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
 
-    const levelSelectorStartWrapper = document.createElement("div");
-    levelSelectorStartWrapper.className = "dropdown-buttons";
-    
-    const dropdownWrapper = document.createElement("div");
-    dropdownWrapper.className = "custom-dropdown";
+  // Extract unique levels
+  const levels = [...new Set(data.map(row => (row["Level"] || "").trim()).filter(Boolean))].sort();
 
-    levelSelectorStartWrapper.appendChild(dropdownWrapper);
-    
-    const dropdownHeader = document.createElement("div");
-    dropdownHeader.id = "dropdownHeader";
-    dropdownHeader.className = "dropdown-header";
-    dropdownHeader.textContent = "Select Level(s)";
-    levelSelectorStartWrapper.appendChild(dropdownHeader);
+  // Clear existing checkboxes and rebuild
+  dropdownOptions.innerHTML = "";
 
-    const dropdownOptions = document.createElement("div");
-    dropdownOptions.id = "dropdownOptions";
-    dropdownOptions.className = "dropdown-options hidden";
+  const allLabel = document.createElement("label");
+  const allCheckbox = document.createElement("input");
+  allCheckbox.type = "checkbox";
+  allCheckbox.value = "all";
+  allLabel.appendChild(allCheckbox);
+  allLabel.appendChild(document.createTextNode("All"));
+  dropdownOptions.appendChild(allLabel);
 
-    const levels = [...new Set(data.map(row => (row["Level"] || "").trim()).filter(Boolean))].sort();
-    levels.unshift("all");
+  levels.forEach(level => {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.value = level;
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(level));
+    dropdownOptions.appendChild(label);
+  });
 
-    levels.forEach(level => {
-      const label = document.createElement("label");
-      const input = document.createElement("input");
-      input.type = "checkbox";
-      input.value = level;
-      label.appendChild(input);
-      label.appendChild(document.createTextNode(level === "all" ? "All" : level));
-      dropdownOptions.appendChild(label);
-    });
+  // Re-query after building checkboxes
+  checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
 
-    levelSelectorStartWrapper.appendChild(dropdownOptions);
-    practiceArea.appendChild(levelSelectorStartWrapper);
+  let selectedLevels = [];
 
-    const startButton = document.createElement("button");
-    startButton.textContent = "Start";
-    startButton.className = "loadPracticeBtn";
-    practiceArea.appendChild(startButton);
+  // Toggle dropdown visibility
+  dropdownHeader.addEventListener("click", () => {
+    dropdownOptions.classList.toggle("hidden");
+  });
 
-    // Toggle dropdown
-    dropdownHeader.addEventListener("click", () => {
-      dropdownOptions.classList.toggle("hidden");
-    });
+  // Close dropdown if clicked outside
+  document.addEventListener("click", (e) => {
+    if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
+      dropdownOptions.classList.add("hidden");
+    }
+  });
 
-    document.addEventListener("click", (e) => {
-      if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
-        dropdownOptions.classList.add("hidden");
-      }
-    });
+  // Handle checkbox logic
+  checkboxes.forEach(cb => {
+    cb.addEventListener("change", () => {
+      const isAllBox = cb.value === "all";
+      const individualCheckboxes = Array.from(checkboxes).slice(1);
 
-    // Handle checkbox logic
-    const levelCheckboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
-    levelCheckboxes.forEach(cb => {
-      cb.addEventListener("change", () => {
-        const isAll = cb.value === "all";
-        const rest = Array.from(levelCheckboxes).slice(1);
-
-        if (isAll) {
-          const allChecked = rest.every(c => c.checked);
-          levelCheckboxes.forEach(c => c.checked = !allChecked);
-        } else {
-          if (!cb.checked && levelCheckboxes[0].checked) {
-            levelCheckboxes[0].checked = false;
-          } else {
-            const allNow = rest.every(c => c.checked);
-            levelCheckboxes[0].checked = allNow;
-          }
-        }
-
-        selectedLevels = Array.from(levelCheckboxes)
-          .filter(c => c.checked)
-          .map(c => c.value)
-          .filter(l => l !== "all");
-
-        dropdownHeader.textContent = selectedLevels.length
-          ? selectedLevels.join(", ")
-          : "Select Level(s)";
-      });
-    });
-
-    // Start flashcards
-    startButton.addEventListener("click", () => {
-      if (selectedLevels.length === 0) {
-        alert("Please select at least one level.");
-        return;
-      }
-
-      const levelFiltered = filteredData.filter(row =>
-        selectedLevels.includes((row["Level"] || "").trim())
-      );
-
-      if (levelFiltered.length === 0) {
-        practiceArea.innerHTML = "No flashcards match your selection.";
+      if (isAllBox) {
+        const allChecked = individualCheckboxes.every(c => c.checked);
+        checkboxes.forEach(c => c.checked = !allChecked);
       } else {
-        currentIndex = 0;
-        renderPracticeFlashcard(levelFiltered[currentIndex], levelFiltered);
+        if (!cb.checked && checkboxes[0].checked) {
+          checkboxes[0].checked = false;
+        } else {
+          const allSelected = individualCheckboxes.every(c => c.checked);
+          checkboxes[0].checked = allSelected;
+        }
       }
+
+      selectedLevels = Array.from(checkboxes)
+        .filter(c => c.checked && c.value !== "all")
+        .map(c => c.value);
+
+      dropdownHeader.textContent = selectedLevels.length === 0
+        ? "Select Level(s)"
+        : (selectedLevels.length === individualCheckboxes.length ? "All" : selectedLevels.join(", "));
     });
-  }
+  });
+
+  // Start flashcards
+  startButton.addEventListener("click", () => {
+    if (selectedLevels.length === 0) {
+      alert("Please select at least one level.");
+      return;
+    }
+
+    const levelFiltered = filteredData.filter(row =>
+      selectedLevels.includes((row["Level"] || "").trim())
+    );
+
+    const practiceArea = document.getElementById("practiceArea");
+    if (levelFiltered.length === 0) {
+      practiceArea.innerHTML = "No flashcards match your selection.";
+    } else {
+      currentIndex = 0;
+      renderPracticeFlashcard(levelFiltered[currentIndex], levelFiltered);
+    }
+  });
+}
 
   function renderPracticeFlashcard(entry, dataArray) {
     practiceArea.innerHTML = "";
