@@ -10,28 +10,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
   const clearBtn = document.getElementById("clearSelection");
   const displayTableBtn = document.getElementById("displayTableBtn");
-	const SHEET_NAME = "Vokabular";
-	let allData = [];
-	
-	// Fetch and parse Excel
-	fetch("Vocabulary.xlsx")
-	  .then(response => {
-	    if (!response.ok) throw new Error("Failed to load Excel file.");
-	    return response.arrayBuffer();
-	  })
-	  .then(arrayBuffer => {
-	    const workbook = XLSX.read(arrayBuffer, {
-	      type: "array",
-	      codepage: 65001 // UTF-8 explicitly (not required, but reinforces intent)
-	    });
-	    const worksheet = workbook.Sheets[SHEET_NAME];
-	    if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-	    allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-	  })
-	  .catch(error => {
-	    tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-	    console.error(error);
-	  });
+  const SHEET_NAME = "Vokabular";
+  let allData = [];
+
+  // Fetch and parse Excel
+  fetch("Vocabulary.xlsx")
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to load Excel file.");
+      return response.arrayBuffer();
+    })
+    .then(arrayBuffer => {
+      const workbook = XLSX.read(arrayBuffer, { type: "array" });
+      const worksheet = workbook.Sheets[SHEET_NAME];
+      if (!worksheet) throw new Error(Sheet "${SHEET_NAME}" not found.);
+      allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+    })
+    .catch(error => {
+      tableBody.innerHTML = <tr><td colspan="12">Error loading data: ${error.message}</td></tr>;
+      console.error(error);
+    });
 	
 		
   // Toggle dropdown visibility
