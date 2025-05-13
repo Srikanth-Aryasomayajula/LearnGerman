@@ -32,6 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderPracticeFlashcard(entry) {
     practiceArea.innerHTML = "";
 
+    const container = document.createElement("div");
+    container.className = "flashcard-container";
+    
     const wrapper = document.createElement("div");
     wrapper.className = "button-wrapper";
 
@@ -85,12 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     card.appendChild(table);
-    wrapper.appendChild(card);
+    container.appendChild(card);
 
     const resultDisplay = document.createElement("div");
     resultDisplay.id = "practiceResult";
     resultDisplay.className = "flashcard-progress";
-    wrapper.appendChild(resultDisplay);
+    container.appendChild(resultDisplay);
 
     const buttonRow = document.createElement("div");
     buttonRow.className = "button-wrapper";
@@ -124,9 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
     buttonRow.appendChild(prevBtn);
     buttonRow.appendChild(submitBtn);
     buttonRow.appendChild(nextBtn);
-    wrapper.appendChild(buttonRow);
-
-    practiceArea.appendChild(wrapper);
+    container.appendChild(buttonRow);
+    
+    practiceArea.innerHTML = "";
+    practiceArea.appendChild(container);
 
     // Submission logic
     submitBtn.addEventListener("click", () => {
