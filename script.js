@@ -45,9 +45,7 @@ fetch("Vocabulary.xlsx")
 	allData = XLSX.utils.sheet_to_json(worksheet, {
 	  defval: "",
 	  raw: false,     // Ensure text is parsed
-	  rawNumbers: false,
-	  // 👇 Ensure rich-text HTML isn't used
-	  // This prevents it from using `h` field if present
+	  rawNumbers: false,	  // Ensure rich-text HTML isn't used // This prevents it from using `h` field if present
 	  cellText: true,
 	  cellHTML: false
 	});
