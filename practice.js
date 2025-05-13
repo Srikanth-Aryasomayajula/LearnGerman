@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let filteredData = [];
   let currentIndex = 0;
+  let selectedLevel = null;
 
   loadButton.addEventListener("click", () => {
     const selected = Array.from(checkboxes)
@@ -21,13 +22,59 @@ document.addEventListener("DOMContentLoaded", () => {
       selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
     );
 
-    if (filteredData.length > 0) {
+    if (filteredData.length === 0) {
+      practiceArea.innerHTML = "No data loaded.";
+      return;
+    }
+
+    // If Vokabular is selected, show level selector
+    if (selected.includes("Vokabular")) {
+      const levels = Array.from(new Set(filteredData
+        .map(row => row["Level"])
+        .filter(Boolean)
+        .map(level => level.trim())
+      )).sort();
+
+      showLevelSelector(levels);
+    } else {
       currentIndex = 0;
       renderPracticeFlashcard(filteredData[currentIndex]);
-    } else {
-      practiceArea.innerHTML = "No data loaded.";
     }
   });
+
+  function showLevelSelector(levels) {
+    practiceArea.innerHTML = "";
+
+    const levelBox = document.createElement("div");
+    levelBox.className = "level-selector";
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Select a Level:";
+    levelBox.appendChild(heading);
+
+    const select = document.createElement("select");
+    select.id = "levelDropdown";
+    select.innerHTML = levels.map(lvl => `<option value="${lvl}">${lvl}</option>`).join("");
+    levelBox.appendChild(select);
+
+    const startBtn = document.createElement("button");
+    startBtn.textContent = "Start Practice";
+    startBtn.addEventListener("click", () => {
+      selectedLevel = select.value;
+      const levelFiltered = filteredData.filter(row => row["Level"]?.trim() === selectedLevel);
+
+      if (levelFiltered.length === 0) {
+        practiceArea.innerHTML = "No words found for selected level.";
+      } else {
+        filteredData = levelFiltered;
+        currentIndex = 0;
+        renderPracticeFlashcard(filteredData[currentIndex]);
+      }
+    });
+
+    levelBox.appendChild(startBtn);
+    practiceArea.appendChild(levelBox);
+  }
 
   function renderPracticeFlashcard(entry) {
     practiceArea.innerHTML = "";
