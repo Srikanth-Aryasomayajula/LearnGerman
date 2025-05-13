@@ -41,7 +41,17 @@ fetch("Vocabulary.xlsx")
   const worksheet = workbook.Sheets[SHEET_NAME];
   if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
   
-  allData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+	allData = XLSX.utils.sheet_to_json(worksheet, {
+	  defval: "",
+	  raw: false,     // Ensure text is parsed
+	  rawNumbers: false,
+	  // 👇 Ensure rich-text HTML isn't used
+	  // This prevents it from using `h` field if present
+	  cellText: true,
+	  cellHTML: false
+	});
+	
   renderTable(allData);
   console.log("Final parsed data:", allData);
   console.log("Workbook:", workbook); // Now it can access the variable correctly
