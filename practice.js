@@ -63,7 +63,7 @@ function renderPracticeFlashcard(entry, vocabData) {
         const processed = value.replace(/\b([\wäöüÄÖÜß]+)\b/g, (match) => {
           if (Math.random() > 0.8) {
             const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
-            const options = generateOptions(match, vocabData);
+            const options = generateOptions(match, vocabData, col); // Pass the column
             return createBlankHTML(blankId, match, options);
           }
           return match;
@@ -115,11 +115,14 @@ function createBlankHTML(blankId, correctWord, options) {
   `;
 }
 
-function generateOptions(correctWord, vocabData) {
-  const allWords = vocabData.flatMap(entry => 
-    [entry["Meaning"], entry["Usage"]].join(" ").match(/\b([\wäöüÄÖÜß]+)\b/g) || []
-  );
-  const filtered = allWords.filter(word => word !== correctWord);
-  const unique = Array.from(new Set(filtered)).sort(() => 0.5 - Math.random()).slice(0, 3);
+function generateOptions(correctWord, vocabData, column) {
+  const wordsFromSameColumn = vocabData
+    .map(entry => entry[column])                // get values from that column
+    .filter(value => value && value !== "-")    // skip empty or dash
+    .flatMap(value => value.match(/\b([\wäöüÄÖÜß]+)\b/g) || []) // extract words
+    .filter(word => word !== correctWord);      // exclude the correct word
+
+  const unique = Array.from(new Set(wordsFromSameColumn)).sort(() => 0.5 - Math.random()).slice(0, 3);
   return [...unique, correctWord].sort(() => 0.5 - Math.random());
 }
+
