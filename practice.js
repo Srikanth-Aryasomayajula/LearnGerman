@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkboxes = document.querySelectorAll("#sourceSelector input[type='checkbox']");
   const practiceArea = document.getElementById("practiceArea");
 
-  loadButton.addEventListener("click", async () => {
+  loadButton.addEventListener("click", () => {
     const selected = Array.from(checkboxes)
       .filter(cb => cb.checked)
       .map(cb => cb.value);
@@ -13,26 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Load and parse selected files
-    let allFlashcardData = [];
+    // Access data from script.js
+    const vocabData = window.vocabData || [];
+    const filtered = vocabData.filter(row => selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()));
 
-    for (const sheetName of selected) {
-      try {
-        const response = await fetch(`${sheetName}.xlsx`);
-        const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: "array", codepage: 65001 });
-        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-
-        const parsedData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-        allFlashcardData.push(...parsedData);
-      } catch (err) {
-        console.error(`Error loading ${sheetName}:`, err);
-      }
-    }
-
-    // Show one flashcard for now
-    if (allFlashcardData.length > 0) {
-      renderPracticeFlashcard(allFlashcardData[0]); // Later: random or shuffle
+    if (filtered.length > 0) {
+      renderPracticeFlashcard(filtered[0]); // Show one for now
     } else {
       practiceArea.innerHTML = "No data loaded.";
     }
@@ -45,10 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
     container.className = "practice-card";
 
     const questionText = (entry["Usage"] || "").replace(/\b(\w+)\b/g, (match, word) => {
-      // Example: only replace known target words (simplified for now)
       if (Math.random() > 0.8) { // randomly create blanks
         const blankId = `blank_${Math.random().toString(36).substring(2, 8)}`;
-        const options = generateOptions(word); // pick 5 words incl. correct
+        const options = generateOptions(word);
         return createBlankWithOptions(blankId, word, options);
       }
       return word;
@@ -83,6 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function generateOptions(correct) {
     const dummyWords = ["laufen", "machen", "essen", "lesen", "schreiben", "sehen", "haben"];
     const shuffled = [correct, ...dummyWords.filter(w => w !== correct).sort(() => 0.5 - Math.random()).slice(0, 4)];
-    return shuffled.sort(() => 0.5 - Math.random()); // Shuffle
+    return shuffled.sort(() => 0.5 - Math.random());
   }
 });
