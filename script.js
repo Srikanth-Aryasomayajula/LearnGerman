@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const tableViewRadio = document.getElementById("viewTable");
+  const flashcardViewRadio = document.getElementById("viewFlashcards");
+  const table = document.getElementById("vocabTable");
+  const flashcardContainer = document.getElementById("flashcardContainer");
+
   const tableBody = document.querySelector("#vocabTable tbody");
   const dropdownHeader = document.getElementById("dropdownHeader");
   const dropdownOptions = document.getElementById("dropdownOptions");
@@ -89,15 +94,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-	// Display the table when the button is clicked
+	// Display the table/Flashcards when the button is clicked
 	displayTableBtn.addEventListener("click", () => {
-	  if (selectedLevels.length !== 0) {
-	    const table = document.getElementById("vocabTable");
-	    table.style.display = "table";
-	  } else {
-	    alert("Please select the level");
+	  if (selectedLevels.length === 0) {
+		alert("Please select the level");
+		return;
+	  }
+
+	  if (tableViewRadio.checked) {
+		table.style.display = "table";
+		flashcardContainer.style.display = "none";
+	  } else if (flashcardViewRadio.checked) {
+		table.style.display = "none";
+		flashcardContainer.style.display = "block";
+		renderFlashcards(
+		  allData.filter(row => selectedLevels.includes((row["Level"] || "").trim()))
+		);
 	  }
 	});
+
 
 
   // Clear selection
@@ -142,4 +157,25 @@ document.addEventListener("DOMContentLoaded", () => {
       tableBody.appendChild(tr);
     }
   }
+  
+  function renderFlashcards(data) {
+  flashcardContainer.innerHTML = "";
+  if (data.length === 0) {
+    flashcardContainer.textContent = "No entries found for this level.";
+    return;
+  }
+
+  const shuffled = data.sort(() => 0.5 - Math.random());
+  shuffled.forEach(row => {
+    const card = document.createElement("div");
+    card.className = "flashcard";
+    card.innerHTML = `
+      <strong>${row["Article, Word and Plural"] || ""}</strong><br/>
+      <em>${row["Meaning"] || ""}</em><br/>
+      ${row["Example statement with the preposition"] || ""}
+    `;
+    flashcardContainer.appendChild(card);
+  });
+}
+
 });
