@@ -157,25 +157,64 @@ document.addEventListener("DOMContentLoaded", () => {
       tableBody.appendChild(tr);
     }
   }
-  
-  function renderFlashcards(data) {
+
+let shuffledFlashcards = [];
+let currentFlashcardIndex = 0;
+	
+function renderFlashcards(data) {
   flashcardContainer.innerHTML = "";
+
   if (data.length === 0) {
     flashcardContainer.textContent = "No entries found for this level.";
     return;
   }
 
-  const shuffled = data.sort(() => 0.5 - Math.random());
-  shuffled.forEach(row => {
-    const card = document.createElement("div");
-    card.className = "flashcard";
-    card.innerHTML = `
-      <strong>${row["Article, Word and Plural"] || ""}</strong><br/>
-      <em>${row["Meaning"] || ""}</em><br/>
-      ${row["Example statement with the preposition"] || ""}
-    `;
-    flashcardContainer.appendChild(card);
-  });
+  // Shuffle and reset index
+  shuffledFlashcards = data.sort(() => 0.5 - Math.random());
+  currentFlashcardIndex = 0;
+
+  showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
 }
 
+// Show one flashcard
+function showFlashcard(row) {
+  flashcardContainer.innerHTML = ""; // Clear container
+
+  const card = document.createElement("div");
+  card.className = "flashcard";
+
+  // Loop over columns
+  const columns = [
+    "Level",
+    "Article, Word and Plural",
+    "Part of Speech",
+    "Meaning",
+    "Usage",
+    "Past (Präteritum)",
+    "Perfect (Partizip II)",
+    "Plusquamperfekt",
+    "Futur I",
+    "Futur II",
+    "Prepositions that go together with the verb/Noun/Adj.",
+    "Example statement with the preposition"
+  ];
+
+  card.innerHTML = columns.map(col => `
+    <p><strong>${col}:</strong> ${row[col] || "-"}</p>
+  `).join("");
+
+  flashcardContainer.appendChild(card);
+
+  // Add "Next" button
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "Next";
+  nextBtn.style.marginTop = "1rem";
+  nextBtn.addEventListener("click", () => {
+    currentFlashcardIndex = (currentFlashcardIndex + 1) % shuffledFlashcards.length;
+    showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
+  });
+
+  flashcardContainer.appendChild(nextBtn);
+}
+	
 });
