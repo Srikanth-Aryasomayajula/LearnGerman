@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
-
   // Fetch and parse Excel
 fetch("Vocabulary.xlsx")
   .then(response => {
@@ -56,7 +55,6 @@ for (const cellAddress in worksheet) {
   }
 }
 
-
 	allData = XLSX.utils.sheet_to_json(worksheet, {
 	  defval: "",
 	  raw: false,     // Ensure text is parsed
@@ -69,8 +67,6 @@ for (const cellAddress in worksheet) {
   
   window.vocabData = allData;
   renderTable(allData);
-  console.log("Final parsed data:", allData);
-  console.log("Workbook:", workbook); // Now it can access the variable correctly
 })
 
   .catch(error => {
