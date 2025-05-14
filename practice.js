@@ -206,7 +206,7 @@ function renderPracticeFlashcard(entry) {
                     <span class="blank-line" style="display: inline-block; min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <br>${createOptionsHTML(blankId, prep, options)}
                   `;
-                }).join('<span style="margin: 0 10px;">,</span>');
+                }).join('<br>');
               
                 td.innerHTML = cellContent;
               } else {
