@@ -432,8 +432,9 @@ body {
     display: block;
   }
 
-   .menu-container {
-    display: none;
+  .menu-container {
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     top: 60px;
     right: 10px;
@@ -445,10 +446,14 @@ body {
     padding: 10px;
     z-index: 1000;
     min-width: 160px;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    transform: translateY(-10px);
   }
-
+  
   .menu-container.show-menu {
-    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .menu-button {
