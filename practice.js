@@ -282,10 +282,13 @@ function renderPracticeFlashcard(entry) {
     
         if (!isCorrect) {
           const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
-          const parentDiv = checked.closest("div"); // container of the option group
+          const parentDiv = (checked || correctInput).closest("div"); // works for both blank and incorrect
           const existing = parentDiv.querySelector(".correct-combo");
         
           if (!existing) {
+            // Ensure parent allows line breaks
+            parentDiv.style.display = "block";
+        
             const correctAnswerSpan = document.createElement("div");
             correctAnswerSpan.className = "correct-combo";
             correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
@@ -293,6 +296,7 @@ function renderPracticeFlashcard(entry) {
             parentDiv.appendChild(correctAnswerSpan);
           }
         }
+
         if (isCorrect) correct++;
       } else {
         // No radio selected — treat as wrong
