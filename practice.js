@@ -210,7 +210,7 @@ function renderPracticeFlashcard(entry) {
               
                 td.innerHTML = cellContent;
               } else if (col === "Example statement with the preposition") {
-                  const regex = new RegExp(`(${allValidPrepositions.join("|")})`, "gi");
+                  const regex = new RegExp(`\\b(${allValidPrepositions.join("|")})\\b`, "gi");
 
                   const matches = [...value.matchAll(regex)];
                 
@@ -241,8 +241,7 @@ function renderPracticeFlashcard(entry) {
                 
                   // Replace placeholders with span + options
                   radioBlocks.forEach((block, idx) => {
-                    const placeholder = `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <br>${block.html}<br><br>`;
+                    const placeholder = `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>${block.html}`;
                     processedValue = processedValue.replace(`__BLANK${idx}__`, placeholder);
                   });
                   
