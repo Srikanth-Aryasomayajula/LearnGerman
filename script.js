@@ -305,16 +305,6 @@ function showFlashcard(row) {
   buttonWrapper.appendChild(nextBtn);
   flashcardContainer.appendChild(buttonWrapper);
 }
+
 	
-});
-
-
-// Toggle menu on mobile
-document.addEventListener("DOMContentLoaded", function () {
-  const toggle = document.querySelector(".menu-toggle");
-  const menu = document.querySelector(".menu-container");
-
-  toggle.addEventListener("click", () => {
-    menu.classList.toggle("active");
-  });
 });
