@@ -172,7 +172,7 @@ body {
   display: flex;
   align-items: center; /* Vertically center the content inside */
   justify-content: space-between; /* Align text to the left if needed */
-  box-shadow: 0 0 0 1px #aaa;
+  box-shadow: 4 4 0 1px #aaa;
 }
 
 .dropdown-options {
