@@ -386,13 +386,72 @@ body {
   display: inline-block;
   margin: 0 5px;
 }
+
 .blank-group label {
   display: block;
   margin: 2px 0;
 }
+
 .practice-card {
   padding: 1rem;
   background: #f4f4f4;
   border-radius: 5px;
   margin-top: 1rem;
+}
+
+
+/* Mobile version */
+@media (max-width: 600px) {
+  .menu-button {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+
+  .dropdown-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dropdown-buttons button,
+  .custom-dropdown {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .vocab-table {
+    overflow-x: auto;
+    display: block;
+  }
+
+  .flashcard {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .button-wrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .option-group {
+    flex-direction: column;
+  }
+
+    body {
+    font-size: 1rem;
+  }
+
+  .main-title {
+    font-size: 1.25rem;
+  }
+
+  .dropdown-header {
+    font-size: 1rem;
+  }
+}
+
+@media (hover: none) {
+  .menu-button:hover {
+    background-color: #2563eb;
+  }
 }
