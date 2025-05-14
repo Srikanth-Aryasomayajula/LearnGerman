@@ -436,8 +436,8 @@ body {
     display: none;
     position: absolute;
     top: 60px;
-    right: -50px;
-    /*left: auto;*/
+    right: 10px;
+    left: auto;
     flex-direction: column;
     background-color: #000;
     border: 1px solid #333;
@@ -445,17 +445,10 @@ body {
     padding: 10px;
     z-index: 1000;
     min-width: 160px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
   }
 
   .menu-container.show-menu {
     display: flex;
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
   }
 
   .menu-button {
