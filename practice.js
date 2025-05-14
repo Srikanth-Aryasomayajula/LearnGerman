@@ -203,7 +203,7 @@ function renderPracticeFlashcard(entry) {
                   const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
                   const options = generateOptions(prep, window.vocabData || [], col);
                   return `
-                    <span class="blank-line" style="display: min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span class="blank-line" style="display: inline-block; min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <br>${createOptionsHTML(blankId, prep, options)}
                   `;
                 }).join('<br>');
@@ -290,7 +290,7 @@ function renderPracticeFlashcard(entry) {
             correctAnswerSpan.className = "correct-combo";
             correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
             correctAnswerSpan.style.color = "blue";
-            correctAnswerSpan.style.marginTop = "4px";
+            correctAnswerSpan.style.cssText = "color: blue; margin-top: 4px; display: block;";
             parentDiv.appendChild(correctAnswerSpan);
           }
         }
