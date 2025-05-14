@@ -198,23 +198,18 @@ function renderPracticeFlashcard(entry) {
                 const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_text_${Math.random().toString(36).substr(2, 6)}`;
                 td.innerHTML = `<input type="text" id="${blankId}" data-answer="${value}" data-col="${col}" style="min-width: 120px;" />`;
               } else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
-                  const preps = value.split(/\s*,\s*/);  // Split by comma
-                  const blocks = [];
-                
-                  preps.forEach((prep, idx) => {
-                    const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
-                    const options = generateOptions(prep, window.vocabData || [], col);
-                
-                    const sentenceHTML = `<div class="prep-blank" style="margin-bottom: 0.3em;">
-                      <span class="blank-line" style="display: inline-block; min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    </div>`;
-                    const optionsHTML = `<div style="margin-bottom: 1em;">${createOptionsHTML(blankId, prep, options)}</div>`;
-                
-                    blocks.push(`${sentenceHTML}${optionsHTML}`);
-                  });
-                
-                  td.innerHTML = blocks.join("");  // Display sentence and options in the correct order.
-                } else if (col === "Example statement with the preposition") {
+                const preps = value.split(/\s*,\s*/);  // Split by comma
+                const cellContent = preps.map((prep, idx) => {
+                  const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
+                  const options = generateOptions(prep, window.vocabData || [], col);
+                  return `
+                    <span class="blank-line" style="display: inline-block; min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <br>${createOptionsHTML(blankId, prep, options)}
+                  `;
+                }).join('<br>');
+              
+                td.innerHTML = cellContent;
+              } else if (col === "Example statement with the preposition") {
                   const lines = value.split(/\r?\n/); // split on real linebreaks
                   const lineHTML = [];
                 
@@ -316,27 +311,28 @@ function renderPracticeFlashcard(entry) {
     let correct = 0;
     const radioGroups = new Set();
     document.querySelectorAll("input[type='radio']").forEach(r => radioGroups.add(r.name));
-  
+
     radioGroups.forEach(groupName => {
       const checked = document.querySelector(`input[name='${groupName}']:checked`);
       const inputs = document.querySelectorAll(`input[name='${groupName}']`);
       if (checked) {
         const isCorrect = checked.dataset.correct === "true";
         const answerCell = checked.closest("td");
-  
+    
         const resultIcon = document.createElement("span");
         resultIcon.textContent = isCorrect ? "✅" : "❌";
         resultIcon.style.color = isCorrect ? "green" : "red";
         checked.parentNode.appendChild(resultIcon);
-  
+    
         if (!isCorrect) {
           const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
-          const parentDiv = (checked || correctInput).parentElement;
+          const parentDiv = (checked || correctInput).closest("div"); // works for both blank and incorrect
           const existing = parentDiv.querySelector(".correct-combo");
-  
+        
           if (!existing) {
+            // Ensure parent allows line breaks
             parentDiv.style.display = "block";
-  
+        
             const correctAnswerSpan = document.createElement("div");
             correctAnswerSpan.className = "correct-combo";
             correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
@@ -344,15 +340,16 @@ function renderPracticeFlashcard(entry) {
             parentDiv.appendChild(correctAnswerSpan);
           }
         }
-  
+
         if (isCorrect) correct++;
       } else {
+        // No radio selected — treat as wrong
         const answerCell = inputs[0]?.closest("td");
         const resultIcon = document.createElement("span");
         resultIcon.textContent = "❌";
         resultIcon.style.color = "red";
         inputs[0].parentNode.appendChild(resultIcon);
-  
+    
         const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
         const correctAnswerSpan = document.createElement("div");
         correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
@@ -360,15 +357,18 @@ function renderPracticeFlashcard(entry) {
         answerCell.appendChild(correctAnswerSpan);
       }
     });
-  
+    
+    // Evaluate text inputs for all tense columns
+    const tenseColumns = ["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"];
+    evaluateTextInputs(tenseColumns);
+    
     const total = document.querySelectorAll("input[type='radio']").length / 4;
     resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
-  
+
     submitBtn.style.display = "none";
     if (currentIndex > 0) prevBtn.style.display = "inline-block";
     if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
   });
-
 }
 
     function evaluateTextInputs(columns) {
