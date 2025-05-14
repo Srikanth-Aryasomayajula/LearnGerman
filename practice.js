@@ -289,7 +289,6 @@ function renderPracticeFlashcard(entry) {
             const correctAnswerSpan = document.createElement("div");
             correctAnswerSpan.className = "correct-combo";
             correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
-            correctAnswerSpan.style.color = "blue";
             correctAnswerSpan.style.cssText = "color: blue; margin-top: 4px; display: block;";
             parentDiv.appendChild(correctAnswerSpan);
           }
