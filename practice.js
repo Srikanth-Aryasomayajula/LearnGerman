@@ -238,7 +238,11 @@ function renderPracticeFlashcard(entry) {
                     });
                 
                     radioBlocks.forEach((block, idx) => {
-                      const placeholderHTML = `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>${block.html}`;
+                      const placeholderHTML = `
+                        <span class="blank-with-options" style="display: inline-block; margin: 0 4px;">
+                          <span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                          ${block.html}
+                        </span>`;
                       processedLine = processedLine.replace(`__BLANK${lineIdx}_${idx}__`, placeholderHTML);
                     });
                 
