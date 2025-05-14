@@ -239,17 +239,20 @@ function renderPracticeFlashcard(entry) {
                 
                     radioBlocks.forEach((block, idx) => {
                       const placeholderHTML = `
-                        <span class="blank-with-options" style="display: inline-block; margin: 0 4px;">
-                          <span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                          ${block.html}
-                        </span>`;
+                        <span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      `;
                       processedLine = processedLine.replace(`__BLANK${lineIdx}_${idx}__`, placeholderHTML);
                     });
-                
-                    lineHTML.push(processedLine);  // Add processed full sentence with blank + options
+
+                    // Assemble the full HTML for this line: sentence, then options, then result
+                    const sentenceHTML = `<div class="example-sentence" style="margin-bottom: 0.3em;"><strong>•</strong> ${processedLine}</div>`;
+                    const optionsHTML = radioBlocks.map(rb => `<div style="margin: 0.3em 0;">${rb.html}</div>`).join("");
+                    const resultHTML = `<div class="example-result" id="result_${lineIdx}" style="margin-bottom: 1em;"></div>`;
+
+                    lineHTML.push(`${sentenceHTML}${optionsHTML}${resultHTML}`);
                   });
                 
-                  td.innerHTML = lineHTML.map(l => `<div style="margin-bottom: 1em;">${l}</div>`).join("");
+                  td.innerHTML = lineHTML.join("");
                 } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
