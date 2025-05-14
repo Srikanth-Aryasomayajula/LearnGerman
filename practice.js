@@ -228,9 +228,9 @@ function renderPracticeFlashcard(entry) {
                     processedValue = processedValue.replace(fullMatch, placeholder);
                 
                     // Generate options
-                    const incorrectOpts = ["wor", "wo", "woh", "da", "dah", "dar"]
-                      .flatMap(prefix => germanPrepositions.map(p => prefix + p))
+                    const incorrectOpts = validCompoundPrepositions
                       .filter(opt => opt.toLowerCase() !== fullMatch.toLowerCase());
+                    
                     const incorrectOptions = incorrectOpts.sort(() => 0.5 - Math.random()).slice(0, 3);
                     const options = [...incorrectOptions, fullMatch].sort(() => 0.5 - Math.random());
                 
@@ -243,8 +243,10 @@ function renderPracticeFlashcard(entry) {
                 
                   // Replace placeholders with span + options
                   radioBlocks.forEach((block, idx) => {
-                    processedValue = processedValue.replace(`__BLANK${idx}__`,
-                      `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>${block.html}`);
+                  processedValue = processedValue.replace(`__BLANK${idx}__`,
+                    `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`);
+                  
+                  processedValue += `<br>${block.html}<br>`;
                   });
                 
                   td.innerHTML = processedValue;
@@ -392,6 +394,11 @@ function renderPracticeFlashcard(entry) {
     "nach", "neben", "ohne", "über", "um", "unter", "von", "vor", "zu", "zwischen",
     "trotz", "während", "wegen", "entlang", "ab", "seit", "außer", "gegenüber", "anstatt"
   ];
+
+  const compoundPrefixes = ["wor", "wo", "woh", "da", "dar"]; // Removed "dah"
+  const validCompoundPrepositions = germanPrepositions.flatMap(prep =>
+    compoundPrefixes.map(prefix => `${prefix}${prep}`)
+  );
 
   function generateOptions(correctWord, vocabData, column) {
       if (column === "Prepositions that go together with the verb/Noun/Adj.") {
