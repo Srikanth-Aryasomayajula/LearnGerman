@@ -310,7 +310,7 @@ function renderPracticeFlashcard(entry) {
       <div class="option-group">
         ${options.map(opt => `
           <label>
-            <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}">
+            <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}" data-correct-answer="${correctWord}">
             ${opt}
           </label>
         `).join("")}
