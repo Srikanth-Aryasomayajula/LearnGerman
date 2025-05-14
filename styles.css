@@ -11,7 +11,7 @@ body {
 .navbar {
   background-color: #000000;
   color: white;
-  padding: 1rem;
+  padding: 1rem 0rem;
   display: flex;
   gap: 1.5rem;
   justify-content: center; /* Centers the navbar items horizontally */
