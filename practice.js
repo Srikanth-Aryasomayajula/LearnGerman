@@ -4,95 +4,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const practiceArea = document.getElementById("practiceArea");
 
   let filteredData = [];
-  let selectedLevels = [];
   let currentIndex = 0;
 
   loadButton.addEventListener("click", () => {
-    const selectedTopics = Array.from(checkboxes)
+    const selected = Array.from(checkboxes)
       .filter(cb => cb.checked)
       .map(cb => cb.value);
 
-    if (selectedTopics.length === 0) {
+    if (selected.length === 0) {
       alert("Please select at least one topic.");
       return;
     }
 
     const vocabData = window.vocabData || [];
     filteredData = vocabData.filter(row =>
-      selectedTopics.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
+      selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
     );
 
     if (filteredData.length > 0) {
-      renderLevelSelector(filteredData);
+      currentIndex = 0;
+      renderPracticeFlashcard(filteredData[currentIndex]);
     } else {
       practiceArea.innerHTML = "No data loaded.";
     }
   });
 
-  function renderLevelSelector(data) {
-  // Toggle dropdown visibility
-  dropdownHeader.addEventListener("click", () => {
-    dropdownOptions.classList.toggle("hidden");
-  });
-
-  // Close dropdown if clicked outside
-  document.addEventListener("click", (e) => {
-    if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
-      dropdownOptions.classList.add("hidden");
-    }
-  });
-
-	// Handle checkbox change for level selection
-	let selectedLevels = [];
-	
-	checkboxes.forEach(checkbox => {
-	  checkbox.addEventListener("change", () => {
-		const isAllBoxClicked = checkbox.value === "all";
-		const allCheckboxesExceptAll = Array.from(checkboxes).slice(1);
-
-		if (isAllBoxClicked) {
-		  const allChecked = allCheckboxesExceptAll.every(cb => cb.checked);
-		  if (allChecked) {
-			// If all are already checked and 'all' is clicked again → uncheck all
-			checkboxes.forEach(cb => cb.checked = false);
-		  } else {
-			// Otherwise → check all
-			checkboxes.forEach(cb => cb.checked = true);
-		  }
-		} else {
-		  // Any individual checkbox is clicked
-		  if (!checkbox.checked && checkboxes[0].checked) {
-			// If a level is unchecked and 'all' is checked → uncheck 'all'
-			checkboxes[0].checked = false;
-		  } else {
-			// If all others are now checked → check 'all' automatically
-			const allSelected = allCheckboxesExceptAll.every(cb => cb.checked);
-			checkboxes[0].checked = allSelected;
-		  }
-		}
-
-		// Now collect selected levels and render table
-		selectedLevels = Array.from(checkboxes)
-		  .filter(cb => cb.checked)
-		  .map(cb => cb.value);
-
-		if (selectedLevels.length === 0) {
-		  dropdownHeader.textContent = "Select Level(s)";
-		  renderTable([]);
-		} else if (selectedLevels.length === checkboxes.length) {
-		  dropdownHeader.textContent = "All";
-		  renderTable(allData);
-		} else {
-		  dropdownHeader.textContent = selectedLevels.join(", ");
-		  const filteredData = allData.filter(row =>
-			selectedLevels.includes((row["Level"] || "").trim())
-		  );
-		  renderTable(filteredData);
-		}
-	  });
-	});
-  }
-  
   function renderPracticeFlashcard(entry) {
     practiceArea.innerHTML = "";
 
