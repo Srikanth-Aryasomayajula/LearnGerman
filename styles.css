@@ -164,7 +164,7 @@ body {
 /* Style for the dropdown header */
 .dropdown-header-1 {
   background: #fff;
-  border: 1px solid #000000;
+  border: 1px solid #aaa;
   border-radius: 4px;
   padding: 8px 12px;
   cursor: pointer;
@@ -172,6 +172,7 @@ body {
   display: flex;
   align-items: center; /* Vertically center the content inside */
   justify-content: space-between; /* Align text to the left if needed */
+  box-shadow: 0 0 0 1px #aaa;
 }
 
 .dropdown-options {
