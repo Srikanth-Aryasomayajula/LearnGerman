@@ -5,20 +5,100 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let filteredData = [];
   let currentIndex = 0;
+  let selectedLevels = [];
+
+  // Create level dropdown
+  const levelDropdownContainer = document.createElement("div");
+  levelDropdownContainer.id = "levelDropdownContainer";
+  levelDropdownContainer.style.display = "none";
+
+  const dropdownHeader = document.createElement("div");
+  dropdownHeader.id = "dropdownHeader";
+  dropdownHeader.className = "dropdown-header";
+  dropdownHeader.textContent = "Select Level(s)";
+  levelDropdownContainer.appendChild(dropdownHeader);
+
+  const dropdownOptions = document.createElement("div");
+  dropdownOptions.id = "dropdownOptions";
+  dropdownOptions.className = "dropdown-options hidden";
+  levelDropdownContainer.appendChild(dropdownOptions);
+
+  const levels = ["all", "A1", "A2", "B1", "B2", "C1", "C2"];
+  levels.forEach(level => {
+    const label = document.createElement("label");
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.value = level;
+    label.appendChild(cb);
+    label.append(` ${level}`);
+    dropdownOptions.appendChild(label);
+  });
+
+  practiceArea.parentNode.insertBefore(levelDropdownContainer, practiceArea);
+
+  const levelCheckboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
+
+  dropdownHeader.addEventListener("click", () => {
+    dropdownOptions.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
+      dropdownOptions.classList.add("hidden");
+    }
+  });
+
+  levelCheckboxes.forEach(cb => {
+    cb.addEventListener("change", () => {
+      const isAll = cb.value === "all";
+      const rest = Array.from(levelCheckboxes).filter(c => c.value !== "all");
+
+      if (isAll) {
+        const allChecked = rest.every(c => c.checked);
+        levelCheckboxes.forEach(c => c.checked = !allChecked);
+      } else {
+        if (!cb.checked) levelCheckboxes[0].checked = false;
+        else if (rest.every(c => c.checked)) levelCheckboxes[0].checked = true;
+      }
+
+      selectedLevels = Array.from(levelCheckboxes)
+        .filter(c => c.checked)
+        .map(c => c.value)
+        .filter(l => l !== "all");
+
+      dropdownHeader.textContent = selectedLevels.length === 0
+        ? "Select Level(s)"
+        : selectedLevels.length === rest.length
+          ? "All"
+          : selectedLevels.join(", ");
+    });
+  });
 
   loadButton.addEventListener("click", () => {
-    const selected = Array.from(checkboxes)
+    const selectedSources = Array.from(checkboxes)
       .filter(cb => cb.checked)
       .map(cb => cb.value);
 
-    if (selected.length === 0) {
+    if (selectedSources.length === 0) {
       alert("Please select at least one topic.");
       return;
     }
 
+    if (selectedSources.includes("Vokabular")) {
+      levelDropdownContainer.style.display = "block";
+
+      if (selectedLevels.length === 0) {
+        alert("Please select at least one level from the dropdown.");
+        return;
+      }
+    } else {
+      levelDropdownContainer.style.display = "none";
+    }
+
     const vocabData = window.vocabData || [];
     filteredData = vocabData.filter(row =>
-      selected.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim())
+      selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
+      (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim()) : true)
     );
 
     if (filteredData.length > 0) {
@@ -34,9 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const container = document.createElement("div");
     container.className = "flashcard-container";
-    
-    const wrapper = document.createElement("div");
-    wrapper.className = "button-wrapper";
 
     const card = document.createElement("div");
     card.className = "flashcard";
@@ -45,16 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
     table.className = "flashcard-table";
 
     const columns = [
-      "Level",
-      "Article, Word and Plural",
-      "Part of Speech",
-      "Meaning",
-      "Usage",
-      "Past (Präteritum)",
-      "Perfect (Partizip II)",
-      "Plusquamperfekt",
-      "Futur I",
-      "Futur II",
+      "Level", "Article, Word and Plural", "Part of Speech", "Meaning", "Usage",
+      "Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt",
+      "Futur I", "Futur II",
       "Prepositions that go together with the verb/Noun/Adj.",
       "Example statement with the preposition"
     ];
@@ -75,8 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const options = generateOptions(correctWord, window.vocabData || [], col);
 
           words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
-          const sentenceWithBlank = words.join(" ");
-          td.innerHTML = `${sentenceWithBlank}<br>${createOptionsHTML(blankId, correctWord, options)}`;
+          td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, options)}`;
         } else {
           td.innerHTML = value.replace(/\r?\n/g, "<br>");
         }
@@ -101,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.createElement("button");
     prevBtn.textContent = "Previous";
     prevBtn.className = "nav-button";
-    prevBtn.style.display = "none";
+    prevBtn.style.display = currentIndex === 0 ? "none" : "inline-block";
     prevBtn.addEventListener("click", () => {
       if (currentIndex > 0) {
         currentIndex--;
@@ -128,11 +197,10 @@ document.addEventListener("DOMContentLoaded", () => {
     buttonRow.appendChild(submitBtn);
     buttonRow.appendChild(nextBtn);
     container.appendChild(buttonRow);
-    
+
     practiceArea.innerHTML = "";
     practiceArea.appendChild(container);
 
-    // Submission logic
     submitBtn.addEventListener("click", () => {
       const selected = document.querySelectorAll("input[type='radio']:checked");
       let correct = 0;
