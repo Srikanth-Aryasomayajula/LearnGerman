@@ -461,7 +461,7 @@ body {
 
   .menu-container {
     display: none;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     gap: 10px;
     width: auto;
