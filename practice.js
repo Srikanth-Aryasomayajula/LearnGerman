@@ -226,7 +226,7 @@ function renderPracticeFlashcard(entry) {
                     processedValue = processedValue.replace(fullMatch, placeholder);
                 
                     // Generate options
-                    const incorrectOpts = validCompoundPrepositions
+                    const incorrectOpts = allValidPrepositions
                       .filter(opt => opt.toLowerCase() !== fullMatch.toLowerCase());
                     
                     const incorrectOptions = incorrectOpts.sort(() => 0.5 - Math.random()).slice(0, 3);
