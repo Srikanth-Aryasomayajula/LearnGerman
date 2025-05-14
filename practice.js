@@ -210,7 +210,10 @@ function renderPracticeFlashcard(entry) {
               
                 td.innerHTML = cellContent;
               } else if (col === "Example statement with the preposition") {
-                  const regex = new RegExp(`\\b(?:wor|wo|woh|da|dah|dar)?(?:${germanPrepositions.join("|")})\\b`, "gi");
+                  const prefixGroup = "(?:wor|wo|woh|da|dah|dar)";
+                  const prepGroup = germanPrepositions.join("|");
+                  const regex = new RegExp(`\\b(?:${prefixGroup}(?:${prepGroup})|${prepGroup})\\b`, "gi");
+
                   const matches = [...value.matchAll(regex)];
                 
                   let processedValue = value;
