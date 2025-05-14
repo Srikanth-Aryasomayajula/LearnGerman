@@ -400,6 +400,23 @@ body {
 }
 
 
+/* Toggle Button */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Container for menu links */
+.menu-container {
+  display: flex;
+  gap: 1.5rem;
+}
+
+
 /* Mobile version */
 @media (max-width: 600px) {
   .menu-button {
@@ -447,6 +464,35 @@ body {
 
   .dropdown-header {
     font-size: 1rem;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+  }
+
+  .menu-container {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    background-color: #000;
+    padding: 10px 0;
+  }
+
+  .menu-container.active {
+    display: flex;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu-button {
+    width: 100%;
+    text-align: left;
+    padding-left: 20px;
   }
 }
 
