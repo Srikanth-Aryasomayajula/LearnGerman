@@ -39,7 +39,7 @@ body {
 .toggle-menu {
   font-size: 1.5rem;
   background: none;
-  /*margin-left: auto;*/
+  margin-right: 5px;
   color: white;
   border: none;
   cursor: pointer;
