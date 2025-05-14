@@ -194,6 +194,9 @@ function renderPracticeFlashcard(entry) {
               
                 words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
                 td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, options)}`;
+              } else if (["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].includes(col)) {
+                const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_text_${Math.random().toString(36).substr(2, 6)}`;
+                td.innerHTML = `<input type="text" id="${blankId}" data-answer="${value}" data-col="${col}" style="min-width: 120px;" />`;
               } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
@@ -274,7 +277,11 @@ function renderPracticeFlashcard(entry) {
 
       if (correctWord) correct++;
     });
-
+    
+    // Evaluate text inputs for all tense columns
+    const tenseColumns = ["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"];
+    evaluateTextInputs(tenseColumns);
+    
     const total = document.querySelectorAll("input[type='radio']").length / 4;
     resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
 
@@ -283,6 +290,27 @@ function renderPracticeFlashcard(entry) {
     if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
   });
 }
+
+    function evaluateTextInputs(columns) {
+    columns.forEach(col => {
+      const inputs = document.querySelectorAll(`input[data-col="${col}"]`);
+      inputs.forEach(input => {
+        const userAnswer = input.value.trim().toLowerCase();
+        const correctAnswer = input.dataset.answer.toLowerCase();
+  
+        const resultIcon = document.createElement("span");
+        resultIcon.textContent = userAnswer === correctAnswer ? "✅" : "❌";
+        resultIcon.style.marginLeft = "5px";
+        resultIcon.style.color = userAnswer === correctAnswer ? "green" : "red";
+        input.parentNode.insertBefore(resultIcon, input.nextSibling);
+  
+        const correctDisplay = document.createElement("div");
+        correctDisplay.textContent = `Correct: ${correctAnswer}`;
+        correctDisplay.style.color = "blue";
+        input.parentNode.appendChild(correctDisplay);
+      });
+    });
+  }
 
 
   function generateOptions(correctWord, vocabData, column) {
