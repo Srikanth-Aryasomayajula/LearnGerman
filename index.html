@@ -12,8 +12,8 @@
   
 <body class="bg-text">
   <nav class="navbar">
-	<button id="menuToggle" class="menu-button" style="margin-right: auto;">&#9776;</button>
-	 <div id="sideMenu" class="side-menu"> 
+	<button class="toggle-menu" id="menuToggleBtn">&#9776;</button>
+	 <div class="menu-container" id="menuContainer"> 
 		<a href="index.html" class="menu-button">Vokabular</a>
 		<a href="grammatik.html" class="menu-button">Grammatik</a>
 		<a href="maschinenbau.html" class="menu-button">Maschinenbau</a>
@@ -72,9 +72,8 @@
     </table>
 
 	<script>
-	  document.getElementById("menuToggle").addEventListener("click", function () {
-	    const menu = document.getElementById("sideMenu");
-	    menu.classList.toggle("hidden");
+	  document.getElementById("menuToggleBtn").addEventListener("click", function () {
+	    document.getElementById("menuContainer").classList.toggle("show-menu");
 	  });
 	</script>
 	  
