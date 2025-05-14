@@ -402,20 +402,17 @@ body {
 
 /* Mobile version */
 @media (max-width: 600px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .main-title {
+    font-size: 1.25rem;
+  }
+  
   .menu-button {
     font-size: 16px;
     padding: 6px 12px;
-  }
-
-  .dropdown-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .dropdown-buttons button,
-  .custom-dropdown {
-    width: 100%;
-    font-size: 1rem;
   }
 
   .vocab-table {
@@ -437,15 +434,18 @@ body {
     flex-direction: column;
   }
 
-    body {
+  .dropdown-header {
     font-size: 1rem;
   }
 
-  .main-title {
-    font-size: 1.25rem;
+  .dropdown-buttons {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .dropdown-header {
+  .dropdown-buttons button,
+  .custom-dropdown {
+    width: 100%;
     font-size: 1rem;
   }
 }
