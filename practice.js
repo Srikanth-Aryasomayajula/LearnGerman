@@ -210,42 +210,42 @@ function renderPracticeFlashcard(entry) {
               
                 td.innerHTML = cellContent;
               } else if (col === "Example statement with the preposition") {
-                  const regex = new RegExp(`\\b(${allValidPrepositions.join("|")})\\b`, "gi");
-
-                  const matches = [...value.matchAll(regex)];
+                  const lines = value.split(/\r?\n/); // split on real linebreaks
+                  const lineHTML = [];
                 
-                  let processedValue = value;
-                  const radioBlocks = [];
+                  lines.forEach((line, lineIdx) => {
+                    let processedLine = line;
+                    const radioBlocks = [];
                 
-                  matches.forEach((match, idx) => {
-                    const fullMatch = match[0];
-                    const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
+                    const regex = new RegExp(`\\b(${allValidPrepositions.join("|")})\\b`, "gi");
+                    const matches = [...processedLine.matchAll(regex)];
                 
-                    // Replace first instance only (with unique placeholder)
-                    const placeholder = `__BLANK${idx}__`;
-                    processedValue = processedValue.replace(fullMatch, placeholder);
+                    matches.forEach((match, idx) => {
+                      const fullMatch = match[0];
+                      const placeholder = `__BLANK${lineIdx}_${idx}__`;
+                      processedLine = processedLine.replace(fullMatch, placeholder);
                 
-                    // Generate options
-                    const incorrectOpts = allValidPrepositions
-                      .filter(opt => opt.toLowerCase() !== fullMatch.toLowerCase());
-                    
-                    const incorrectOptions = incorrectOpts.sort(() => 0.5 - Math.random()).slice(0, 3);
-                    const options = [...incorrectOptions, fullMatch].sort(() => 0.5 - Math.random());
+                      const incorrectOpts = allValidPrepositions.filter(opt => opt.toLowerCase() !== fullMatch.toLowerCase());
+                      const incorrectOptions = incorrectOpts.sort(() => 0.5 - Math.random()).slice(0, 3);
+                      const options = [...incorrectOptions, fullMatch].sort(() => 0.5 - Math.random());
                 
-                    radioBlocks.push({
-                      id: blankId,
-                      correct: fullMatch,
-                      html: createOptionsHTML(blankId, fullMatch, options)
+                      const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${lineIdx}_${idx}_${Math.random().toString(36).substr(2, 6)}`;
+                      radioBlocks.push({
+                        id: blankId,
+                        correct: fullMatch,
+                        html: createOptionsHTML(blankId, fullMatch, options)
+                      });
                     });
+                
+                    radioBlocks.forEach((block, idx) => {
+                      const placeholderHTML = `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>${block.html}`;
+                      processedLine = processedLine.replace(`__BLANK${lineIdx}_${idx}__`, placeholderHTML);
+                    });
+                
+                    lineHTML.push(processedLine);  // Add processed full sentence with blank + options
                   });
                 
-                  // Replace placeholders with span + options
-                  radioBlocks.forEach((block, idx) => {
-                    const placeholder = `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>${block.html}`;
-                    processedValue = processedValue.replace(`__BLANK${idx}__`, placeholder);
-                  });
-                  
-                  td.innerHTML = processedValue;
+                  td.innerHTML = lineHTML.map(l => `<div style="margin-bottom: 1em;">${l}</div>`).join("");
                 } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
