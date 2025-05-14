@@ -197,6 +197,18 @@ function renderPracticeFlashcard(entry) {
               } else if (["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].includes(col)) {
                 const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_text_${Math.random().toString(36).substr(2, 6)}`;
                 td.innerHTML = `<input type="text" id="${blankId}" data-answer="${value}" data-col="${col}" style="min-width: 120px;" />`;
+              } else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
+                const preps = value.split(/\s*,\s*/);  // Split by comma
+                const cellContent = preps.map((prep, idx) => {
+                  const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
+                  const options = generateOptions(prep, window.vocabData || [], col);
+                  return `
+                    <span class="blank-line" style="display: inline-block; min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <br>${createOptionsHTML(blankId, prep, options)}
+                  `;
+                }).join('<span style="margin: 0 10px;">,</span>');
+              
+                td.innerHTML = cellContent;
               } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
@@ -270,12 +282,19 @@ function renderPracticeFlashcard(entry) {
     
         if (!isCorrect) {
           const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
-          const correctAnswerSpan = document.createElement("div");
-          correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
-          correctAnswerSpan.style.color = "blue";
-          answerCell.appendChild(correctAnswerSpan);
+          const parentTd = checked.closest("td");
+  
+          let existing = parentTd.querySelector(".correct-combo");
+          if (existing) {
+            existing.textContent += `, ${correctInput.dataset.correctAnswer}`;
+          } else {  
+            const correctAnswerSpan = document.createElement("div");
+            correctAnswerSpan.className = "correct-combo";
+            correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
+            correctAnswerSpan.style.color = "blue";
+            answerCell.appendChild(correctAnswerSpan);
+          }
         }
-    
         if (isCorrect) correct++;
       } else {
         // No radio selected — treat as wrong
@@ -327,8 +346,21 @@ function renderPracticeFlashcard(entry) {
     });
   }
 
+  const germanPrepositions = [
+    "an", "auf", "aus", "bei", "durch", "für", "gegen", "hinter", "in", "mit",
+    "nach", "neben", "ohne", "über", "um", "unter", "von", "vor", "zu", "zwischen",
+    "trotz", "während", "wegen", "entlang", "ab", "seit", "außer", "gegenüber", "anstatt"
+  ];
 
   function generateOptions(correctWord, vocabData, column) {
+      if (column === "Prepositions that go together with the verb/Noun/Adj.") {
+        const incorrectOptions = germanPrepositions
+          .filter(prep => prep !== correctWord)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3);
+    
+        return [...incorrectOptions, correctWord].sort(() => 0.5 - Math.random());
+      }
     const wordsFromSameColumn = vocabData
       .map(entry => entry[column])
       .filter(value => value && value !== "-")
