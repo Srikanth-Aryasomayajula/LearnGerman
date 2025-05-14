@@ -63,7 +63,7 @@ body {
   border-radius: 4px; /* Rounded corners */
   text-align: center; /* Center the text */
   text-decoration: none; /* Remove underline from the link */
-  font-size: 20px; /* Font size */
+  font-size: 40px; /* Font size */
   cursor: pointer; /* Pointer cursor on hover */
   transition: background-color 0.3s ease; /* Smooth color transition */
 }
