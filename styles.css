@@ -207,7 +207,6 @@ body {
   z-index: -1; /* Push it behind the main element */
 }
 
-
 .dropdown-options {
   position: absolute;
   top: 100%;
@@ -261,6 +260,12 @@ body {
 
 .hidden {
   display: none;
+}
+
+.view-mode {
+  display: flex;
+  gap: 1.5rem; /* Adjust the gap as needed */
+  align-items: center;
 }
 
 .flashcard-container {
