@@ -391,11 +391,12 @@ function renderPracticeFlashcard(entry) {
     "nach", "neben", "ohne", "über", "um", "unter", "von", "vor", "zu", "zwischen",
     "trotz", "während", "wegen", "entlang", "ab", "seit", "außer", "gegenüber", "anstatt"
   ];
-
-  const compoundPrefixes = ["wor", "wo", "woh", "da", "dar"]; // Removed "dah"
-  const validCompoundPrepositions = germanPrepositions.flatMap(prep =>
-    compoundPrefixes.map(prefix => `${prefix}${prep}`)
-  );
+  const compoundPrepositions = [
+    "worauf", "woran", "woraus", "worüber", "womit", "wodurch", "wofür", "wogegen", "wohin", "wozu",
+    "darauf", "daran", "daraus", "darüber", "damit", "dadurch", "dafür", "dagegen", "dahin", "dazu",
+    "wovor", "woher", "worin", "wobei", "darunter", "darin", "daraufhin", "darüberhinaus", "davor"
+  ];
+  const allValidPrepositions = [...germanPrepositions, ...compoundPrepositions];
 
   function generateOptions(correctWord, vocabData, column) {
       if (column === "Prepositions that go together with the verb/Noun/Adj.") {
