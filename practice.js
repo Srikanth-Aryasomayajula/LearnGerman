@@ -34,6 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdownOptions.appendChild(label);
   });
 
+  // Add second "Start Practice" button after dropdown
+  const secondStartBtn = document.createElement("button");
+  secondStartBtn.id = "startAfterLevelSelect";
+  secondStartBtn.textContent = "Start Practice";
+  secondStartBtn.style.display = "none";
+  levelDropdownContainer.appendChild(secondStartBtn);
+
   practiceArea.parentNode.insertBefore(levelDropdownContainer, practiceArea);
 
   const levelCheckboxes = dropdownOptions.querySelectorAll("input[type='checkbox']");
@@ -74,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // First Start Practice button (main flow trigger)
   loadButton.addEventListener("click", () => {
     const selectedSources = Array.from(checkboxes)
       .filter(cb => cb.checked)
@@ -86,16 +94,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (selectedSources.includes("Vokabular")) {
       levelDropdownContainer.style.display = "block";
-
-      if (selectedLevels.length === 0) {
-        alert("Please select at least one level from the dropdown.");
-        return;
-      }
+      secondStartBtn.style.display = "inline-block";
+      return; // Wait for user to click second start button
     } else {
       levelDropdownContainer.style.display = "none";
+      secondStartBtn.style.display = "none";
     }
 
+    startPractice(selectedSources, []); // No levels needed if not Vokabular
+  });
+
+  // Second Start Practice button (after level selection)
+  secondStartBtn.addEventListener("click", () => {
+    selectedLevels = Array.from(levelCheckboxes)
+      .filter(c => c.checked)
+      .map(c => c.value)
+      .filter(l => l !== "all");
+
+    if (selectedLevels.length === 0) {
+      alert("Please select at least one level from the dropdown.");
+      return;
+    }
+
+    const selectedSources = Array.from(checkboxes)
+      .filter(cb => cb.checked)
+      .map(cb => cb.value);
+
+    startPractice(selectedSources, selectedLevels);
+  });
+
+  function startPractice(selectedSources, selectedLevels) {
     const vocabData = window.vocabData || [];
+
     filteredData = vocabData.filter(row =>
       selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
       (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim()) : true)
@@ -107,7 +137,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       practiceArea.innerHTML = "No data loaded.";
     }
-  });
+
+    // Hide level selector and second button after practice starts
+    levelDropdownContainer.style.display = "none";
+    secondStartBtn.style.display = "none";
+  }
 
   function renderPracticeFlashcard(entry) {
     practiceArea.innerHTML = "";
