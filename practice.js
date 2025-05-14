@@ -176,16 +176,25 @@ function renderPracticeFlashcard(entry) {
       const td = document.createElement("td");
 
       // Handle "Meaning" and "Usage" specifically for blanks
-      if (col === "Meaning" || col === "Usage") {
-        const correctWord = (col === "Meaning") ? value.trim() : value.split(/\s+/)[Math.floor(Math.random() * value.split(/\s+/).length)];
-        const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
-        const options = generateOptions(correctWord, window.vocabData || [], col);
-        
-        td.innerHTML = `
-          <span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <br>${createOptionsHTML(blankId, correctWord, options)}
-        `;
-      } else {
+      if (col === "Meaning") {
+                const correctPhrase = value.trim(); // For "Meaning", blank the whole phrase.
+                const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+                const options = generateOptions(correctPhrase, window.vocabData || [], col);
+              
+                td.innerHTML = `
+                  <span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <br>${createOptionsHTML(blankId, correctPhrase, options)}
+                `;
+              } else if (col === "Usage") {
+                const words = value.split(/\s+/);  // For "Usage", only one word is blanked.
+                const randomIndex = Math.floor(Math.random() * words.length);
+                const correctWord = words[randomIndex];
+                const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+                const options = generateOptions(correctWord, window.vocabData || [], col);
+              
+                words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+                td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, options)}`;
+              } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
 
