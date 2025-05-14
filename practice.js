@@ -210,7 +210,7 @@ function renderPracticeFlashcard(entry) {
               
                 td.innerHTML = cellContent;
               } else if (col === "Example statement with the preposition") {
-                  const regex = new RegExp(`\\b(${compoundPrepositions.join("|")})\\b`, "gi");
+                  const regex = new RegExp(`\\b(${allValidPrepositions.join("|")})\\b`, "gi");
 
                   const matches = [...value.matchAll(regex)];
                 
