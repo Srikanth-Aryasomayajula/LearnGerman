@@ -38,8 +38,6 @@ fetch("Vocabulary.xlsx")
     });
   }
 	
-  console.log("Workbook:", workbook); // Now it can access the variable correctly
-	
   const worksheet = workbook.Sheets[SHEET_NAME];
   if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
 
