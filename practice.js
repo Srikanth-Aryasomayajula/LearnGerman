@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = 0;
   let selectedLevels = [];
 
-  // Compact dropdown container for level selection
   const levelDropdownContainer = document.createElement("div");
   levelDropdownContainer.className = "dropdown-buttons";
   levelDropdownContainer.id = "levelDropdownContainer";
@@ -126,157 +125,156 @@ document.addEventListener("DOMContentLoaded", () => {
     startPractice(selectedSources, selectedLevels);
   });
 
-function startPractice(selectedSources, selectedLevels) {
-  const vocabData = window.vocabData || [];
+  function startPractice(selectedSources, selectedLevels) {
+    const vocabData = window.vocabData || [];
 
-  const data = vocabData.filter(row =>
-    selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
-    (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim().toUpperCase()) : true)
-  );
+    const data = vocabData.filter(row =>
+      selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
+      (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim().toUpperCase()) : true)
+    );
 
-  if (data.length > 0) {
-    filteredData = data.sort(() => 0.5 - Math.random());  // Shuffle like in script.js
-    currentIndex = 0;
-    renderPracticeFlashcard(filteredData[currentIndex]);
-  } else {
-    practiceArea.innerHTML = "No data loaded.";
+    if (data.length > 0) {
+      filteredData = data.sort(() => 0.5 - Math.random());  // Shuffle like in script.js
+      currentIndex = 0;
+      renderPracticeFlashcard(filteredData[currentIndex]);
+    } else {
+      practiceArea.innerHTML = "No data loaded.";
+    }
+
+    levelDropdownContainer.style.display = "none";
+    secondStartBtn.style.display = "none";
   }
 
-  levelDropdownContainer.style.display = "none";
-  secondStartBtn.style.display = "none";
-}
+  function renderPracticeFlashcard(entry) {
+    practiceArea.innerHTML = "";
 
+    const container = document.createElement("div");
+    container.className = "flashcard-container";
 
-function renderPracticeFlashcard(entry) {
-  practiceArea.innerHTML = "";
+    const card = document.createElement("div");
+    card.className = "flashcard";
 
-  const container = document.createElement("div");
-  container.className = "flashcard-container";
+    const table = document.createElement("table");
+    table.className = "flashcard-table";
 
-  const card = document.createElement("div");
-  card.className = "flashcard";
+    const columns = [
+      "Level", "Article, Word and Plural", "Part of Speech", "Meaning", "Usage",
+      "Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt",
+      "Futur I", "Futur II",
+      "Prepositions that go together with the verb/Noun/Adj.",
+      "Example statement with the preposition"
+    ];
 
-  const table = document.createElement("table");
-  table.className = "flashcard-table";
+    columns.forEach(col => {
+      const value = entry[col]?.trim();
+      if (value && value !== "-") {
+        const tr = document.createElement("tr");
+        const th = document.createElement("th");
+        th.textContent = col;
+        const td = document.createElement("td");
 
-  const columns = [
-    "Level", "Article, Word and Plural", "Part of Speech", "Meaning", "Usage",
-    "Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt",
-    "Futur I", "Futur II",
-    "Prepositions that go together with the verb/Noun/Adj.",
-    "Example statement with the preposition"
-  ];
+        // Handle tenses (Präteritum, Perfect, etc.) by adding blanks for user input
+        if (["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].includes(col)) {
+          const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${Math.random().toString(36).substr(2, 6)}`;
+          td.innerHTML = `<input type="text" id="${blankId}" class="blank-line" />`;
+        }
+        // Handle prepositions
+        else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
+          const prepositions = value.split(",").map(prep => prep.trim());
+          const blankIds = prepositions.map((_, index) => `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${index}_${Math.random().toString(36).substr(2, 6)}`);
+          td.innerHTML = blankIds.map((blankId, index) => `<input type="text" id="${blankId}" class="blank-line" placeholder="___" />`).join(" , ");
+          td.setAttribute("data-correct-prepositions", prepositions.join(","));
+        }
+        // Handle other cases
+        else if (col === "Usage") {
+          const words = value.split(/\s+/);
+          const randomIndex = Math.floor(Math.random() * words.length);
+          const correctWord = words[randomIndex];
+          const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+          words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+          td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, generateOptions(correctWord, window.vocabData || [], col))}`;
+        }
+        else {
+          td.innerHTML = value.replace(/\r?\n/g, "<br>");
+        }
 
-  columns.forEach(col => {
-    const value = entry[col]?.trim();
-    if (value && value !== "-") {
-      const tr = document.createElement("tr");
-      const th = document.createElement("th");
-      th.textContent = col;
-      const td = document.createElement("td");
-
-      // Handle tenses (Präteritum, Perfect, etc.) by adding blanks for user input
-      if (["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].includes(col)) {
-        const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${Math.random().toString(36).substr(2, 6)}`;
-        td.innerHTML = `<input type="text" id="${blankId}" class="blank-line" />`;
-      }
-      // Handle prepositions
-      else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
-        const prepositions = value.split(",").map(prep => prep.trim());
-        const blankIds = prepositions.map((_, index) => `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${index}_${Math.random().toString(36).substr(2, 6)}`);
-        td.innerHTML = blankIds.map((blankId, index) => `<input type="text" id="${blankId}" class="blank-line" placeholder="___" />`).join(" , ");
-        td.setAttribute("data-correct-prepositions", prepositions.join(","));
-      }
-      // Handle other cases
-      else if (col === "Usage") {
-        const words = value.split(/\s+/);
-        const randomIndex = Math.floor(Math.random() * words.length);
-        const correctWord = words[randomIndex];
-        const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
-        words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
-        td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, generateOptions(correctWord, window.vocabData || [], col))}`;
-      }
-      else {
-        td.innerHTML = value.replace(/\r?\n/g, "<br>");
-      }
-
-      tr.appendChild(th);
-      tr.appendChild(td);
-      table.appendChild(tr);
-    }
-  });
-
-  card.appendChild(table);
-  container.appendChild(card);
-
-  const resultDisplay = document.createElement("div");
-  resultDisplay.id = "practiceResult";
-  resultDisplay.className = "flashcard-progress";
-  container.appendChild(resultDisplay);
-
-  const buttonRow = document.createElement("div");
-  buttonRow.className = "dropdown-buttons";
-
-  const prevBtn = document.createElement("button");
-  prevBtn.textContent = "Previous";
-  prevBtn.className = "nav-button";
-  prevBtn.style.display = currentIndex === 0 ? "none" : "inline-block";
-  prevBtn.addEventListener("click", () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      renderPracticeFlashcard(filteredData[currentIndex]);
-    }
-  });
-
-  const submitBtn = document.createElement("button");
-  submitBtn.textContent = "Submit";
-  submitBtn.id = "submitAnswers";
-
-  const nextBtn = document.createElement("button");
-  nextBtn.textContent = "Next";
-  nextBtn.className = "nav-button";
-  nextBtn.style.display = "none";
-  nextBtn.addEventListener("click", () => {
-    if (currentIndex < filteredData.length - 1) {
-      currentIndex++;
-      renderPracticeFlashcard(filteredData[currentIndex]);
-    }
-  });
-
-  buttonRow.appendChild(prevBtn);
-  buttonRow.appendChild(submitBtn);
-  buttonRow.appendChild(nextBtn);
-  container.appendChild(buttonRow);
-
-  practiceArea.appendChild(container);
-
-  submitBtn.addEventListener("click", () => {
-    let correct = 0;
-
-    // Check answers for tenses (Präteritum, Perfect, etc.)
-    ["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].forEach(col => {
-      const input = document.getElementById(`${col.toLowerCase().replace(/\s+/g, "_")}_blank`);
-      if (input) {
-        const correctAnswer = entry[col].trim();
-        if (input.value.trim() === correctAnswer) correct++;
+        tr.appendChild(th);
+        tr.appendChild(td);
+        table.appendChild(tr);
       }
     });
 
-    // Check answers for prepositions
-    const prepositionsInput = document.querySelectorAll(`#${col.toLowerCase().replace(/\s+/g, "_")}_blank`);
-    prepositionsInput.forEach(input => {
-      const correctPrepositions = input.closest('td').dataset.correctPrepositions.split(",");
-      if (correctPrepositions.includes(input.value.trim())) correct++;
+    card.appendChild(table);
+    container.appendChild(card);
+
+    const resultDisplay = document.createElement("div");
+    resultDisplay.id = "practiceResult";
+    resultDisplay.className = "flashcard-progress";
+    container.appendChild(resultDisplay);
+
+    const buttonRow = document.createElement("div");
+    buttonRow.className = "dropdown-buttons";
+
+    const prevBtn = document.createElement("button");
+    prevBtn.textContent = "Previous";
+    prevBtn.className = "nav-button";
+    prevBtn.style.display = currentIndex === 0 ? "none" : "inline-block";
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderPracticeFlashcard(filteredData[currentIndex]);
+      }
     });
 
-    const total = filteredData.length;
-    resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
+    const submitBtn = document.createElement("button");
+    submitBtn.textContent = "Submit";
+    submitBtn.id = "submitAnswers";
 
-    submitBtn.style.display = "none";
-    if (currentIndex > 0) prevBtn.style.display = "inline-block";
-    if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
-  });
-}
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next";
+    nextBtn.className = "nav-button";
+    nextBtn.style.display = "none";
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < filteredData.length - 1) {
+        currentIndex++;
+        renderPracticeFlashcard(filteredData[currentIndex]);
+      }
+    });
+
+    buttonRow.appendChild(prevBtn);
+    buttonRow.appendChild(submitBtn);
+    buttonRow.appendChild(nextBtn);
+    container.appendChild(buttonRow);
+
+    practiceArea.appendChild(container);
+
+    submitBtn.addEventListener("click", () => {
+      let correct = 0;
+
+      // Check answers for tenses (Präteritum, Perfect, etc.)
+      ["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].forEach(col => {
+        const input = document.getElementById(`${col.toLowerCase().replace(/\s+/g, "_")}_blank`);
+        if (input) {
+          const correctAnswer = entry[col].trim();
+          if (input.value.trim() === correctAnswer) correct++;
+        }
+      });
+
+      // Check answers for prepositions
+      const prepositionsInput = document.querySelectorAll(`#${col.toLowerCase().replace(/\s+/g, "_")}_blank`);
+      prepositionsInput.forEach(input => {
+        const correctPrepositions = input.closest('td').dataset.correctPrepositions.split(",");
+        if (correctPrepositions.includes(input.value.trim())) correct++;
+      });
+
+      const total = filteredData.length;
+      resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
+
+      submitBtn.style.display = "none";
+      if (currentIndex > 0) prevBtn.style.display = "inline-block";
+      if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
+    });
+  }
 
   function generateOptions(correctWord, vocabData, column) {
     const wordsFromSameColumn = vocabData
@@ -284,15 +282,15 @@ function renderPracticeFlashcard(entry) {
       .filter(value => value && value !== "-")
       .map(value => value.trim())
       .filter(phrase => phrase !== correctWord);  // Exclude the correct word
-  
+
     // Get individual words from the phrases
     const allWords = wordsFromSameColumn.flatMap(phrase => phrase.split(/\s+/));
-  
+
     // Select 3 random words from the available options (excluding the correct word)
     const incorrectWords = Array.from(new Set(allWords))
       .sort(() => 0.5 - Math.random())  // Shuffle
       .slice(0, 3);  // Select 3 words randomly
-  
+
     // Return a mix of incorrect options and the correct word
     return [...incorrectWords, correctWord].sort(() => 0.5 - Math.random());
   }
