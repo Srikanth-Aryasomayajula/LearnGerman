@@ -209,7 +209,43 @@ function renderPracticeFlashcard(entry) {
                 }).join('<br>');
               
                 td.innerHTML = cellContent;
-              } else {
+              } else if (col === "Example statement with the preposition") {
+                  const regex = new RegExp(`\\b(?:wor|wo|woh|da|dah|dar)?(?:${germanPrepositions.join("|")})\\b`, "gi");
+                  const matches = [...value.matchAll(regex)];
+                
+                  let processedValue = value;
+                  const radioBlocks = [];
+                
+                  matches.forEach((match, idx) => {
+                    const fullMatch = match[0];
+                    const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
+                
+                    // Replace first instance only (with unique placeholder)
+                    const placeholder = `__BLANK${idx}__`;
+                    processedValue = processedValue.replace(fullMatch, placeholder);
+                
+                    // Generate options
+                    const incorrectOpts = ["wor", "wo", "woh", "da", "dah", "dar"]
+                      .flatMap(prefix => germanPrepositions.map(p => prefix + p))
+                      .filter(opt => opt.toLowerCase() !== fullMatch.toLowerCase());
+                    const incorrectOptions = incorrectOpts.sort(() => 0.5 - Math.random()).slice(0, 3);
+                    const options = [...incorrectOptions, fullMatch].sort(() => 0.5 - Math.random());
+                
+                    radioBlocks.push({
+                      id: blankId,
+                      correct: fullMatch,
+                      html: createOptionsHTML(blankId, fullMatch, options)
+                    });
+                  });
+                
+                  // Replace placeholders with span + options
+                  radioBlocks.forEach((block, idx) => {
+                    processedValue = processedValue.replace(`__BLANK${idx}__`,
+                      `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>${block.html}`);
+                  });
+                
+                  td.innerHTML = processedValue;
+                } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
 
