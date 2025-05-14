@@ -175,13 +175,22 @@ function startPractice(selectedSources, selectedLevels) {
         th.textContent = col;
         const td = document.createElement("td");
 
-        if (col === "Meaning" || col === "Usage") {
-          const words = value.split(/\s+/);
+        if (col === "Meaning") {
+          const correctPhrase = value.trim(); // For "Meaning", blank the whole phrase.
+          const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+          const options = generateOptions(correctPhrase, window.vocabData || [], col);
+        
+          td.innerHTML = `
+            <span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <br>${createOptionsHTML(blankId, correctPhrase, options)}
+          `;
+        } else if (col === "Usage") {
+          const words = value.split(/\s+/);  // For "Usage", only one word is blanked.
           const randomIndex = Math.floor(Math.random() * words.length);
           const correctWord = words[randomIndex];
           const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
           const options = generateOptions(correctWord, window.vocabData || [], col);
-
+        
           words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
           td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, options)}`;
         } else {
@@ -259,7 +268,7 @@ function startPractice(selectedSources, selectedLevels) {
     const wordsFromSameColumn = vocabData
       .map(entry => entry[column])
       .filter(value => value && value !== "-")
-      .flatMap(value => value.match(/\b([\wäöüÄÖÜß]+)\b/g) || [])
+      .map(value => value.trim())
       .filter(word => word !== correctWord);
 
     const unique = Array.from(new Set(wordsFromSameColumn)).sort(() => 0.5 - Math.random()).slice(0, 3);
