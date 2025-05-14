@@ -252,30 +252,45 @@ function renderPracticeFlashcard(entry) {
   practiceArea.appendChild(container);
 
   submitBtn.addEventListener("click", () => {
-    const selected = document.querySelectorAll("input[type='radio']:checked");
     let correct = 0;
+    const radioGroups = new Set();
+    document.querySelectorAll("input[type='radio']").forEach(r => radioGroups.add(r.name));
 
-    selected.forEach(input => {
-      const answerCell = input.closest('td');  // The cell containing the answer
-      const correctWord = input.dataset.correct === "true";
-      
-      // Show the result (green tick or red cross)
-      const resultIcon = document.createElement('span');
-      resultIcon.textContent = correctWord ? '✅' : '❌';
-      resultIcon.style.color = correctWord ? 'green' : 'red';
-      
-      // Append the result icon next to the radio input
-      input.parentNode.appendChild(resultIcon);
-
-      // Display the correct answer if the user is wrong
-      if (!correctWord) {
-        const correctAnswerSpan = document.createElement('span');
-        correctAnswerSpan.textContent = ` Correct: ${input.dataset.correctAnswer}`;
-        correctAnswerSpan.style.color = 'blue';
+    radioGroups.forEach(groupName => {
+      const checked = document.querySelector(`input[name='${groupName}']:checked`);
+      const inputs = document.querySelectorAll(`input[name='${groupName}']`);
+      if (checked) {
+        const isCorrect = checked.dataset.correct === "true";
+        const answerCell = checked.closest("td");
+    
+        const resultIcon = document.createElement("span");
+        resultIcon.textContent = isCorrect ? "✅" : "❌";
+        resultIcon.style.color = isCorrect ? "green" : "red";
+        checked.parentNode.appendChild(resultIcon);
+    
+        if (!isCorrect) {
+          const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
+          const correctAnswerSpan = document.createElement("div");
+          correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
+          correctAnswerSpan.style.color = "blue";
+          answerCell.appendChild(correctAnswerSpan);
+        }
+    
+        if (isCorrect) correct++;
+      } else {
+        // No radio selected — treat as wrong
+        const answerCell = inputs[0]?.closest("td");
+        const resultIcon = document.createElement("span");
+        resultIcon.textContent = "❌";
+        resultIcon.style.color = "red";
+        inputs[0].parentNode.appendChild(resultIcon);
+    
+        const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
+        const correctAnswerSpan = document.createElement("div");
+        correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
+        correctAnswerSpan.style.color = "blue";
         answerCell.appendChild(correctAnswerSpan);
       }
-
-      if (correctWord) correct++;
     });
     
     // Evaluate text inputs for all tense columns
