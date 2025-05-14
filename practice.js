@@ -210,9 +210,7 @@ function renderPracticeFlashcard(entry) {
               
                 td.innerHTML = cellContent;
               } else if (col === "Example statement with the preposition") {
-                  const prefixGroup = "(?:wor|wo|woh|da|dah|dar)";
-                  const prepGroup = germanPrepositions.join("|");
-                  const regex = new RegExp(`\\b(?:${prefixGroup}(?:${prepGroup})|${prepGroup})\\b`, "gi");
+                  const regex = new RegExp(`\\b(${compoundPrepositions.join("|")})\\b`, "gi");
 
                   const matches = [...value.matchAll(regex)];
                 
@@ -243,12 +241,11 @@ function renderPracticeFlashcard(entry) {
                 
                   // Replace placeholders with span + options
                   radioBlocks.forEach((block, idx) => {
-                  processedValue = processedValue.replace(`__BLANK${idx}__`,
-                    `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`);
-                  
-                  processedValue += `<br>${block.html}<br>`;
+                    const placeholder = `<span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <br>${block.html}<br><br>`;
+                    processedValue = processedValue.replace(`__BLANK${idx}__`, placeholder);
                   });
-                
+                  
                   td.innerHTML = processedValue;
                 } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
