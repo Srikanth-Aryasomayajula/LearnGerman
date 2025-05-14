@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Create level dropdown
   const levelDropdownContainer = document.createElement("div");
   levelDropdownContainer.id = "levelDropdownContainer";
+  levelDropdownContainer.className = "ddropdown-buttons";
   levelDropdownContainer.style.display = "none";
 
   const dropdownHeader = document.createElement("div");
