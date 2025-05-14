@@ -295,7 +295,7 @@ function renderPracticeFlashcard(entry) {
     columns.forEach(col => {
       const inputs = document.querySelectorAll(`input[data-col="${col}"]`);
       inputs.forEach(input => {
-        const userAnswer = input.value.trim().toLowerCase();
+        const userAnswer = (input.value || "").trim().toLowerCase();
         const correctAnswer = input.dataset.answer.toLowerCase();
   
         const resultIcon = document.createElement("span");
