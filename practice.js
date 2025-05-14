@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const dropdownHeader = document.createElement("div");
   dropdownHeader.id = "dropdownHeader";
-  dropdownHeader.className = "dropdown-header";
+  dropdownHeader.className = "custom-dropdown";
   dropdownHeader.textContent = "Select Level(s)";
   levelDropdownContainer.appendChild(dropdownHeader);
 
@@ -35,10 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdownOptions.appendChild(label);
   });
 
-  // Add second "Start Practice" button after dropdown
+  // Add second "Start" button after dropdown
   const secondStartBtn = document.createElement("button");
   secondStartBtn.id = "startAfterLevelSelect";
-  secondStartBtn.textContent = "Start Practice";
+  secondStartBtn.textContent = "Start";
   secondStartBtn.style.display = "none";
   levelDropdownContainer.appendChild(secondStartBtn);
 
