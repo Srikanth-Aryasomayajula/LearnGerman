@@ -282,7 +282,7 @@ function renderPracticeFlashcard(entry) {
     
         if (!isCorrect) {
           const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
-          const parentDiv = (checked || correctInput).closest("div"); // container of the option group
+          const parentDiv = checked.closest("div"); // container of the option group
           const existing = parentDiv.querySelector(".correct-combo");
         
           if (!existing) {
