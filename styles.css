@@ -36,6 +36,27 @@ body {
   color: #1f2937;  /* Similar to text-gray-800 */
 }
 
+/* Side menu container */
+.side-menu {
+  position: absolute;
+  top: 70px; /* below the navbar */
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  z-index: 999;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 180px;
+}
+
+/* Hide element by default */
+.hidden {
+  display: none;
+}
+
 /* Menu link styles */
 .menu-link {
   display: inline-block;
