@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   levelSelect.id = "levelSelectContainer";
   levelSelect.className = "custom-dropdown";
   levelSelect.style.display = "none";
+  levelDropdownContainer.appendChild(levelSelect);
   
   const dropdownHeader = document.createElement("div");
   dropdownHeader.id = "dropdownHeader";
