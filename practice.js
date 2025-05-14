@@ -282,17 +282,16 @@ function renderPracticeFlashcard(entry) {
     
         if (!isCorrect) {
           const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
-          const parentTd = checked.closest("td");
-  
-          let existing = parentTd.querySelector(".correct-combo");
-          if (existing) {
-            existing.textContent += `, ${correctInput.dataset.correctAnswer}`;
-          } else {  
+          const parentDiv = checked.closest("div"); // container of the option group
+          const existing = parentDiv.querySelector(".correct-combo");
+        
+          if (!existing) {
             const correctAnswerSpan = document.createElement("div");
             correctAnswerSpan.className = "correct-combo";
             correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
             correctAnswerSpan.style.color = "blue";
-            answerCell.appendChild(correctAnswerSpan);
+            correctAnswerSpan.style.marginTop = "4px";
+            parentDiv.appendChild(correctAnswerSpan);
           }
         }
         if (isCorrect) correct++;
