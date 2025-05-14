@@ -264,7 +264,7 @@ body {
 
 .view-mode {
   display: flex;
-  gap: 1.5rem; /* Adjust the gap as needed */
+  gap: 2.5rem; /* Adjust the gap as needed */
   align-items: center;
 }
 
