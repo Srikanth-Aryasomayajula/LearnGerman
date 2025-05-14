@@ -203,7 +203,7 @@ function renderPracticeFlashcard(entry) {
                   const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
                   const options = generateOptions(prep, window.vocabData || [], col);
                   return `
-                    <span class="blank-line" style="display: inline-block; min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <span class="blank-line" style="display: min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     <br>${createOptionsHTML(blankId, prep, options)}
                   `;
                 }).join('<br>');
