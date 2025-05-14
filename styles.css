@@ -179,12 +179,12 @@ body {
 .dropdown-header-1::before {
   content: "";
   position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  border: 2px solid black; /* Outer border */
-  border-radius: 6px; /* Slightly larger radius to match inner */
+  top: -8px;
+  left: -12px;
+  right: -12px;
+  bottom: -8px;
+  border: 1px solid #aaa; /* Outer border */
+  border-radius: 4px; /* Slightly larger radius to match inner */
   z-index: -1; /* Push it behind the main element */
 }
 
