@@ -163,17 +163,31 @@ body {
 
 /* Style for the dropdown header */
 .dropdown-header-1 {
+  position: relative; /* Required for positioning the pseudo-element */
   background: #fff;
-  border: 1px solid #aaa;
+  border: 1px solid #aaa; /* Inner border */
   border-radius: 4px;
   padding: 8px 12px;
   cursor: pointer;
   user-select: none;
   display: flex;
-  align-items: center; /* Vertically center the content inside */
-  justify-content: space-between; /* Align text to the left if needed */
-  box-shadow: 4 4 0 1px #aaa;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1; /* Ensure it's above the pseudo-element */
 }
+
+.dropdown-header-1::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid black; /* Outer border */
+  border-radius: 6px; /* Slightly larger radius to match inner */
+  z-index: -1; /* Push it behind the main element */
+}
+
 
 .dropdown-options {
   position: absolute;
