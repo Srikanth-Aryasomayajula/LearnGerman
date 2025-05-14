@@ -7,41 +7,41 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = 0;
   let selectedLevels = [];
 
-  // Create level dropdown
+  // Compact dropdown container for level selection
   const levelDropdownContainer = document.createElement("div");
-  levelDropdownContainer.id = "levelDropdownContainer";
   levelDropdownContainer.className = "dropdown-buttons";
+  levelDropdownContainer.id = "levelDropdownContainer";
   levelDropdownContainer.style.display = "none";
 
   const levelSelect = document.createElement("div");
-  levelSelect.id = "levelSelectContainer";
   levelSelect.className = "custom-dropdown";
-  levelSelect.style.display = "none";
-  levelDropdownContainer.appendChild(levelSelect);
-  
+  levelSelect.id = "levelSelectContainer";
+
   const dropdownHeader = document.createElement("div");
-  dropdownHeader.id = "dropdownHeader";
   dropdownHeader.className = "dropdown-header";
+  dropdownHeader.id = "dropdownHeader";
   dropdownHeader.textContent = "Select Level(s)";
-  levelDropdownContainer.appendChild(dropdownHeader);
+  levelSelect.appendChild(dropdownHeader);
 
   const dropdownOptions = document.createElement("div");
-  dropdownOptions.id = "dropdownOptions";
   dropdownOptions.className = "dropdown-options hidden";
-  levelDropdownContainer.appendChild(dropdownOptions);
+  dropdownOptions.id = "dropdownOptions";
 
   const levels = ["All", "A1", "A2", "B1", "B2", "C1", "C2"];
   levels.forEach(level => {
     const label = document.createElement("label");
     const cb = document.createElement("input");
     cb.type = "checkbox";
-    cb.value = level;
+    cb.value = level.toLowerCase();
+    cb.name = "levelCheckbox";
     label.appendChild(cb);
     label.append(` ${level}`);
     dropdownOptions.appendChild(label);
   });
 
-  // Add second "Start" button after dropdown
+  levelSelect.appendChild(dropdownOptions);
+  levelDropdownContainer.appendChild(levelSelect);
+
   const secondStartBtn = document.createElement("button");
   secondStartBtn.id = "startAfterLevelSelect";
   secondStartBtn.textContent = "Start";
@@ -64,31 +64,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   levelCheckboxes.forEach(cb => {
     cb.addEventListener("change", () => {
-      const isAll = cb.value === "all";
-      const rest = Array.from(levelCheckboxes).filter(c => c.value !== "all");
+      const allBox = Array.from(levelCheckboxes).find(c => c.value === "all");
+      const others = Array.from(levelCheckboxes).filter(c => c.value !== "all");
 
-      if (isAll) {
-        const allChecked = rest.every(c => c.checked);
-        levelCheckboxes.forEach(c => c.checked = !allChecked);
+      if (cb.value === "all") {
+        const allChecked = others.every(c => c.checked);
+        others.forEach(c => c.checked = !allChecked);
       } else {
-        if (!cb.checked) levelCheckboxes[0].checked = false;
-        else if (rest.every(c => c.checked)) levelCheckboxes[0].checked = true;
+        if (!cb.checked) allBox.checked = false;
+        else if (others.every(c => c.checked)) allBox.checked = true;
       }
 
       selectedLevels = Array.from(levelCheckboxes)
-        .filter(c => c.checked)
-        .map(c => c.value)
-        .filter(l => l !== "all");
+        .filter(c => c.checked && c.value !== "all")
+        .map(c => c.value.toUpperCase());
 
       dropdownHeader.textContent = selectedLevels.length === 0
         ? "Select Level(s)"
-        : selectedLevels.length === rest.length
+        : selectedLevels.length === others.length
           ? "All"
           : selectedLevels.join(", ");
     });
   });
 
-  // First Start Practice button (main flow trigger)
   loadButton.addEventListener("click", () => {
     const selectedSources = Array.from(checkboxes)
       .filter(cb => cb.checked)
@@ -100,23 +98,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (selectedSources.includes("Vokabular")) {
-      levelDropdownContainer.style.display = "block";
+      levelDropdownContainer.style.display = "flex";
       secondStartBtn.style.display = "inline-block";
-      return; // Wait for user to click second start button
+      return;
     } else {
       levelDropdownContainer.style.display = "none";
       secondStartBtn.style.display = "none";
     }
 
-    startPractice(selectedSources, []); // No levels needed if not Vokabular
+    startPractice(selectedSources, []);
   });
 
-  // Second Start Practice button (after level selection)
   secondStartBtn.addEventListener("click", () => {
     selectedLevels = Array.from(levelCheckboxes)
-      .filter(c => c.checked)
-      .map(c => c.value)
-      .filter(l => l !== "all");
+      .filter(c => c.checked && c.value !== "all")
+      .map(c => c.value.toUpperCase());
 
     if (selectedLevels.length === 0) {
       alert("Please select at least one level from the dropdown.");
@@ -135,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     filteredData = vocabData.filter(row =>
       selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
-      (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim()) : true)
+      (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim().toUpperCase()) : true)
     );
 
     if (filteredData.length > 0) {
@@ -145,7 +141,6 @@ document.addEventListener("DOMContentLoaded", () => {
       practiceArea.innerHTML = "No data loaded.";
     }
 
-    // Hide level selector and second button after practice starts
     levelDropdownContainer.style.display = "none";
     secondStartBtn.style.display = "none";
   }
@@ -239,7 +234,6 @@ document.addEventListener("DOMContentLoaded", () => {
     buttonRow.appendChild(nextBtn);
     container.appendChild(buttonRow);
 
-    practiceArea.innerHTML = "";
     practiceArea.appendChild(container);
 
     submitBtn.addEventListener("click", () => {
