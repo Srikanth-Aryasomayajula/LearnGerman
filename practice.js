@@ -126,24 +126,26 @@ document.addEventListener("DOMContentLoaded", () => {
     startPractice(selectedSources, selectedLevels);
   });
 
-  function startPractice(selectedSources, selectedLevels) {
-    const vocabData = window.vocabData || [];
+function startPractice(selectedSources, selectedLevels) {
+  const vocabData = window.vocabData || [];
 
-    filteredData = vocabData.filter(row =>
-      selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
-      (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim().toUpperCase()) : true)
-    );
+  const data = vocabData.filter(row =>
+    selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
+    (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim().toUpperCase()) : true)
+  );
 
-    if (filteredData.length > 0) {
-      currentIndex = 0;
-      renderPracticeFlashcard(filteredData[currentIndex]);
-    } else {
-      practiceArea.innerHTML = "No data loaded.";
-    }
-
-    levelDropdownContainer.style.display = "none";
-    secondStartBtn.style.display = "none";
+  if (data.length > 0) {
+    filteredData = data.sort(() => 0.5 - Math.random());  // Shuffle like in script.js
+    currentIndex = 0;
+    renderPracticeFlashcard(filteredData[currentIndex]);
+  } else {
+    practiceArea.innerHTML = "No data loaded.";
   }
+
+  levelDropdownContainer.style.display = "none";
+  secondStartBtn.style.display = "none";
+}
+
 
   function renderPracticeFlashcard(entry) {
     practiceArea.innerHTML = "";
