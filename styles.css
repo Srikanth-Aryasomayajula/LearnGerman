@@ -467,7 +467,7 @@ body {
     flex-direction: column;
   }
 
-    body {
+  body {
     font-size: 1rem;
   }
 
@@ -506,6 +506,14 @@ body {
     width: 100%;
     text-align: left;
     padding-left: 20px;
+  }
+
+  .menu-button {
+    width: auto; /* instead of 100% */
+  }
+
+  .menu-container {
+    width: auto; /* shrink based on content */
   }
 }
 
