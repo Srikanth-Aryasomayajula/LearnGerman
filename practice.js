@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   levelSelect.id = "levelSelectContainer";
 
   const dropdownHeader = document.createElement("div");
-  dropdownHeader.className = "dropdown-header";
+  dropdownHeader.className = "dropdown-header-1";
   dropdownHeader.id = "dropdownHeader";
   dropdownHeader.textContent = "Select Level(s)";
   levelSelect.appendChild(dropdownHeader);
