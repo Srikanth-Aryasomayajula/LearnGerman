@@ -92,6 +92,7 @@ body {
 }
 
 .main-content {
+  padding: 0 -1rem;
   width: 100%
 }
 
