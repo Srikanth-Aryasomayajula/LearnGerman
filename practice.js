@@ -245,7 +245,7 @@ function renderPracticeFlashcard(entry) {
                     });
 
                     // Assemble the full HTML for this line: sentence, then options, then result
-                    const sentenceHTML = `<div class="example-sentence" style="margin-bottom: 0.3em;"><strong>•</strong> ${processedLine}</div>`;
+                    const sentenceHTML = `<div class="example-sentence" style="margin-bottom: 0.3em;">${processedLine}</div>`;
                     const optionsHTML = radioBlocks.map(rb => `<div style="margin: 0.3em 0;">${rb.html}</div>`).join("");
                     const resultHTML = `<div class="example-result" id="result_${lineIdx}" style="margin-bottom: 1em;"></div>`;
 
