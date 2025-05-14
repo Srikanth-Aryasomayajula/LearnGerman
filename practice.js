@@ -13,6 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
   levelDropdownContainer.className = "dropdown-buttons";
   levelDropdownContainer.style.display = "none";
 
+  const levelSelect = document.createElement("div");
+  levelSelect.id = "levelSelectContainer";
+  levelSelect.className = "custom-dropdown";
+  levelSelect.style.display = "none";
+  
   const dropdownHeader = document.createElement("div");
   dropdownHeader.id = "dropdownHeader";
   dropdownHeader.className = "dropdown-header";
