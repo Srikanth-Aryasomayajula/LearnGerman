@@ -199,16 +199,22 @@ function renderPracticeFlashcard(entry) {
                 td.innerHTML = `<input type="text" id="${blankId}" data-answer="${value}" data-col="${col}" style="min-width: 120px;" />`;
               } else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
                 const preps = value.split(/\s*,\s*/);  // Split by comma
-                const cellContent = preps.map((prep, idx) => {
+                const blocks = [];
+                
+                preps.forEach((prep, idx) => {
                   const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
                   const options = generateOptions(prep, window.vocabData || [], col);
-                  return `
+                
+                  const sentenceHTML = `<div class="prep-blank" style="margin-bottom: 0.3em;">
                     <span class="blank-line" style="display: inline-block; min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <br>${createOptionsHTML(blankId, prep, options)}
-                  `;
-                }).join('<br>');
-              
-                td.innerHTML = cellContent;
+                  </div>`;
+                  const optionsHTML = `<div style="margin-bottom: 1em;">${createOptionsHTML(blankId, prep, options)}</div>`;
+                
+                  blocks.push(`${sentenceHTML}${optionsHTML}`);
+                });
+                
+                td.innerHTML = blocks.join("");
+
               } else if (col === "Example statement with the preposition") {
                   const lines = value.split(/\r?\n/); // split on real linebreaks
                   const lineHTML = [];
