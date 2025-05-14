@@ -194,6 +194,15 @@ function renderPracticeFlashcard(entry) {
               
                 words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
                 td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, options)}`;
+              } else if (["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].includes(col)) {
+                const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_${Math.random().toString(36).substr(2, 6)}`;
+                td.innerHTML = `<input type="text" class="tense-input" data-correct="${value.trim()}" name="${blankId}">`;
+              } else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
+                const preps = value.split(',').map(p => p.trim());
+                const blanks = preps.map((prep, i) =>
+                  `<input type="text" class="prep-input" data-correct="${prep}" data-index="${i}">`
+                ).join(", ");
+                td.innerHTML = blanks;
               } else {
         td.innerHTML = value.replace(/\r?\n/g, "<br>");
       }
@@ -252,6 +261,55 @@ function renderPracticeFlashcard(entry) {
     const selected = document.querySelectorAll("input[type='radio']:checked");
     let correct = 0;
 
+    // Evaluate free text inputs for tense columns
+    const tenseInputs = document.querySelectorAll("input.tense-input");
+    tenseInputs.forEach(input => {
+      const userAns = input.value.trim().toLowerCase();
+      const correctAns = input.dataset.correct.trim().toLowerCase();
+      const resultIcon = document.createElement('span');
+    
+      if (userAns === correctAns) {
+        correct++;
+        resultIcon.textContent = '✅';
+        resultIcon.style.color = 'green';
+      } else {
+        resultIcon.textContent = '❌';
+        resultIcon.style.color = 'red';
+        const correctSpan = document.createElement('span');
+        correctSpan.textContent = ` Correct: ${input.dataset.correct}`;
+        correctSpan.style.color = 'blue';
+        input.parentNode.appendChild(correctSpan);
+      }
+    
+      input.parentNode.appendChild(resultIcon);
+    });
+
+    // For multiple preposition inputs
+    const prepInputs = document.querySelectorAll("input.prep-input");
+    const prepGroups = {};
+    
+    prepInputs.forEach(input => {
+      const idx = input.dataset.index;
+      const correctPrep = input.dataset.correct.trim().toLowerCase();
+      const userPrep = input.value.trim().toLowerCase();
+      const resultIcon = document.createElement('span');
+    
+      if (userPrep === correctPrep) {
+        correct++;
+        resultIcon.textContent = '✅';
+        resultIcon.style.color = 'green';
+      } else {
+        resultIcon.textContent = '❌';
+        resultIcon.style.color = 'red';
+        const correctSpan = document.createElement('span');
+        correctSpan.textContent = ` Correct: ${input.dataset.correct}`;
+        correctSpan.style.color = 'blue';
+        input.parentNode.appendChild(correctSpan);
+      }
+    
+      input.parentNode.appendChild(resultIcon);
+    });
+
     selected.forEach(input => {
       const answerCell = input.closest('td');  // The cell containing the answer
       const correctWord = input.dataset.correct === "true";
@@ -275,7 +333,12 @@ function renderPracticeFlashcard(entry) {
       if (correctWord) correct++;
     });
 
-    const total = document.querySelectorAll("input[type='radio']").length / 4;
+    const total = (
+      document.querySelectorAll("input[type='radio']").length / 4 +
+      document.querySelectorAll("input.tense-input").length +
+      document.querySelectorAll("input.prep-input").length
+    );
+
     resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
 
     submitBtn.style.display = "none";
