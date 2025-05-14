@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = 0;
   let selectedLevels = [];
 
+  // Compact dropdown container for level selection
   const levelDropdownContainer = document.createElement("div");
   levelDropdownContainer.className = "dropdown-buttons";
   levelDropdownContainer.id = "levelDropdownContainer";
@@ -125,25 +126,26 @@ document.addEventListener("DOMContentLoaded", () => {
     startPractice(selectedSources, selectedLevels);
   });
 
-  function startPractice(selectedSources, selectedLevels) {
-    const vocabData = window.vocabData || [];
+function startPractice(selectedSources, selectedLevels) {
+  const vocabData = window.vocabData || [];
 
-    const data = vocabData.filter(row =>
-      selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
-      (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim().toUpperCase()) : true)
-    );
+  const data = vocabData.filter(row =>
+    selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
+    (selectedSources.includes("Vokabular") ? selectedLevels.includes((row["Level"] || "").trim().toUpperCase()) : true)
+  );
 
-    if (data.length > 0) {
-      filteredData = data.sort(() => 0.5 - Math.random());  // Shuffle like in script.js
-      currentIndex = 0;
-      renderPracticeFlashcard(filteredData[currentIndex]);
-    } else {
-      practiceArea.innerHTML = "No data loaded.";
-    }
-
-    levelDropdownContainer.style.display = "none";
-    secondStartBtn.style.display = "none";
+  if (data.length > 0) {
+    filteredData = data.sort(() => 0.5 - Math.random());  // Shuffle like in script.js
+    currentIndex = 0;
+    renderPracticeFlashcard(filteredData[currentIndex]);
+  } else {
+    practiceArea.innerHTML = "No data loaded.";
   }
+
+  levelDropdownContainer.style.display = "none";
+  secondStartBtn.style.display = "none";
+}
+
 
   function renderPracticeFlashcard(entry) {
     practiceArea.innerHTML = "";
@@ -173,28 +175,25 @@ document.addEventListener("DOMContentLoaded", () => {
         th.textContent = col;
         const td = document.createElement("td");
 
-        // Handle tenses (Präteritum, Perfect, etc.) by adding blanks for user input
-        if (["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].includes(col)) {
-          const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${Math.random().toString(36).substr(2, 6)}`;
-          td.innerHTML = `<input type="text" id="${blankId}" class="blank-line" />`;
-        }
-        // Handle prepositions
-        else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
-          const prepositions = value.split(",").map(prep => prep.trim());
-          const blankIds = prepositions.map((_, index) => `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${index}_${Math.random().toString(36).substr(2, 6)}`);
-          td.innerHTML = blankIds.map((blankId, index) => `<input type="text" id="${blankId}" class="blank-line" placeholder="___" />`).join(" , ");
-          td.setAttribute("data-correct-prepositions", prepositions.join(","));
-        }
-        // Handle other cases
-        else if (col === "Usage") {
-          const words = value.split(/\s+/);
+        if (col === "Meaning") {
+          const correctPhrase = value.trim(); // For "Meaning", blank the whole phrase.
+          const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+          const options = generateOptions(correctPhrase, window.vocabData || [], col);
+        
+          td.innerHTML = `
+            <span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <br>${createOptionsHTML(blankId, correctPhrase, options)}
+          `;
+        } else if (col === "Usage") {
+          const words = value.split(/\s+/);  // For "Usage", only one word is blanked.
           const randomIndex = Math.floor(Math.random() * words.length);
           const correctWord = words[randomIndex];
           const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+          const options = generateOptions(correctWord, window.vocabData || [], col);
+        
           words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
-          td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, generateOptions(correctWord, window.vocabData || [], col))}`;
-        }
-        else {
+          td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, options)}`;
+        } else {
           td.innerHTML = value.replace(/\r?\n/g, "<br>");
         }
 
@@ -249,25 +248,14 @@ document.addEventListener("DOMContentLoaded", () => {
     practiceArea.appendChild(container);
 
     submitBtn.addEventListener("click", () => {
+      const selected = document.querySelectorAll("input[type='radio']:checked");
       let correct = 0;
 
-      // Check answers for tenses (Präteritum, Perfect, etc.)
-      ["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].forEach(col => {
-        const input = document.getElementById(`${col.toLowerCase().replace(/\s+/g, "_")}_blank`);
-        if (input) {
-          const correctAnswer = entry[col].trim();
-          if (input.value.trim() === correctAnswer) correct++;
-        }
+      selected.forEach(input => {
+        if (input.dataset.correct === "true") correct++;
       });
 
-      // Check answers for prepositions
-      const prepositionsInput = document.querySelectorAll(`#${col.toLowerCase().replace(/\s+/g, "_")}_blank`);
-      prepositionsInput.forEach(input => {
-        const correctPrepositions = input.closest('td').dataset.correctPrepositions.split(",");
-        if (correctPrepositions.includes(input.value.trim())) correct++;
-      });
-
-      const total = filteredData.length;
+      const total = document.querySelectorAll("input[type='radio']").length / 4;
       resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
 
       submitBtn.style.display = "none";
@@ -282,15 +270,15 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter(value => value && value !== "-")
       .map(value => value.trim())
       .filter(phrase => phrase !== correctWord);  // Exclude the correct word
-
+  
     // Get individual words from the phrases
     const allWords = wordsFromSameColumn.flatMap(phrase => phrase.split(/\s+/));
-
+  
     // Select 3 random words from the available options (excluding the correct word)
     const incorrectWords = Array.from(new Set(allWords))
       .sort(() => 0.5 - Math.random())  // Shuffle
       .slice(0, 3);  // Select 3 words randomly
-
+  
     // Return a mix of incorrect options and the correct word
     return [...incorrectWords, correctWord].sort(() => 0.5 - Math.random());
   }
