@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   dropdownOptions.className = "dropdown-options hidden";
   levelDropdownContainer.appendChild(dropdownOptions);
 
-  const levels = ["all", "A1", "A2", "B1", "B2", "C1", "C2"];
+  const levels = ["All", "A1", "A2", "B1", "B2", "C1", "C2"];
   levels.forEach(level => {
     const label = document.createElement("label");
     const cb = document.createElement("input");
