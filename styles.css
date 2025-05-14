@@ -185,6 +185,7 @@ body {
   bottom: -8px;
   border: 1px solid #aaa; /* Outer border */
   border-radius: 4px; /* Slightly larger radius to match inner */
+  background-color: white;
   z-index: -1; /* Push it behind the main element */
 }
 
