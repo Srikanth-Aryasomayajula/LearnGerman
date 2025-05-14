@@ -393,8 +393,8 @@ function renderPracticeFlashcard(entry) {
   }
 
   const germanPrepositions = [
-    "an", "auf", "aus", "bei", "durch", "für", "gegen", "hinter", "in", "mit",
-    "nach", "neben", "ohne", "über", "um", "unter", "von", "vor", "zu", "zwischen",
+    "an", "am", "auf", "aus", "bei", "beim", "durch", "für", "fürs", "gegen", "hinter", "in", "im", "mit",
+    "nach", "neben", "ohne", "über", "um", "unter", "von", "vor", "zu", "zum","zur", "zwischen",
     "trotz", "während", "wegen", "entlang", "ab", "seit", "außer", "gegenüber", "anstatt"
   ];
   const compoundPrepositions = [
