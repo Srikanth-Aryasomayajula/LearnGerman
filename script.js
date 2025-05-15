@@ -310,17 +310,14 @@ function showFlashcard(row) {
 
 // Close menu when clicking outside
 document.addEventListener('click', (event) => {
-    const menu = document.querySelector('header nav ul');
-    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.getElementById('menuContainer');
+    const toggleBtn = document.getElementById('menuToggleBtn');
 
-    // Safety check in case elements aren't found
-    if (!menu || !menuToggle) return;
-
-    // Check if menu is active and click is outside both menu and toggle button
-    if (menu.classList.contains('active') &&
+    // If the menu is open (has "show-menu" class), and the click is outside the menu and toggle button
+    if (menu.classList.contains('show-menu') &&
         !menu.contains(event.target) &&
-        !menuToggle.contains(event.target)) {
-        menu.classList.remove('active');
-        menu.style.maxHeight = "0";
+        !toggleBtn.contains(event.target)) {
+        menu.classList.remove('show-menu');
     }
 });
+
