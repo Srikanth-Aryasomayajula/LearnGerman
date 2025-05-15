@@ -237,7 +237,7 @@ body {
 /* Style for the buttons next to the dropdown */
 .dropdown-buttons {
   display: flex;
-  justify-content: center;     /* ⬅️ Horizontally center all contents */
+  justify-content: center;     /* Horizontally center all contents */
   align-items: center;         /* Vertically align */
   gap: 20px;                   /* Space between dropdown and buttons */
   flex-wrap: wrap;             /* Wrap on small screens */
@@ -504,10 +504,12 @@ body {
   }
 
   .dropdown-buttons {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
+    justify-content: center; 
   }
-
+ 
   .dropdown-buttons button,
   .custom-dropdown {
     width: 60%;
