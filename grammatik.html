@@ -23,20 +23,30 @@
 </head>
 
 <body class="bg-text">
-  <nav class="navbar">
-    <a href="index.html" class="menu-button">Vokabular</a>
-    <a href="grammatik.html" class="menu-button">Grammatik</a>
-    <a href="maschinenbau.html" class="menu-button">Maschinenbau</a>
-    <a href="fuehrerschein.html" class="menu-button">Führerschein</a>
-    <a href="practice.html" class="menu-button">Üben</a>
-  </nav>
+	  <nav class="navbar">
+			  <button class="toggle-menu" id="menuToggleBtn">&#9776;</button>
+			  
+				<div class="menu-container" id="menuContainer"> 
+					<a href="index.html" class="menu-button">Vokabular</a>
+					<a href="grammatik.html" class="menu-button">Grammatik</a>
+					<a href="maschinenbau.html" class="menu-button">Maschinenbau</a>
+					<a href="fuehrerschein.html" class="menu-button">Führerschein</a>
+					<a href="practice.html" class="menu-button">Üben</a>
+				</div>
+	  </nav>
+	
+	  <main class="main-content">
+	    <h1 class="main-title">Grammatik</h1>
 
-  <main class="main-content">
-    <h1 class="main-title">Grammatik</h1>
+	    <!-- Embed iframe -->
+	    <iframe id="grammatikFrame" src="grammatik_table.html" onload="resizeIframe(this)"></iframe>
 
-    <!-- Embed iframe -->
-    <iframe id="grammatikFrame" src="grammatik_table.html" onload="resizeIframe(this)"></iframe>
-  </main>
+			<script>
+				document.getElementById("menuToggleBtn").addEventListener("click", function () {
+					document.getElementById("menuContainer").classList.toggle("show-menu");
+				});
+			</script>
+	  </main>
 
   <script>
     function resizeIframe(iframe) {
