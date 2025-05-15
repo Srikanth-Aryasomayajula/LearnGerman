@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tableViewRadio = document.getElementById("viewTable");
   const flashcardViewRadio = document.getElementById("viewFlashcards");
   const table = document.getElementById("maschinenbauTable");
+  table.style.display = "none";
   const flashcardContainer = document.getElementById("flashcardContainer");
   
   const tableBody = document.querySelector("#maschinenbauTable tbody");
