@@ -527,6 +527,7 @@ body {
 
   .checkbox-row {
     flex-direction: column;
+    gap: 5px;
   }
 }
 
