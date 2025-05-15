@@ -24,7 +24,19 @@
   <main class="main-content">
     <h1 class="main-title">Maschinenbau</h1>
     
-    <table id="vocabTable" class="vocab-table">
+	<div class="dropdown-buttons" style="flex-direction: column;">
+		
+		<div class="view-mode">
+			<label><input type="radio" name="viewMode" id="viewFlashcards" checked /> Flashcards</label>
+			<label><input type="radio" name="viewMode" id="viewTable" /> Table</label>
+		</div>
+		<button id="displayTableBtn">Display</button>
+		
+		<!-- Empty div for flashcards -->
+		<div id="flashcardContainer" class="flashcard-container" style="display: none;"></div>
+    </div>
+	
+	<table id="vocabTable" class="vocab-table">
       <thead>
         <tr>
           <th>German</th>
