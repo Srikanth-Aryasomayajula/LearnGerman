@@ -464,7 +464,6 @@ body {
     position: absolute;
     top: 30px;
     right: 65px;
-    /*left: auto;*/
     flex-direction: column;
     background-color: #000;
     border: 1px solid #333;
