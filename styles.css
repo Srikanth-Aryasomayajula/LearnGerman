@@ -493,6 +493,7 @@ body {
   .button-wrapper {
     flex-direction: column;
     gap: 0.5rem;
+    align-items: center;
   }
 
   .option-group {
