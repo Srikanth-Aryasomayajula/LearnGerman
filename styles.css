@@ -111,7 +111,7 @@ body {
 
 /* Table Styles */
 .vocab-table {
-  width: max-content;
+  width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
   font-size: 0.95rem;
