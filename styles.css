@@ -534,6 +534,10 @@ body {
     margin-top: 0px;
     gap: 15px;
   }
+
+  .loadPracticeBtn {
+    margin-bottom: 20px;
+  }
 }
 
 @media (hover: none) {
