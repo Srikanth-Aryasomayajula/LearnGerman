@@ -500,7 +500,7 @@ body {
 
   .dropdown-header {
     font-size: 1rem;
-    width: 100%;
+    width: 90%;
   }
 
   .dropdown-buttons {
@@ -510,7 +510,7 @@ body {
 
   .dropdown-buttons button,
   .custom-dropdown {
-    width: 70%;
+    width: 60%;
     font-size: 1rem;
   }
 }
