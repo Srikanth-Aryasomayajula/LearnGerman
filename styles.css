@@ -241,7 +241,7 @@ body {
   align-items: center;         /* Vertically align */
   gap: 20px;                   /* Space between dropdown and buttons */
   flex-wrap: wrap;             /* Wrap on small screens */
-  flex-direction: column;      /* Stack buttons and flashcards vertically */
+  flex-direction: row;      /* Stack buttons and flashcards vertically */
   width: 100%;
 }
 
