@@ -120,6 +120,14 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
+/* Scrollable container for the table */
+#vocabTable {
+  display: block;              /* Make it behave like a block to scroll */
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 100%;             /* Prevent horizontal overflow beyond viewport */
+}
+
 .vocab-table th,
 .vocab-table td {
   font-family: inherit;
