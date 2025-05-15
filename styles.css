@@ -510,7 +510,11 @@ body {
     align-items: center;
     justify-content: center; 
   }
- 
+
+  .dropdown-buttons button {
+    width: 50%;
+  }
+  
   .dropdown-buttons button,
   .custom-dropdown {
     width: 60%;
