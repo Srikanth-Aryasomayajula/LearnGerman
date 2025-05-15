@@ -7,6 +7,20 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="xlsx.full.min.js"></script>
   <script defer src="maschinenbau.js"></script>
+
+  <style>
+	  iframe {
+		width: 98vw;
+		height: 80vh;
+		border: none;
+	  }
+  
+	  body, html {
+		margin-top: 0px;
+		padding: 0;
+		overflow: hidden;   /* Prevent outer scrollbars */
+	  }
+	</style>	
 </head>
   
 <body class="bg-text">
@@ -24,7 +38,7 @@
   <main class="main-content">
     <h1 class="main-title">Maschinenbau</h1>
     
-	<div class="dropdown-buttons" style="flex-direction: column;">
+	  <div class="dropdown-buttons" style="flex-direction: column;">
 		
 		<div class="view-mode">
 			<label><input type="radio" name="viewMode" id="viewFlashcards" checked /> Flashcards</label>
@@ -34,9 +48,11 @@
 		
 		<!-- Empty div for flashcards -->
 		<div id="flashcardContainer" class="flashcard-container" style="display: none;"></div>
-    </div>
+        </div>
 	
 	<table id="maschinenbauTable" class="vocab-table">
+	<!-- Embed iframe -->
+	<iframe id="maschinenbauFrame" src="maschinenbau_table.html" onload="resizeIframe(this)" style="display:none;"></iframe>
       <thead>
         <tr>
           <th>German</th>
