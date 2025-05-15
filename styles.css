@@ -479,10 +479,6 @@ body {
     padding: 6px 12px;
   }
 
-  .custom-dropdown {
-    width: 50%;
-  }
-  
   .vocab-table {
     overflow-x: auto;
     display: block;
@@ -514,7 +510,7 @@ body {
 
   .dropdown-buttons button,
   .custom-dropdown {
-    width: 100%;
+    width: 60%;
     font-size: 1rem;
   }
 }
