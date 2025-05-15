@@ -529,6 +529,11 @@ body {
     flex-direction: column;
     gap: 5px;
   }
+
+  #sourceSelector {
+    margin-top: 0px;
+    gap: 15px;
+  }
 }
 
 @media (hover: none) {
