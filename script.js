@@ -33,6 +33,12 @@ fetch("Vocabulary.xlsx")
     workbook.Strings.forEach(entry => {
       if (entry.t && typeof entry.t === "string") {
         entry.t = entry.t.replace(/ø/g, "ß");
+      }
+
+  // Manually fix: Replace all 'φ' with 'ß'
+  if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
+    workbook.Strings.forEach(entry => {
+      if (entry.t && typeof entry.t === "string") {
 	entry.t = entry.t.replace(/Ó/g, "Ü");
       }
     });
