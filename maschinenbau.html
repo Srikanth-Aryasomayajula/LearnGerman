@@ -45,24 +45,25 @@
 			<label><input type="radio" name="viewMode" id="viewTable" /> Table</label>
 		</div>
 		<button id="displayTableBtn">Display</button>
-		
+	
 		<!-- Empty div for flashcards -->
 		<div id="flashcardContainer" class="flashcard-container" style="display: none;"></div>
-        </div>
+
+		<!-- Embed iframe -->
+		<iframe id="maschinenbauFrame" src="maschinenbau_table.html" onload="resizeIframe(this)" style="display:none;"></iframe>
+	  </div>
 	  
-	<!-- Embed iframe -->
-	<iframe id="maschinenbauFrame" src="maschinenbau_table.html" onload="resizeIframe(this)" style="display:none;"></iframe>
-      
-	<thead>
-        <tr>
-          <th>German</th>
-          <th>English</th>
-          <th>Example</th>
-          <th>Remarks</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+		<table id="vocabTable" class="vocab-table" style="display:none;">
+			<thead>
+		        <tr>
+		          <th>German</th>
+		          <th>English</th>
+		          <th>Example</th>
+		          <th>Remarks</th>
+		        </tr>
+		      </thead>
+		      <tbody></tbody>
+		    </table>
 
     <script>
   	  document.getElementById("menuToggleBtn").addEventListener("click", function () {
