@@ -6,16 +6,19 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="xlsx.full.min.js"></script>
-
 </head>
   
 <body class="bg-text">
   <nav class="navbar">
-    <a href="index.html" class="menu-button">Vokabular</a>
-    <a href="grammatik.html" class="menu-button">Grammatik</a>
-    <a href="maschinenbau.html" class="menu-button">Maschinenbau</a>
-    <a href="fuehrerschein.html" class="menu-button">Führerschein</a>
-    <a href="practice.html" class="menu-button">Üben</a>
+	<button class="toggle-menu" id="menuToggleBtn">&#9776;</button>
+	
+	<div class="menu-container" id="menuContainer"> 
+		<a href="index.html" class="menu-button">Vokabular</a>
+		<a href="grammatik.html" class="menu-button">Grammatik</a>
+		<a href="maschinenbau.html" class="menu-button">Maschinenbau</a>
+		<a href="fuehrerschein.html" class="menu-button">Führerschein</a>
+		<a href="practice.html" class="menu-button">Üben</a>
+	</div>
   </nav>
 
   <main class="main-content">
@@ -46,6 +49,12 @@
 	</div>
     
 	<div id="practiceArea"></div>
+	
+	<script>
+	  document.getElementById("menuToggleBtn").addEventListener("click", function () {
+	    document.getElementById("menuContainer").classList.toggle("show-menu");
+	  });
+	</script>
     
   </main>
   <script src="script.js" defer></script>
