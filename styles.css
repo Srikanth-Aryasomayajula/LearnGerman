@@ -237,9 +237,12 @@ body {
 /* Style for the buttons next to the dropdown */
 .dropdown-buttons {
   display: flex;
-  align-items: center;  /* Vertically align items */
-  gap: 20px;            /* Space between dropdown and buttons */
-  flex-wrap: wrap;      /* Optional: Wrap on small screens */
+  justify-content: center;     /* ⬅️ Horizontally center all contents */
+  align-items: center;         /* Vertically align */
+  gap: 20px;                   /* Space between dropdown and buttons */
+  flex-wrap: wrap;             /* Wrap on small screens */
+  flex-direction: column;      /* Stack buttons and flashcards vertically */
+  width: 100%;
 }
 
 /* Optional: Adjust the button size and font */
@@ -273,6 +276,7 @@ body {
   align-items: center;
 }
 
+/* Style for the flashcard container */
 .flashcard-container {
   display: flex;
   justify-content: center;
