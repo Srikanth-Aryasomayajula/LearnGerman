@@ -33,6 +33,7 @@ fetch("Vocabulary.xlsx")
     workbook.Strings.forEach(entry => {
       if (entry.t && typeof entry.t === "string") {
         entry.t = entry.t.replace(/ø/g, "ß");
+	entry.t = entry.t.replace(/Ó/g, "Ü");
       }
     });
   }
