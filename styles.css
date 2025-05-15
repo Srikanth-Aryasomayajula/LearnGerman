@@ -515,6 +515,10 @@ body {
     width: 90%;
   }
 
+  .dropdown-options {
+    max-height: 500px;
+  }
+  
   .dropdown-buttons {
     flex-direction: column;
     align-items: center;
