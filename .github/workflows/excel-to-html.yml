@@ -1,41 +1,42 @@
-name: Check HTML File Upload
-
-on:
-  push:
-    paths:
-      - 'Vocabulary1.xlsx'  # Trigger the workflow when Vocabulary.xlsx is pushed to the repo
-
-jobs:
-  check_html_file:
-    runs-on: ubuntu-latest
-    steps:
-      # Step 1: Checkout the repository
-      - uses: actions/checkout@v3
-
-      # Step 2: Set up Python environment
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: |
-          pip install gitpython xlwings
-          pip install xlwings
-          pip install gitpython
-          
-      # Step 4: Check if HTML file was uploaded after the Excel file
-      - name: Check if HTML file was uploaded after Excel
-        run: |
-          python convert_to_html.py
-
-      # Step 5: Commit and Push HTML file (only if HTML file is uploaded after Excel)
-      - name: Commit and Push HTML file
-        if: success()  # Only run this step if the check passed
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add grammatik_table.html  # Ensure this is the file you want to commit
-          git commit -m "Add updated HTML file from Excel conversion" || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
+#                                                                                                      #
+#name: Check HTML File Upload                                                                          #
+#                                                                                                      #
+#on:                                                                                                   #
+#  push:                                                                                               #
+#    paths:                                                                                            #
+#      - 'Vocabulary1.xlsx'  # Trigger the workflow when Vocabulary.xlsx is pushed to the repo         #
+#                                                                                                      #
+#jobs:                                                                                                 #
+#  check_html_file:                                                                                    #
+#    runs-on: ubuntu-latest                                                                            #
+#    steps:                                                                                            #
+#      # Step 1: Checkout the repository                                                               #
+#      - uses: actions/checkout@v3                                                                     #
+#                                                                                                      #
+#      # Step 2: Set up Python environment                                                             #
+#      - name: Set up Python                                                                           #
+#        uses: actions/setup-python@v4                                                                 #
+#        with:                                                                                         #
+#          python-version: '3.10'                                                                      #
+#                                                                                                      #
+#      # Step 3: Install dependencies                                                                  #
+#      - name: Install dependencies                                                                    #
+#        run: |                                                                                        #
+#          pip install gitpython xlwings                                                               #
+#          pip install xlwings                                                                         #
+#          pip install gitpython                                                                       #
+#                                                                                                      #
+#      # Step 4: Check if HTML file was uploaded after the Excel file                                  #
+#      - name: Check if HTML file was uploaded after Excel                                             #
+#        run: |                                                                                        #
+#          python convert_to_html.py                                                                   #
+#                                                                                                      #
+#      # Step 5: Commit and Push HTML file (only if HTML file is uploaded after Excel)                 #
+#      - name: Commit and Push HTML file                                                               #
+#        if: success()  # Only run this step if the check passed                                       #
+#        run: |                                                                                        #
+#          git config user.name "github-actions"                                                       #
+#          git config user.email "github-actions@github.com"                                           #
+#          git add grammatik_table.html  # Ensure this is the file you want to commit                  #
+#          git commit -m "Add updated HTML file from Excel conversion" || echo "No changes to commit"  #
+#          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }} #
