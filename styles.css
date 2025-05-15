@@ -42,6 +42,7 @@ body {
   font-size: 2.5rem;
   background: none;
   margin-left: auto;
+  right: 30px;
   color: white;
   border: none;
   cursor: pointer;
