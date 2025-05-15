@@ -97,9 +97,6 @@ body {
   width: 100%;
   justify-content: center;
   align-items: center;
-  overflow-x: auto;
-  overflow-y: auto;
-  max-width: 100%;
 }
 
 .main-title {
