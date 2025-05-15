@@ -41,7 +41,7 @@ fetch("Vocabulary.xlsx")
   if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
     workbook.Strings.forEach(entry => {
       if (entry.t && typeof entry.t === "string") {
-        entry.t = entry.t.replace(/Ó/g, "#");
+        entry.t = entry.t.replace(/Ó/g, "Ü");
       }
     });
   }
@@ -56,6 +56,9 @@ for (const cellAddress in worksheet) {
     if (cell.t === 's' && typeof cell.v === 'string') {
       // Replace ø with ß
       cell.v = cell.v.replace(/ø/g, "ß");
+
+      // Replace Ó with Ü
+      cell.v = cell.v.replace(/Ó/g, "Ü");
 
       // Ensure .w and .h are not used (just use .v)
       delete cell.w;
