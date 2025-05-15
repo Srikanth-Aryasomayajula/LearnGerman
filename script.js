@@ -41,7 +41,7 @@ fetch("Vocabulary.xlsx")
   if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
     workbook.Strings.forEach(entry => {
       if (entry.t && typeof entry.t === "string") {
-        entry.t = entry.t.replace(/Ó/g, "Ü");
+        entry.t = entry.t.replace(/Ó/g, "#");
       }
     });
   }
