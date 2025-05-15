@@ -82,8 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   	// Display the table/Flashcards when the button is clicked
   	displayTableBtn.addEventListener("click", () => {
+	  const iframe = document.getElementById("maschinenbauFrame");
+		
   	  if (tableViewRadio.checked) {
-    		table.style.display = "table";
+    		// table.style.display = "table"; // Enable this if you don't want the data in maschinenbau_table.html as a plain text
+		iframe.style.display = "block";   // Enable this if you want maschinenbau_table.html
     		flashcardContainer.style.display = "none";
   	  } else if (flashcardViewRadio.checked) {
     		table.style.display = "none";
