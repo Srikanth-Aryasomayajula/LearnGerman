@@ -237,7 +237,8 @@ body {
 /* Style for the buttons next to the dropdown */
 .dropdown-buttons {
   display: flex;
-  align-items: center;  /* Vertically align items */
+  /* align-items: center;  /* Vertically align items */
+  text-align: center;
   gap: 20px;            /* Space between dropdown and buttons */
   flex-wrap: wrap;      /* Optional: Wrap on small screens */
 }
