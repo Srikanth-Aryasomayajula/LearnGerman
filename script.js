@@ -304,7 +304,23 @@ function showFlashcard(row) {
   buttonWrapper.appendChild(prevBtn);
   buttonWrapper.appendChild(nextBtn);
   flashcardContainer.appendChild(buttonWrapper);
-}
-
+ }
 	
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (event) => {
+    const menu = document.querySelector('header nav ul');
+    const menuToggle = document.querySelector('.menu-toggle');
+
+    // Safety check in case elements aren't found
+    if (!menu || !menuToggle) return;
+
+    // Check if menu is active and click is outside both menu and toggle button
+    if (menu.classList.contains('active') &&
+        !menu.contains(event.target) &&
+        !menuToggle.contains(event.target)) {
+        menu.classList.remove('active');
+        menu.style.maxHeight = "0";
+    }
 });
