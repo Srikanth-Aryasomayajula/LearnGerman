@@ -71,5 +71,16 @@
   	</script>
     
   </main>
+  <script>
+    function resizeIframe(iframe) {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        iframe.style.height = doc.body.scrollHeight + 'px';
+        iframe.style.width = doc.body.scrollWidth + 'px'; // Optional, only if needed
+      } catch (e) {
+        console.error('Could not auto-resize iframe:', e);
+      }
+    }
+  </script>
 </body>
 </html>
