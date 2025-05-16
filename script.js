@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
     					<colgroup>
 						${columns.map(col => {
 							if (col === "Usage" || col === "Example statement with the preposition") {
-								return '<col style="width: 30%;">';
+								return '<col style="width: 60%;">';
 							}
 							return '<col style="width: auto;">';
 						}).join("")}
