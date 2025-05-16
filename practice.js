@@ -191,10 +191,10 @@ document.addEventListener("DOMContentLoaded", () => {
   table.className = "flashcard-table";
 
   const columns = [
-    "Level", "Article, Word and Plural", "Part of Speech", "Meaning", "Usage",
+    "Level", "Word (with Article and Plural)", "Part of Speech", "Meaning", "Usage",
     "Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt",
     "Futur I", "Futur II",
-    "Prepositions that go together with the verb/Noun/Adj.",
+    "Linked Preposition(s)",
     "Example statement with the preposition"
   ];
 
