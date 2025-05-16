@@ -62,50 +62,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+	// Create dropdown to select the level in vocabulary
+	function createLevelDropdown() {
+		const container = document.createElement("div");
+		container.className = "dropdown-buttons";
+		container.id = "levelDropdownContainer";
+		container.style.display = "none";
 
-  function createLevelDropdown() {
-    const container = document.createElement("div");
-    container.className = "dropdown-buttons";
-    container.id = "levelDropdownContainer";
-    container.style.display = "none";
+		const dropdown = document.createElement("div");
+		dropdown.className = "custom-dropdown";
+		dropdown.id = "levelSelectContainer";
 
-    const dropdown = document.createElement("div");
-    dropdown.className = "custom-dropdown";
-    dropdown.id = "levelSelectContainer";
+		const header = document.createElement("div");
+		header.className = "dropdown-header-1";
+		header.id = "dropdownHeader";
+		header.textContent = "Select Level(s)";
+		dropdown.appendChild(header);
 
-    const header = document.createElement("div");
-    header.className = "dropdown-header-1";
-    header.id = "dropdownHeader";
-    header.textContent = "Select Level(s)";
-    dropdown.appendChild(header);
+		const options = document.createElement("div");
+		options.className = "dropdown-options hidden";
+		options.id = "dropdownOptions";
 
-    const options = document.createElement("div");
-    options.className = "dropdown-options hidden";
-    options.id = "dropdownOptions";
+		const levels = ["All", "A1", "A2", "B1", "B2", "C1", "C2"];
+		levels.forEach(level => {
+			const label = document.createElement("label");
+			const cb = document.createElement("input");
+			cb.type = "checkbox";
+			cb.value = level.toLowerCase();
+			cb.name = "levelCheckbox";
+			label.appendChild(cb);
+			label.append(` ${level}`);
+			options.appendChild(label);
+		});
 
-    const levels = ["All", "A1", "A2", "B1", "B2", "C1", "C2"];
-    levels.forEach(level => {
-      const label = document.createElement("label");
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.value = level.toLowerCase();
-      cb.name = "levelCheckbox";
-      label.appendChild(cb);
-      label.append(` ${level}`);
-      options.appendChild(label);
-    });
+		dropdown.appendChild(options);
+		container.appendChild(dropdown);
 
-    dropdown.appendChild(options);
-    container.appendChild(dropdown);
+		const startBtn = document.createElement("button");
+		startBtn.id = "startAfterLevelSelect";
+		startBtn.textContent = "Start";
+		startBtn.style.display = "none";
+		container.appendChild(startBtn);
 
-    const startBtn = document.createElement("button");
-    startBtn.id = "startAfterLevelSelect";
-    startBtn.textContent = "Start";
-    startBtn.style.display = "none";
-    container.appendChild(startBtn);
-
-    return container;
-  }
+		return container;
+	}
 
   function setupDropdownToggle(header, options) {
     header.addEventListener("click", () => {
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
               } else if (["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].includes(col)) {
                 const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_text_${Math.random().toString(36).substr(2, 6)}`;
                 td.innerHTML = `<input type="text" id="${blankId}" data-answer="${value}" data-col="${col}" style="min-width: 120px;" />`;
-              } else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
+              } else if (col === "Linked Preposition(s)") {
                 const preps = value.split(/\s*,\s*/);  // Split by comma
                 const cellContent = preps.map((prep, idx) => {
                   const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${lineIdx}_${idx}_${Math.random().toString(36).substr(2, 6)}`;
                       radioBlocks.push({
                         id: blankId,
-                        correct: fullMatch,
+                        Answer: fullMatch,
                         html: createOptionsHTML(blankId, fullMatch, options)
                       });
                     });
@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
             const correctAnswerSpan = document.createElement("div");
             correctAnswerSpan.className = "correct-combo";
-            correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
+            correctAnswerSpan.textContent = `Answer: ${correctInput.dataset.correctAnswer}`;
             correctAnswerSpan.style.cssText = "color: blue; margin-top: 4px; display: block;";
             parentDiv.appendChild(correctAnswerSpan);
           }
@@ -383,7 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
         const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
         const correctAnswerSpan = document.createElement("div");
-        correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
+        correctAnswerSpan.textContent = `Answer: ${correctInput.dataset.correctAnswer}`;
         correctAnswerSpan.style.color = "blue";
         answerCell.appendChild(correctAnswerSpan);
       }
@@ -456,7 +456,7 @@ function generateOptions(correctWord, vocabData, column) {
         input.parentNode.insertBefore(resultIcon, input.nextSibling);
   
         const correctDisplay = document.createElement("div");
-        correctDisplay.textContent = `Correct: ${correctAnswer}`;
+        correctDisplay.textContent = `Answer: ${correctAnswer}`;
         correctDisplay.style.color = "blue";
         input.parentNode.appendChild(correctDisplay);
       });
