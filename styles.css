@@ -129,6 +129,22 @@ body {
   max-width: 100%;
 }
 
+/* Scrollable container for the table */
+#maschinenbauTable {
+  display: block;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 100%;
+}
+
+/* Scrollable container for the table */
+#fuehrerscheinTable {
+  display: block;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-width: 100%;
+}
+
 .vocab-table th,
 .vocab-table td {
   font-family: inherit;
