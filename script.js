@@ -94,9 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		);
 		
 		if (tableViewRadio.checked) {
-			iframe.style.display = "block";   // 'block' --> selected levels from vokabular.json,'none' --> nothing
-			table.style.display = "none";
+			table.style.display = "none"; //'block' --> table is shown; 'none' --> table is hidden
 			flashcardContainer.style.display = "none";
+			renderTable(filteredData);   // Enable this and the next line if you want the table as an html
+			renderSelectedLevelsIframe(filteredData); // Dynamic html for table as html
 		} else if (flashcardViewRadio.checked) {
 			table.style.display = "none";
 			flashcardContainer.style.display = "block";
@@ -321,6 +322,20 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 		return html;
 	}
+
+	// Generate dynamic html for selected levels of data
+	function renderSelectedLevelsIframe(filteredData) {
+	  const htmlContent = generateSelectedLevelsHTML(filteredData); // your custom HTML generator
+	  const blob = new Blob([htmlContent], { type: 'text/html' });
+	  const blobUrl = URL.createObjectURL(blob);
+	  
+	  const iframe = document.getElementById("vocabIframe");
+	  if (iframe) {
+	    iframe.src = blobUrl;
+	    iframe.style.display = "block";
+	  }
+	}
+
 		
 });
 
