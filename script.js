@@ -28,6 +28,7 @@ fetch("Vocabulary.xlsx")
     WTF: true // Add this here
   });
 
+	console.log(workbook.Strings.map(s => s.t));
   // Manually fix: Replace all 'φ' with 'ß'
   if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
     workbook.Strings.forEach(entry => {
