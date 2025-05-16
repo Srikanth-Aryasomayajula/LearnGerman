@@ -43,21 +43,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (isAllBoxClicked) {
 			const allChecked = allCheckboxesExceptAll.every(cb => cb.checked);
 			if (allChecked) {
-			// If all are already checked and 'all' is clicked again → uncheck all
-			checkboxes.forEach(cb => cb.checked = false);
+				// If all are already checked and 'all' is clicked again → uncheck all
+				checkboxes.forEach(cb => cb.checked = false);
 			} else {
-			// Otherwise → check all
-			checkboxes.forEach(cb => cb.checked = true);
+				// Otherwise → check all
+				checkboxes.forEach(cb => cb.checked = true);
 			}
 		} else {
 			// Any individual checkbox is clicked
 			if (!checkbox.checked && checkboxes[0].checked) {
-			// If a level is unchecked and 'all' is checked → uncheck 'all'
-			checkboxes[0].checked = false;
+				// If a level is unchecked and 'all' is checked → uncheck 'all'
+				checkboxes[0].checked = false;
 			} else {
-			// If all others are now checked → check 'all' automatically
-			const allSelected = allCheckboxesExceptAll.every(cb => cb.checked);
-			checkboxes[0].checked = allSelected;
+				// If all others are now checked → check 'all' automatically
+				const allSelected = allCheckboxesExceptAll.every(cb => cb.checked);
+				checkboxes[0].checked = allSelected;
 			}
 		}
 
