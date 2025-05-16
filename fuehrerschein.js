@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   const tableViewRadio = document.getElementById("viewTable");
   const flashcardViewRadio = document.getElementById("viewFlashcards");
-  const table = document.getElementById("fuehererscheinTable");
+  const table = document.getElementById("fuehrerscheinTable");
   table.style.display = "none";
   const flashcardContainer = document.getElementById("flashcardContainer");
   
-  const tableBody = document.querySelector("#fuehererscheinTable tbody");
+  const tableBody = document.querySelector("#fuehrerscheinTable tbody");
   const displayTableBtn = document.getElementById("displayTableBtn");
   const SHEET_NAME = "Fühererschein";
   let allData = [];
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cellHTML: false
           });
 
-          window.fuehererscheinData = allData;
+          window.fuehrerscheinData = allData;
           renderTable(allData); // Only call this after data is loaded
     })
     .catch(error => {
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   	// Display the table/Flashcards when the button is clicked
   	displayTableBtn.addEventListener("click", () => {
-	  const iframe = document.getElementById("fuehererscheinFrame");
+	  const iframe = document.getElementById("fuehrerscheinFrame");
 		
   	  if (tableViewRadio.checked) {
 			// iframe.src = "fuehererschein_table.html";		  // Enable this if you want fuehererschein_table.html
