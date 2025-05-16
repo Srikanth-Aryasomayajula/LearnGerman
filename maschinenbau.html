@@ -10,17 +10,20 @@
 
   <style>
 	  iframe {
-		width: 98vw;
-		height: 50vh;
-		border: none;
+	    display: block;
+	    margin: 0 auto;         /* Center the iframe horizontally */
+	    width: 100vw;           /* Take full viewport width */
+	    height: calc(100vh - 120px); /* Approx height from below the button (adjust if needed) */
+	    border: none;
 	  }
-  
+	
 	  body, html {
-		margin-top: 0px;
-		padding: 0;
-		overflow: hidden;   /* Prevent outer scrollbars */
+	    margin: 0;
+	    padding: 0;
+	    overflow: hidden;       /* Prevent outer scrollbars */
 	  }
-	</style>	
+</style>
+	
 </head>
   
 <body class="bg-text">
