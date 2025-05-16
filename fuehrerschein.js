@@ -27,8 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
         workbook.Strings.forEach(entry => {
           if (entry.t && typeof entry.t === "string") {
-            // entry.t = entry.t.replace(/ø/g, "ß");
-		  console.log("Test1");
+            entry.t = entry.t.replace(/ø/g, "ß");
           }
         });
       }
@@ -37,8 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
         workbook.Strings.forEach(entry => {
           if (entry.t && typeof entry.t === "string") {
-            // entry.t = entry.t.replace(/Ó/g, "Ü");
-		  console.log("Test2");
+            entry.t = entry.t.replace(/Ó/g, "Ü");
           }
         });
       }
@@ -87,9 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	  const iframe = document.getElementById("fuehrerscheinFrame");
 		
   	  if (tableViewRadio.checked) {
-			// iframe.src = "fuehererschein_table.html";		  // Enable this if you want fuehererschein_table.html
-			iframe.style.display = "block";   			  // Enable this if you want fuehererschein_table.html (value = 'block' will show the html; value = 'none' will not show the html)
-		    table.style.display = "none"; 			  // Enable this if you don't want the data in fuehererschein_table.html as a plain text (value = 'table' will show the table; value = 'none' will not show the html)
+			iframe.style.display = "none";   			  // Enable this if you want fuehererschein_table.html (value = 'block' will show the html; value = 'none' will not show the html)
+		    table.style.display = "block"; 			  // Enable this if you don't want the data in fuehererschein_table.html as a plain text (value = 'table' will show the table; value = 'none' will not show the html)
     	    flashcardContainer.style.display = "none";
   	  } else if (flashcardViewRadio.checked) {
     		table.style.display = "none";
