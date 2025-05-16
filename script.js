@@ -268,7 +268,7 @@ function showFlashcard(row) {
       const tr = document.createElement("tr");
 
       const th = document.createElement("th");
-      th.textContent = col;
+      th.innerHTML = displayName;
 
       const td = document.createElement("td");
       td.innerHTML = value.replace(/\r?\n/g, "<br>");
@@ -277,7 +277,6 @@ function showFlashcard(row) {
       tr.appendChild(td);
       table.appendChild(tr);
     }
-	th.innerHTML = displayName;
   });
 
   card.appendChild(table);
