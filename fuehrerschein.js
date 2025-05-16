@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   const tableBody = document.querySelector("#fuehrerscheinTable tbody");
   const displayTableBtn = document.getElementById("displayTableBtn");
-  const SHEET_NAME = "Fühererschein";
+  const SHEET_NAME = "Führerschein";
   let allData = [];
 
   // Fetch and parse Excel
