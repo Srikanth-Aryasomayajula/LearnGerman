@@ -30,26 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	setupLevelCheckboxes(levelCheckboxes, dropdownHeader);
 	setupDropdownToggle(dropdownHeader, dropdownOptions);
 
-	// Select the topic of practice
-	loadButton.addEventListener("click", () => {
-		const selectedSources = getSelectedValues(checkboxes);
-		if (selectedSources.length === 0) return alert("Please select at least one topic.");
-
-		if (selectedSources.includes("Vokabular")) {
-			levelDropdownContainer.style.display = "flex";
-			secondStartBtn.style.display = "inline-block";
-		} else if (selectedSources.includes("Grammatik")) {
-			// code for grammatik test
-		} else if (selectedSources.includes("Maschinenbau")) {
-			// code for Maschinenbau test
-		} else if (selectedSources.includes("Führerschein")) {
-			// code for Führerschein test
-		} else {
-			levelDropdownContainer.style.display = "none";
-			secondStartBtn.style.display = "none";
-			startPractice(selectedSources, []);
-		}
-	});
+	loadFlashcards();
 
 	// Second start button
 	secondStartBtn.addEventListener("click", () => {
@@ -59,8 +40,29 @@ document.addEventListener("DOMContentLoaded", () => {
 		startPractice(selectedSources, selectedLevels);
 	});
 
-
-
+	// Select the topic of practice
+	function loadFlashcards() {
+		loadButton.addEventListener("click", () => {
+			const selectedSources = getSelectedValues(checkboxes);
+			if (selectedSources.length === 0) {
+				return alert("Please select at least one topic.");
+			}
+			if (selectedSources.includes("Vokabular")) {
+				levelDropdownContainer.style.display = "flex";
+				secondStartBtn.style.display = "inline-block";
+			} else if (selectedSources.includes("Grammatik")) {
+				// code for grammatik test
+			} else if (selectedSources.includes("Maschinenbau")) {
+				// code for Maschinenbau test
+			} else if (selectedSources.includes("Führerschein")) {
+				// code for Führerschein test
+			} else {
+				levelDropdownContainer.style.display = "none";
+				secondStartBtn.style.display = "none";
+				startPractice(selectedSources, []);
+			}
+		});
+	}
 
 	// Create dropdown to select the level in vocabulary
 	function createLevelDropdown() {
