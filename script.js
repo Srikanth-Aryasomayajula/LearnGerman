@@ -16,19 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let allData = [];
 
   // Fetch and parse Excel
-//fetch("Vocabulary.xlsx")
-//  .then(response => {
-//    if (!response.ok) throw new Error("Failed to load Excel file.");
-//    return response.arrayBuffer();
-//  })
-//.then(arrayBuffer => {
-//  const workbook = XLSX.read(arrayBuffer, {
-//    type: "array",
-//    codepage: 65001,
-//    WTF: true // Add this here
-//  });
-
-fetch("Vocabulary.xlsx")
+ fetch("Vocabulary.xlsx")
   .then(response => response.blob())
   .then(blob => {
     const reader = new FileReader();
@@ -45,12 +33,11 @@ fetch("Vocabulary.xlsx")
     reader.readAsBinaryString(blob);
   });
 
-	
   // Manually fix: Replace all 'φ' with 'ß'
   if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
     workbook.Strings.forEach(entry => {
       if (entry.t && typeof entry.t === "string") {
-        // entry.t = entry.t.replace(/ø/g, "ß");
+        entry.t = entry.t.replace(/ø/g, "ß");
       }
     });
   }
@@ -59,7 +46,7 @@ fetch("Vocabulary.xlsx")
   if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
     workbook.Strings.forEach(entry => {
       if (entry.t && typeof entry.t === "string") {
-        // entry.t = entry.t.replace(/Ó/g, "Ü");
+        entry.t = entry.t.replace(/Ó/g, "Ü");
       }
     });
   }
@@ -73,10 +60,10 @@ for (const cellAddress in worksheet) {
     const cell = worksheet[cellAddress];
     if (cell.t === 's' && typeof cell.v === 'string') {
       // Replace ø with ß
-      // cell.v = cell.v.replace(/ø/g, "ß");
+      cell.v = cell.v.replace(/ø/g, "ß");
 
       // Replace Ó with Ü
-      // cell.v = cell.v.replace(/Ó/g, "Ü");
+      cell.v = cell.v.replace(/Ó/g, "Ü");
 
       // Ensure .w and .h are not used (just use .v)
       delete cell.w;
@@ -353,4 +340,3 @@ document.addEventListener('click', (event) => {
         menu.classList.remove('show-menu');
     }
 });
-
