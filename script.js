@@ -197,7 +197,7 @@ for (const cellAddress in worksheet) {
         "Plusquamperfekt",
         "Futur I",
         "Futur II",
-        "Prepositions that go together with the verb/Noun/Adj.",
+        "Linked Preposition(s)",
         "Example statement with the preposition"
       ];
       columns.forEach(col => {
@@ -255,7 +255,7 @@ function showFlashcard(row) {
     "Plusquamperfekt",
     "Futur I",
     "Futur II",
-    "Prepositions that go together with the verb/Noun/Adj.",
+    "Linked Preposition(s)",
     "Example statement with the preposition"
   ];
 
