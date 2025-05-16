@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //    codepage: 65001,
 //    WTF: true // Add this here
 //  });
+
 fetch("Vocabulary.xlsx")
   .then(response => response.blob())
   .then(blob => {
@@ -39,12 +40,12 @@ fetch("Vocabulary.xlsx")
       });
 
       console.log(workbook); // Check characters
+      console.log(workbook.Strings.map(s => s.t)); // Moved inside where `workbook` is defined
     };
     reader.readAsBinaryString(blob);
   });
 
-
-	console.log(workbook.Strings.map(s => s.t));
+	
   // Manually fix: Replace all 'φ' with 'ß'
   if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
     workbook.Strings.forEach(entry => {
