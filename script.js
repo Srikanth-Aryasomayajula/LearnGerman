@@ -260,7 +260,10 @@ function showFlashcard(row) {
   ];
 
   columns.forEach(col => {
-    const value = row[col]?.trim();
+	const key = Array.isArray(col) ? col[0] : col;
+  	const displayName = Array.isArray(col) ? col[1] : col;
+  	const value = row[key]?.trim();
+	  
     if (value && value !== "-") {
       const tr = document.createElement("tr");
 
@@ -274,6 +277,7 @@ function showFlashcard(row) {
       tr.appendChild(td);
       table.appendChild(tr);
     }
+	th.innerHTML = displayName;
   });
 
   card.appendChild(table);
