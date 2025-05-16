@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const tableBody = document.querySelector("#maschinenbauTable tbody");
 	const displayTableBtn = document.getElementById("displayTableBtn");
-	const SHEET_NAME = "Maschinenbau";
+	const SHEET_NAME = "maschinenbau";
 	let allData = [];
 	let shuffledFlashcards = [];
 	let currentFlashcardIndex = 0;
@@ -17,35 +17,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   	// Display the table/Flashcards when the button is clicked
   	displayTableBtn.addEventListener("click", () => {
-	  const iframe = document.getElementById("maschinenbauFrame");
-		
-  	  if (tableViewRadio.checked) {
+		const iframe = document.getElementById("maschinenbauFrame");
+
+		if (tableViewRadio.checked) {
 			iframe.style.display = "block";   // 'block' --> maschinenbau_table.html,'none' --> nothing
-		    table.style.display = "none"; 	  // 'table' --> table,'none' --> nothing
-    	    flashcardContainer.style.display = "none";
-  	  } else if (flashcardViewRadio.checked) {
-    		table.style.display = "none";
-		    iframe.style.display = "none"; 		
-    		flashcardContainer.style.display = "block";
-  		  	renderFlashcards(allData);
-  	  }
+			table.style.display = "none"; 	  // 'table' --> table,'none' --> nothing
+			flashcardContainer.style.display = "none";
+		} else if (flashcardViewRadio.checked) {
+			table.style.display = "none";
+			iframe.style.display = "none"; 		
+			flashcardContainer.style.display = "block";
+			renderFlashcards(allData);
+		}
   	});
 
-	// Fetch and parse JSON from pre-converted file
+  	// Fetch and parse JSON from pre-converted file
 	function fetchExcelData() {
-		fetch("vocabulary.json")
+		fetch(`${SHEET_NAME}.json`)
 			.then(response => {
-			  if (!response.ok) throw new Error("Failed to load JSON data.");
-			  return response.json();
+				if (!response.ok) throw new Error("Failed to load JSON data.");
+				return response.json();
 			})
 			.then(data => {
-			  allData = data;
-			  window.maschinenbauData = allData;
-			  renderTable(allData);
+				allData = data;
+				window.maschinenbauData = allData;
+				renderTable(allData);
 			})
 			.catch(error => {
-			  tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-			  console.error(error);
+				tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+				console.error(error);
 			});
 	}
 
@@ -64,9 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		if (data.length === 0) {
-		  const tr = document.createElement("tr");
-		  tr.innerHTML = `<td colspan="12">No entries found for this level.</td>`;
-		  tableBody.appendChild(tr);
+			const tr = document.createElement("tr");
+			tr.innerHTML = `<td colspan="12">No entries found for this level.</td>`;
+			tableBody.appendChild(tr);
 		}
 	}
 	
