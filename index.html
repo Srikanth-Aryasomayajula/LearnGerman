@@ -7,6 +7,27 @@
   <link rel="stylesheet" href="styles.css" />
   <script src="xlsx.full.min.js"></script>
   <script defer src="script.js"></script>
+	<style>
+	  iframe {
+	    display: block;
+	    margin: 0 auto;         /* Center the iframe horizontally */
+	    width: calc(100vw - 30px);         
+	    height: calc(100vh - 60px); /* Approx height from below the button (adjust if needed) */
+	    border: 1px solid #ccc;                 /* Add visible border (customize color/width) */
+            padding: 1rem;
+	    margin: 1rem auto;
+	    border-radius: 8px;
+	    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+	    box-sizing: border-box;                 /* Include border in size calculation */
+	  }
+	
+	  body, html {
+	    margin: 0;
+	    padding: 0;
+	    margin: 0 auto;         /* Center the html horizontally */
+	    overflow: hidden;       /* Prevent outer scrollbars */
+	  }
+	</style>
 </head>
   
 <body class="bg-text">
@@ -47,6 +68,9 @@
 	
 	<!-- Empty div for flashcards -->
 	<div id="flashcardContainer" class="flashcard-container" style="display: none;"></div>
+
+	<!-- Embed iframe -->
+	<iframe id="maschinenbauFrame" src="maschinenbau_table.html" style="display:none;"></iframe>
 
   </div>
     
