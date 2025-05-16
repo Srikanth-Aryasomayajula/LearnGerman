@@ -90,14 +90,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 
 		if (tableViewRadio.checked) {
-		table.style.display = "none";
-		flashcardContainer.style.display = "none";
+			table.style.display = "table";
+			flashcardContainer.style.display = "none";
 		} else if (flashcardViewRadio.checked) {
-		table.style.display = "none";
-		flashcardContainer.style.display = "block";
-		renderFlashcards(
-		  allData.filter(row => selectedLevels.includes((row["Level"] || "").trim()))
-		);
+			table.style.display = "none";
+			flashcardContainer.style.display = "block";
+			renderFlashcards(
+				allData.filter(row => selectedLevels.includes((row["Level"] || "").trim()))
+			);
 		}
 	});
 
@@ -114,17 +114,17 @@ document.addEventListener("DOMContentLoaded", () => {
 	function fetchExcelData() {
 		fetch("vocabulary.json")
 			.then(response => {
-			  if (!response.ok) throw new Error("Failed to load JSON data.");
-			  return response.json();
+				if (!response.ok) throw new Error("Failed to load JSON data.");
+				return response.json();
 			})
 			.then(data => {
-			  allData = data;
-			  window.vocabData = allData;
-			  renderTable(allData);
+				allData = data;
+				window.vocabData = allData;
+				renderTable(allData);
 			})
 			.catch(error => {
-			  tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-			  console.error(error);
+				tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+				console.error(error);
 			});
 	}
   
