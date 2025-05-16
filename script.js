@@ -15,60 +15,45 @@ document.addEventListener("DOMContentLoaded", () => {
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
-
-	// Fetch and parse Excel
+  // Fetch and parse Excel
 fetch("Vocabulary.xlsx")
-  .then(response => response.arrayBuffer())
-  .then(buffer => {
-    const uint8Array = new Uint8Array(buffer);
-    const workbook = XLSX.read(uint8Array, {
-      type: "array",
-      codepage: 65001, // UTF-8
-      cellText: true,
-      cellHTML: false
-    });
+  .then(response => {
+    if (!response.ok) throw new Error("Failed to load Excel file.");
+    return response.arrayBuffer();
+  })
+.then(arrayBuffer => {
+  const workbook = XLSX.read(arrayBuffer, {
+    type: "array",
+    codepage: 65001,
+    WTF: true // Add this here
+  });
+
 	
-	      // Manually fix special characters
-	      if (workbook.Strings && Array.isArray(workbook.Strings)) {
-	        workbook.Strings.forEach(entry => {
-	          if (entry.t && typeof entry.t === "string") {
-	            //entry.t = entry.t.replace(/ø/g, "ß").replace(/Ó/g, "Ü");
-	          }
-	        });
-	      }
-	
-	      const worksheet = workbook.Sheets[SHEET_NAME];
-	      if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-	
-	      // Fix each cell content too
-	      for (const cellAddress in worksheet) {
-	        if (!cellAddress.startsWith('!')) {
-	          const cell = worksheet[cellAddress];
-	          if (cell && typeof cell.v === 'string') {
-	            //cell.v = cell.v.replace(/ø/g, "ß").replace(/Ó/g, "Ü");
-	            delete cell.w;
-	            delete cell.h;
-	          }
-	        }
-	      }
-	
-	      allData = XLSX.utils.sheet_to_json(worksheet, {
-	        defval: "",
-	        raw: false,
-	        rawNumbers: false,
-	        cellText: true,
-	        cellHTML: false
-	      });
-	
-	      window.vocabData = allData;
-	      renderTable(allData);
-	    };
-	    reader.readAsBinaryString(blob);
-	  })
-	  .catch(error => {
-	    tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-	    console.error("Error loading/parsing Excel:", error);
-	  });
+  const worksheet = workbook.Sheets[SHEET_NAME];
+const csv = XLSX.utils.sheet_to_csv(worksheet);
+console.log(csv); // Check if Ä, Ö, Ü, ß appear correctly here
+  if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
+
+
+
+	allData = XLSX.utils.sheet_to_json(worksheet, {
+	  defval: "",
+	  raw: false,     // Ensure text is parsed
+	  rawNumbers: false,
+	  // Ensure rich-text HTML isn't used
+	  // This prevents it from using `h` field if present
+	  cellText: true,
+	  cellHTML: false
+	});
+  
+  window.vocabData = allData;
+  renderTable(allData);
+})
+
+  .catch(error => {
+    tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+    console.error(error);
+  });
 	
 	
   // Toggle dropdown visibility
