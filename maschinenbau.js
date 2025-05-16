@@ -85,9 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	  const iframe = document.getElementById("maschinenbauFrame");
 		
   	  if (tableViewRadio.checked) {
-			// iframe.src = "maschinenbau_table.html";		  // Enable this if you want maschinenbau_table.html
-			iframe.style.display = "block";   			  // Enable this if you want maschinenbau_table.html (value = 'block' will show the html; value = 'none' will not show the html)
-		    table.style.display = "none"; 			  // Enable this if you don't want the data in maschinenbau_table.html as a plain text (value = 'table' will show the table; value = 'none' will not show the html)
+			iframe.style.display = "none";   			  // Enable this if you want maschinenbau_table.html (value = 'block' will show the html; value = 'none' will not show the html)
+		    table.style.display = "block"; 			  // Enable this if you don't want the data in maschinenbau_table.html as a plain text (value = 'table' will show the table; value = 'none' will not show the html)
     	    flashcardContainer.style.display = "none";
   	  } else if (flashcardViewRadio.checked) {
     		table.style.display = "none";
