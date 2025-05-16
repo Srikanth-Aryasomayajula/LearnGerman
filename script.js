@@ -19,76 +19,24 @@ document.addEventListener("DOMContentLoaded", () => {
 	fetchExcelData();
 
 		// Fetch and parse Excel
-	function fetchExcelData() {
-	  fetch("Vocabulary.xlsx")
-	    .then(response => {
-	      if (!response.ok) throw new Error("Failed to load Excel file.");
-	      return response.arrayBuffer();
-	    })
-	    .then(arrayBuffer => {
-	      const workbook = XLSX.read(arrayBuffer, {
-	        type: "array",
-	        codepage: 65001,
-	        WTF: true // Add this here
-	      });
-	
-	      // Manually fix: Replace all 'φ' with 'ß'
-	      if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
-	        workbook.Strings.forEach(entry => {
-	          if (entry.t && typeof entry.t === "string") {
-	            entry.t = entry.t.replace(/ø/g, "ß");
-	          }
-	        });
-	      }
-	
-	      // Manually fix: Replace all 'Ó' with 'Ü'
-	      if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
-	        workbook.Strings.forEach(entry => {
-	          if (entry.t && typeof entry.t === "string") {
-	            entry.t = entry.t.replace(/Ó/g, "Ü");
-	          }
-	        });
-	      }
-	
-	      const worksheet = workbook.Sheets[SHEET_NAME];
-	      if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-	
-	      // Clean each cell in the worksheet to force using .t (plain text)
-	      for (const cellAddress in worksheet) {
-	        if (!cellAddress.startsWith('!')) {
-	          const cell = worksheet[cellAddress];
-	          if (cell.t === 's' && typeof cell.v === 'string') {
-	            // Replace ø with ß
-	            cell.v = cell.v.replace(/ø/g, "ß");
-	
-	            // Replace Ó with Ü
-	            cell.v = cell.v.replace(/Ó/g, "Ü");
-	
-	            // Ensure .w and .h are not used (just use .v)
-	            delete cell.w;
-	            delete cell.h;
-	          }
-	        }
-	      }
-	
-	      allData = XLSX.utils.sheet_to_json(worksheet, {
-	        defval: "",
-	        raw: false,     // Ensure text is parsed
-	        rawNumbers: false,
-	        // Ensure rich-text HTML isn't used
-	        // This prevents it from using `h` field if present
-	        cellText: true,
-	        cellHTML: false
-	      });
-	
-	      window.vocabData = allData;
-	      renderTable(allData);
-	    })
-	    .catch(error => {
-	      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-	      console.error(error);
-	    });
-	}
+// Fetch and parse JSON from pre-converted file
+function fetchExcelData() {
+  fetch("vocabulary.json")
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to load JSON data.");
+      return response.json();
+    })
+    .then(data => {
+      allData = data;
+      window.vocabData = allData;
+      renderTable(allData);
+    })
+    .catch(error => {
+      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+      console.error(error);
+    });
+}
+
 	
   // Toggle dropdown visibility
   dropdownHeader.addEventListener("click", () => {
