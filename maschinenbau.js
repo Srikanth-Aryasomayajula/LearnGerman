@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			})
 			.then(data => {
 			  allData = data;
-			  window.vocabData = allData;
+			  window.maschinenbauData = allData;
 			  renderTable(allData);
 			})
 			.catch(error => {
