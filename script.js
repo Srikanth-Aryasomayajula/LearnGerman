@@ -15,26 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
-	// Call this function to load the excel data
-	fetchExcelData();
+// Call this function to load the excel data
+fetchExcelData();
 
-	// Fetch and parse JSON from pre-converted file
-	function fetchExcelData() {
-	  fetch("vocabulary.json")
-	    .then(response => {
-	      if (!response.ok) throw new Error("Failed to load JSON data.");
-	      return response.json();
-	    })
-	    .then(data => {
-	      allData = data;
-	      window.vocabData = allData;
-	      renderTable(allData);
-	    })
-	    .catch(error => {
-	      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-	      console.error(error);
-	    });
-	}
 
 	
   // Toggle dropdown visibility
@@ -182,7 +165,23 @@ function renderFlashcards(data) {
 
   showFlashcard(shuffledFlashcards[currentFlashcardIndex]);
 }
-
+	// Fetch and parse JSON from pre-converted file
+	function fetchExcelData() {
+	  fetch("vocabulary.json")
+	    .then(response => {
+	      if (!response.ok) throw new Error("Failed to load JSON data.");
+	      return response.json();
+	    })
+	    .then(data => {
+	      allData = data;
+	      window.vocabData = allData;
+	      renderTable(allData);
+	    })
+	    .catch(error => {
+	      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+	      console.error(error);
+	    });
+	}
 // Show one flashcard
 function showFlashcard(row) {
   flashcardContainer.innerHTML = ""; // Clear container
