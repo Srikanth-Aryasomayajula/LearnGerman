@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	 					text-align: left;
        					}
 					th { 
-	   					background-color: #4287f5;
+	   					background-color: ##00FFFF;
 	 					text-align: center;
 	   				}
 				</style>
