@@ -9,7 +9,7 @@
   <script defer src="script.js"></script>
 	<style>
 	  iframe {
-	    display: block;
+	    display: none;
 	    margin: 0 auto;         /* Center the iframe horizontally */
 	    width: calc(100vw - 30px);         
 	    height: calc(100vh - 60px); /* Approx height from below the button (adjust if needed) */
@@ -19,6 +19,12 @@
 	    border-radius: 8px;
 	    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 	    box-sizing: border-box;                 /* Include border in size calculation */
+	  }
+	  body, html {
+	    margin: 0;
+	    padding: 0;
+	    margin: 0 auto;         /* Center the html horizontally */
+	    overflow: hidden;       /* Prevent outer scrollbars */
 	  }
 	</style>
 </head>
