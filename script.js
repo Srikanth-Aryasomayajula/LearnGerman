@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   	// Fetch and parse JSON from pre-converted file
 	function fetchExcelData() {
-		fetch("vocabulary.json")
+		fetch(`${SHEET_NAME}.json`)
 			.then(response => {
 				if (!response.ok) throw new Error("Failed to load JSON data.");
 				return response.json();
