@@ -14,6 +14,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropdownHeader = levelDropdownContainer.querySelector(".dropdown-header-1");
   const dropdownOptions = levelDropdownContainer.querySelector(".dropdown-options");
   const secondStartBtn = levelDropdownContainer.querySelector("#startAfterLevelSelect");
+  
+  const germanPrepositions = [
+    "an", "am", "auf", "aus", "bei", "beim", "durch", "für", "fürs", "gegen", "hinter", "in", "im", "mit",
+    "nach", "neben", "ohne", "über", "um", "unter", "von", "vor", "zu", "zum","zur", "zwischen",
+    "trotz", "während", "wegen", "entlang", "ab", "seit", "außer", "gegenüber", "anstatt"
+  ];
+  const compoundPrepositions = [
+    "worauf", "woran", "woraus", "worüber", "womit", "wodurch", "wofür", "wogegen", "wohin", "wozu",
+    "darauf", "daran", "daraus", "darüber", "damit", "dadurch", "dafür", "dagegen", "dahin", "dazu",
+    "wovor", "woher", "worin", "wobei", "darunter", "darin", "daraufhin", "darüberhinaus", "davor"
+  ];
+  const allValidPrepositions = [...germanPrepositions, ...compoundPrepositions];
 
   setupDropdownToggle(dropdownHeader, dropdownOptions);
   setupLevelCheckboxes(levelCheckboxes, dropdownHeader);
