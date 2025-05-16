@@ -18,24 +18,23 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Call this function to load the excel data
 	fetchExcelData();
 
-		// Fetch and parse Excel
-// Fetch and parse JSON from pre-converted file
-function fetchExcelData() {
-  fetch("vocabulary.json")
-    .then(response => {
-      if (!response.ok) throw new Error("Failed to load JSON data.");
-      return response.json();
-    })
-    .then(data => {
-      allData = data;
-      window.vocabData = allData;
-      renderTable(allData);
-    })
-    .catch(error => {
-      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-      console.error(error);
-    });
-}
+	// Fetch and parse JSON from pre-converted file
+	function fetchExcelData() {
+	  fetch("vocabulary.json")
+	    .then(response => {
+	      if (!response.ok) throw new Error("Failed to load JSON data.");
+	      return response.json();
+	    })
+	    .then(data => {
+	      allData = data;
+	      window.vocabData = allData;
+	      renderTable(allData);
+	    })
+	    .catch(error => {
+	      tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+	      console.error(error);
+	    });
+	}
 
 	
   // Toggle dropdown visibility
@@ -110,7 +109,7 @@ function fetchExcelData() {
 	  }
 
 	  if (tableViewRadio.checked) {
-		table.style.display = "table";
+		table.style.display = "none";
 		flashcardContainer.style.display = "none";
 	  } else if (flashcardViewRadio.checked) {
 		table.style.display = "none";
