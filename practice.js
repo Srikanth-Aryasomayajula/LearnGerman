@@ -1,55 +1,63 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const loadButton = document.getElementById("loadPracticeBtn");
-  const checkboxes = document.querySelectorAll("#sourceSelector input[type='checkbox']");
-  const practiceArea = document.getElementById("practiceArea");
+	const loadButton = document.getElementById("loadPracticeBtn");
+	const checkboxes = document.querySelectorAll("#sourceSelector input[type='checkbox']");
+	const practiceArea = document.getElementById("practiceArea");
 
-  let filteredData = [];
-  let currentIndex = 0;
-  let selectedLevels = [];
+	let filteredData = [];
+	let currentIndex = 0;
+	let selectedLevels = [];
 
-  const levelDropdownContainer = createLevelDropdown();
-  practiceArea.parentNode.insertBefore(levelDropdownContainer, practiceArea);
+	const levelDropdownContainer = createLevelDropdown();
+	practiceArea.parentNode.insertBefore(levelDropdownContainer, practiceArea);
 
-  const levelCheckboxes = levelDropdownContainer.querySelectorAll("input[type='checkbox']");
-  const dropdownHeader = levelDropdownContainer.querySelector(".dropdown-header-1");
-  const dropdownOptions = levelDropdownContainer.querySelector(".dropdown-options");
-  const secondStartBtn = levelDropdownContainer.querySelector("#startAfterLevelSelect");
-  
-  const germanPrepositions = [
-    "an", "am", "auf", "aus", "bei", "beim", "durch", "für", "fürs", "gegen", "hinter", "in", "im", "mit",
-    "nach", "neben", "ohne", "über", "um", "unter", "von", "vor", "zu", "zum","zur", "zwischen",
-    "trotz", "während", "wegen", "entlang", "ab", "seit", "außer", "gegenüber", "anstatt"
-  ];
-  const compoundPrepositions = [
-    "worauf", "woran", "woraus", "worüber", "womit", "wodurch", "wofür", "wogegen", "wohin", "wozu",
-    "darauf", "daran", "daraus", "darüber", "damit", "dadurch", "dafür", "dagegen", "dahin", "dazu",
-    "wovor", "woher", "worin", "wobei", "darunter", "darin", "daraufhin", "darüberhinaus", "davor"
-  ];
-  const allValidPrepositions = [...germanPrepositions, ...compoundPrepositions];
+	const levelCheckboxes = levelDropdownContainer.querySelectorAll("input[type='checkbox']");
+	const dropdownHeader = levelDropdownContainer.querySelector(".dropdown-header-1");
+	const dropdownOptions = levelDropdownContainer.querySelector(".dropdown-options");
+	const secondStartBtn = levelDropdownContainer.querySelector("#startAfterLevelSelect");
 
-  setupDropdownToggle(dropdownHeader, dropdownOptions);
-  setupLevelCheckboxes(levelCheckboxes, dropdownHeader);
+	const germanPrepositions = [
+		"an", "am", "auf", "aus", "bei", "beim", "durch", "für", "fürs", "gegen", "hinter", "in", "im", "mit",
+		"nach", "neben", "ohne", "über", "um", "unter", "von", "vor", "zu", "zum","zur", "zwischen",
+		"trotz", "während", "wegen", "entlang", "ab", "seit", "außer", "gegenüber", "anstatt"
+	];
+	const compoundPrepositions = [
+		"worauf", "woran", "woraus", "worüber", "womit", "wodurch", "wofür", "wogegen", "wohin", "wozu",
+		"darauf", "daran", "daraus", "darüber", "damit", "dadurch", "dafür", "dagegen", "dahin", "dazu",
+		"wovor", "woher", "worin", "wobei", "darunter", "darin", "daraufhin", "darüberhinaus", "davor"
+	];
+	const allValidPrepositions = [...germanPrepositions, ...compoundPrepositions];
 
-  loadButton.addEventListener("click", () => {
-    const selectedSources = getSelectedValues(checkboxes);
-    if (selectedSources.length === 0) return alert("Please select at least one topic.");
+	setupLevelCheckboxes(levelCheckboxes, dropdownHeader);
+	setupDropdownToggle(dropdownHeader, dropdownOptions);
 
-    if (selectedSources.includes("Vokabular")) {
-      levelDropdownContainer.style.display = "flex";
-      secondStartBtn.style.display = "inline-block";
-    } else {
-      levelDropdownContainer.style.display = "none";
-      secondStartBtn.style.display = "none";
-      startPractice(selectedSources, []);
-    }
-  });
+	// Select the topic of practice
+	loadButton.addEventListener("click", () => {
+		const selectedSources = getSelectedValues(checkboxes);
+		if (selectedSources.length === 0) return alert("Please select at least one topic.");
 
-  secondStartBtn.addEventListener("click", () => {
-    selectedLevels = getSelectedLevels(levelCheckboxes);
-    if (selectedLevels.length === 0) return alert("Please select at least one level.");
-    const selectedSources = getSelectedValues(checkboxes);
-    startPractice(selectedSources, selectedLevels);
-  });
+		if (selectedSources.includes("Vokabular")) {
+			levelDropdownContainer.style.display = "flex";
+			secondStartBtn.style.display = "inline-block";
+		} else if (selectedSources.includes("Grammatik")) {
+			// code for grammatik test
+		} else if (selectedSources.includes("Maschinenbau")) {
+			// code for Maschinenbau test
+		} else if (selectedSources.includes("Führerschein")) {
+			// code for Führerschein test
+		} else {
+			levelDropdownContainer.style.display = "none";
+			secondStartBtn.style.display = "none";
+			startPractice(selectedSources, []);
+		}
+	});
+
+	// Second start button
+	secondStartBtn.addEventListener("click", () => {
+		selectedLevels = getSelectedLevels(levelCheckboxes);
+		if (selectedLevels.length === 0) return alert("Please select at least one level.");
+		const selectedSources = getSelectedValues(checkboxes);
+		startPractice(selectedSources, selectedLevels);
+	});
 
 
 
@@ -432,5 +440,26 @@ function generateOptions(correctWord, vocabData, column) {
         `).join("")}
       </div>
     `;
+  }
+  
+  function evaluateTextInputs(columns) {
+    columns.forEach(col => {
+      const inputs = document.querySelectorAll(`input[data-col="${col}"]`);
+      inputs.forEach(input => {
+        const userAnswer = (input.value || "").trim().toLowerCase();
+        const correctAnswer = input.dataset.answer.toLowerCase();
+  
+        const resultIcon = document.createElement("span");
+        resultIcon.textContent = userAnswer === correctAnswer ? "✅" : "❌";
+        resultIcon.style.marginLeft = "5px";
+        resultIcon.style.color = userAnswer === correctAnswer ? "green" : "red";
+        input.parentNode.insertBefore(resultIcon, input.nextSibling);
+  
+        const correctDisplay = document.createElement("div");
+        correctDisplay.textContent = `Correct: ${correctAnswer}`;
+        correctDisplay.style.color = "blue";
+        input.parentNode.appendChild(correctDisplay);
+      });
+    });
   }
 });
