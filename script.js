@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const clearBtn = document.getElementById("clearSelection");
 	const displayTableBtn = document.getElementById("displayTableBtn");
-	const SHEET_NAME = "Vokabular";
+	const SHEET_NAME = "vokabular";
 	let allData = [];
 	let shuffledFlashcards = [];
 	let currentFlashcardIndex = 0;
