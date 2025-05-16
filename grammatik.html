@@ -8,16 +8,23 @@
   <title>Deutsch Lernen</title>
 	<style>
 	  iframe {
-		width: 98vw;
-		height: 80vh;
-		border: none;
-		display: block;
+	    display: block;
+	    margin: 0 auto;         /* Center the iframe horizontally */
+	    width: calc(100vw - 360px);         
+	    height: calc(100vh - 200px); /* Approx height from below the button (adjust if needed) */
+	    border: 1px solid #ccc;                 /* Add visible border (customize color/width) */
+            padding: 1rem;
+	    margin: 1rem auto;
+	    border-radius: 8px;
+	    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+	    box-sizing: border-box;                 /* Include border in size calculation */
 	  }
-  
+	
 	  body, html {
-		margin-top: 0px;
-		padding: 0;
-		overflow: hidden;   /* Prevent outer scrollbars */
+	    margin: 0;
+	    padding: 0;
+	    margin: 0 auto;         /* Center the html horizontally */
+	    overflow: hidden;       /* Prevent outer scrollbars */
 	  }
 	</style>
 </head>
