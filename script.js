@@ -188,7 +188,7 @@ for (const cellAddress in worksheet) {
       const tr = document.createElement("tr");
       const columns = [
         "Level",
-        "Article, Word and Plural",
+        "Word (with Article and Plural)",
         "Part of Speech",
         "Meaning",
         "Usage",
@@ -246,7 +246,7 @@ function showFlashcard(row) {
 
   const columns = [
     "Level",
-    "Article, Word and Plural",
+    "Word (with Article and Plural)",
     "Part of Speech",
     "Meaning",
     "Usage",
