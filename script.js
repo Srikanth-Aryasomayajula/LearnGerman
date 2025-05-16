@@ -17,17 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 	// Fetch and parse Excel
-	fetch("Vocabulary.xlsx")
-	  .then(response => response.blob())
-	  .then(blob => {
-	    const reader = new FileReader();
-	    reader.onload = e => {
-	      const data = e.target.result;
-	      const workbook = XLSX.read(data, {
-	        type: "binary",
-	        WTF: true,
-	        codepage: 65001
-	      });
+fetch("Vocabulary.xlsx")
+  .then(response => response.arrayBuffer())
+  .then(buffer => {
+    const uint8Array = new Uint8Array(buffer);
+    const workbook = XLSX.read(uint8Array, {
+      type: "array",
+      codepage: 65001, // UTF-8
+      cellText: true,
+      cellHTML: false
+    });
 	
 	      // Manually fix special characters
 	      if (workbook.Strings && Array.isArray(workbook.Strings)) {
