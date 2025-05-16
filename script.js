@@ -320,13 +320,13 @@ document.addEventListener("DOMContentLoaded", () => {
 			<body>
 				<table>
     					<colgroup>
-						${columns.map(col => {
-							if (col === "Usage" || col === "Example statement with the preposition") {
-								return '<col style="width: 60%;">';
-							}
-							return '<col style="width: auto;">';
-						}).join("")}
-					</colgroup>
+						  ${columns.map(col => {
+						    if (col === "Usage" || col === "Example statement with the preposition") {
+						      return '<col style="min-width: 200px;">'; // Simulate "auto + extra"
+						    }
+						    return '<col style="width: auto;">';
+						  }).join("")}
+						</colgroup>
 					<thead><tr>${columns.map(col => `<th>${col}</th>`).join("")}</tr></thead>
 					<tbody>
 		`;
