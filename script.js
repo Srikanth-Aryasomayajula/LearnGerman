@@ -82,15 +82,20 @@ document.addEventListener("DOMContentLoaded", () => {
 	  });
 	});
 
-	// Display the table/Flashcards when the button is clicked
+	// Display the table/flashcards when the button is clicked
 	displayTableBtn.addEventListener("click", () => {
 		if (selectedLevels.length === 0) {
-		alert("Please select the level");
-		return;
+			alert("Please select the level");
+			return;
 		}
 
+		const filteredData = allData.filter(row =>
+			selectedLevels.includes((row["Level"] || "").trim())
+		);
+		
 		if (tableViewRadio.checked) {
-			table.style.display = "table";
+			iframe.style.display = "block";   // 'block' --> selected levels from vokabular.json,'none' --> nothing
+			table.style.display = "none";
 			flashcardContainer.style.display = "none";
 		} else if (flashcardViewRadio.checked) {
 			table.style.display = "none";
@@ -264,6 +269,57 @@ document.addEventListener("DOMContentLoaded", () => {
 		buttonWrapper.appendChild(prevBtn);
 		buttonWrapper.appendChild(nextBtn);
 		flashcardContainer.appendChild(buttonWrapper);
+	}
+
+	// Function to generate the html from the selected data
+	function generateSelectedLevelsHTML(filteredData) {
+		const columns = [
+			"Level",
+			"Word (with Article and Plural)",
+			"Part of Speech",
+			"Meaning",
+			"Usage",
+			"Past (Präteritum)",
+			"Perfect (Partizip II)",
+			"Plusquamperfekt",
+			"Futur I",
+			"Futur II",
+			"Linked Preposition(s)",
+			"Example statement with the preposition"
+		];
+	
+		let html = `
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<title>Selected Vocabulary Table</title>
+				<style>
+					body { font-family: sans-serif; padding: 10px; }
+					table { border-collapse: collapse; width: 100%; }
+					th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+					th { background-color: #f2f2f2; }
+				</style>
+			</head>
+			<body>
+				<h2>Selected Vocabulary Table</h2>
+				<table>
+					<thead><tr>${columns.map(col => `<th>${col}</th>`).join("")}</tr></thead>
+					<tbody>
+		`;
+	
+		filteredData.forEach(row => {
+			html += `<tr>${columns.map(col => `<td>${(row[col] || "").replace(/\r?\n/g, "<br>")}</td>`).join("")}</tr>`;
+		});
+	
+		html += `
+					</tbody>
+				</table>
+			</body>
+			</html>
+		`;
+	
+		return html;
 	}
 		
 });
