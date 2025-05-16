@@ -153,4 +153,228 @@ document.addEventListener("DOMContentLoaded", () => {
     levelDropdownContainer.style.display = "none";
     secondStartBtn.style.display = "none";
   }
+  
+  function renderPracticeFlashcard(entry) {
+  practiceArea.innerHTML = "";
+
+  const container = document.createElement("div");
+  container.className = "flashcard-container";
+
+  const card = document.createElement("div");
+  card.className = "flashcard";
+
+  const table = document.createElement("table");
+  table.className = "flashcard-table";
+
+  const columns = [
+    "Level", "Article, Word and Plural", "Part of Speech", "Meaning", "Usage",
+    "Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt",
+    "Futur I", "Futur II",
+    "Prepositions that go together with the verb/Noun/Adj.",
+    "Example statement with the preposition"
+  ];
+
+  columns.forEach(col => {
+    const value = entry[col]?.trim();
+    if (value && value !== "-") {
+      const tr = document.createElement("tr");
+      const th = document.createElement("th");
+      th.textContent = col;
+      const td = document.createElement("td");
+
+      // Handle "Meaning" and "Usage" specifically for blanks
+      if (col === "Meaning") {
+                const correctPhrase = value.trim(); // For "Meaning", blank the whole phrase.
+                const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+                const options = generateOptions(correctPhrase, window.vocabData || [], col);
+              
+                td.innerHTML = `
+                  <span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <br>${createOptionsHTML(blankId, correctPhrase, options)}
+                `;
+              } else if (col === "Usage") {
+                const words = value.split(/\s+/);  // For "Usage", only one word is blanked.
+                const randomIndex = Math.floor(Math.random() * words.length);
+                const correctWord = words[randomIndex];
+                const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+                const options = generateOptions(correctWord, window.vocabData || [], col);
+              
+                words[randomIndex] = `<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+                td.innerHTML = `${words.join(" ")}<br>${createOptionsHTML(blankId, correctWord, options)}`;
+              } else if (["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"].includes(col)) {
+                const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_text_${Math.random().toString(36).substr(2, 6)}`;
+                td.innerHTML = `<input type="text" id="${blankId}" data-answer="${value}" data-col="${col}" style="min-width: 120px;" />`;
+              } else if (col === "Prepositions that go together with the verb/Noun/Adj.") {
+                const preps = value.split(/\s*,\s*/);  // Split by comma
+                const cellContent = preps.map((prep, idx) => {
+                  const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${idx}_${Math.random().toString(36).substr(2, 6)}`;
+                  const options = generateOptions(prep, window.vocabData || [], col);
+                  return `
+                    <span class="blank-line" style="display: inline-block; min-width: 60px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <br>${createOptionsHTML(blankId, prep, options)}
+                  `;
+                }).join('<br>');
+              
+                td.innerHTML = cellContent;
+              } else if (col === "Example statement with the preposition") {
+                  const lines = value.split(/\r?\n/); // split on real linebreaks
+                  const lineHTML = [];
+                
+                  lines.forEach((line, lineIdx) => {
+                    let processedLine = line;
+                    const radioBlocks = [];
+                
+                    const regex = new RegExp(`\\b(${allValidPrepositions.join("|")})\\b`, "gi");
+                    const matches = [...processedLine.matchAll(regex)];
+                
+                    matches.forEach((match, idx) => {
+                      const fullMatch = match[0];
+                      const placeholder = `__BLANK${lineIdx}_${idx}__`;
+                      processedLine = processedLine.replace(fullMatch, placeholder);
+                
+                      const incorrectOpts = allValidPrepositions.filter(opt => opt.toLowerCase() !== fullMatch.toLowerCase());
+                      const incorrectOptions = incorrectOpts.sort(() => 0.5 - Math.random()).slice(0, 3);
+                      const options = [...incorrectOptions, fullMatch].sort(() => 0.5 - Math.random());
+                
+                      const blankId = `${col.toLowerCase().replace(/\s+/g, "_")}_blank_${lineIdx}_${idx}_${Math.random().toString(36).substr(2, 6)}`;
+                      radioBlocks.push({
+                        id: blankId,
+                        correct: fullMatch,
+                        html: createOptionsHTML(blankId, fullMatch, options)
+                      });
+                    });
+                
+                    radioBlocks.forEach((block, idx) => {
+                      const placeholderHTML = `
+                        <span class="blank-line" style="display: inline-block; min-width: 80px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      `;
+                      processedLine = processedLine.replace(`__BLANK${lineIdx}_${idx}__`, placeholderHTML);
+                    });
+
+                    // Assemble the full HTML for this line: sentence, then options, then result
+                    const sentenceHTML = `<div class="example-sentence" style="margin-bottom: 0.3em;">${processedLine}</div>`;
+                    const optionsHTML = radioBlocks.map(rb => `<div style="margin: 0.3em 0;">${rb.html}</div>`).join("");
+                    const resultHTML = `<div class="example-result" id="result_${lineIdx}" style="margin-bottom: 1em;"></div>`;
+
+                    lineHTML.push(`${sentenceHTML}${optionsHTML}${resultHTML}`);
+                  });
+                
+                  td.innerHTML = lineHTML.join("");
+                } else {
+        td.innerHTML = value.replace(/\r?\n/g, "<br>");
+      }
+
+      tr.appendChild(th);
+      tr.appendChild(td);
+      table.appendChild(tr);
+    }
+  });
+
+  card.appendChild(table);
+  container.appendChild(card);
+
+  const resultDisplay = document.createElement("div");
+  resultDisplay.id = "practiceResult";
+  resultDisplay.className = "flashcard-progress";
+  container.appendChild(resultDisplay);
+
+  const buttonRow = document.createElement("div");
+  buttonRow.className = "dropdown-buttons";
+
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "Previous";
+  prevBtn.className = "nav-button";
+  prevBtn.style.display = currentIndex === 0 ? "none" : "inline-block";
+  prevBtn.addEventListener("click", () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      renderPracticeFlashcard(filteredData[currentIndex]);
+    }
+  });
+
+  const submitBtn = document.createElement("button");
+  submitBtn.textContent = "Submit";
+  submitBtn.id = "submitAnswers";
+
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "Next";
+  nextBtn.className = "nav-button";
+  nextBtn.style.display = "none";
+  nextBtn.addEventListener("click", () => {
+    if (currentIndex < filteredData.length - 1) {
+      currentIndex++;
+      renderPracticeFlashcard(filteredData[currentIndex]);
+    }
+  });
+
+  buttonRow.appendChild(prevBtn);
+  buttonRow.appendChild(submitBtn);
+  buttonRow.appendChild(nextBtn);
+  container.appendChild(buttonRow);
+
+  practiceArea.appendChild(container);
+
+  submitBtn.addEventListener("click", () => {
+    let correct = 0;
+    const radioGroups = new Set();
+    document.querySelectorAll("input[type='radio']").forEach(r => radioGroups.add(r.name));
+
+    radioGroups.forEach(groupName => {
+      const checked = document.querySelector(`input[name='${groupName}']:checked`);
+      const inputs = document.querySelectorAll(`input[name='${groupName}']`);
+      if (checked) {
+        const isCorrect = checked.dataset.correct === "true";
+        const answerCell = checked.closest("td");
+    
+        const resultIcon = document.createElement("span");
+        resultIcon.textContent = isCorrect ? "✅" : "❌";
+        resultIcon.style.color = isCorrect ? "green" : "red";
+        checked.parentNode.appendChild(resultIcon);
+    
+        if (!isCorrect) {
+          const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
+          const parentDiv = (checked || correctInput).closest("div"); // works for both blank and incorrect
+          const existing = parentDiv.querySelector(".correct-combo");
+        
+          if (!existing) {
+            // Ensure parent allows line breaks
+            parentDiv.style.display = "block";
+        
+            const correctAnswerSpan = document.createElement("div");
+            correctAnswerSpan.className = "correct-combo";
+            correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
+            correctAnswerSpan.style.cssText = "color: blue; margin-top: 4px; display: block;";
+            parentDiv.appendChild(correctAnswerSpan);
+          }
+        }
+
+        if (isCorrect) correct++;
+      } else {
+        // No radio selected — treat as wrong
+        const answerCell = inputs[0]?.closest("td");
+        const resultIcon = document.createElement("span");
+        resultIcon.textContent = "❌";
+        resultIcon.style.color = "red";
+        inputs[0].parentNode.appendChild(resultIcon);
+    
+        const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
+        const correctAnswerSpan = document.createElement("div");
+        correctAnswerSpan.textContent = `Correct: ${correctInput.dataset.correctAnswer}`;
+        correctAnswerSpan.style.color = "blue";
+        answerCell.appendChild(correctAnswerSpan);
+      }
+    });
+    
+    // Evaluate text inputs for all tense columns
+    const tenseColumns = ["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"];
+    evaluateTextInputs(tenseColumns);
+    
+    const total = document.querySelectorAll("input[type='radio']").length / 4;
+    resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
+
+    submitBtn.style.display = "none";
+    if (currentIndex > 0) prevBtn.style.display = "inline-block";
+    if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
+  });
+}
 });
