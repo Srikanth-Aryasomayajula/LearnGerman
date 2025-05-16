@@ -15,81 +15,61 @@ document.addEventListener("DOMContentLoaded", () => {
   const SHEET_NAME = "Vokabular";
   let allData = [];
 
-  // Fetch and parse Excel
- fetch("Vocabulary.xlsx")
-  .then(response => response.blob())
-  .then(blob => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const data = e.target.result;
-      const workbook = XLSX.read(data, {
-        type: "binary",
-        WTF: true
-      });
 
-      console.log(workbook); // Check characters
-      console.log(workbook.Strings.map(s => s.t)); // Moved inside where `workbook` is defined
-    };
-    reader.readAsBinaryString(blob);
-  });
-
-  // Manually fix: Replace all 'φ' with 'ß'
-  if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
-    workbook.Strings.forEach(entry => {
-      if (entry.t && typeof entry.t === "string") {
-        entry.t = entry.t.replace(/ø/g, "ß");
-      }
-    });
-  }
-
-  // Manually fix: Replace all 'Ó' with 'Ü'
-  if (workbook && workbook.Strings && Array.isArray(workbook.Strings)) {
-    workbook.Strings.forEach(entry => {
-      if (entry.t && typeof entry.t === "string") {
-        entry.t = entry.t.replace(/Ó/g, "Ü");
-      }
-    });
-  }
+	// Fetch and parse Excel
+	fetch("Vocabulary.xlsx")
+	  .then(response => response.blob())
+	  .then(blob => {
+	    const reader = new FileReader();
+	    reader.onload = e => {
+	      const data = e.target.result;
+	      const workbook = XLSX.read(data, {
+	        type: "binary",
+	        WTF: true,
+	        codepage: 65001
+	      });
 	
-  const worksheet = workbook.Sheets[SHEET_NAME];
-  if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
-
-// Clean each cell in the worksheet to force using .t (plain text)
-for (const cellAddress in worksheet) {
-  if (!cellAddress.startsWith('!')) {
-    const cell = worksheet[cellAddress];
-    if (cell.t === 's' && typeof cell.v === 'string') {
-      // Replace ø with ß
-      cell.v = cell.v.replace(/ø/g, "ß");
-
-      // Replace Ó with Ü
-      cell.v = cell.v.replace(/Ó/g, "Ü");
-
-      // Ensure .w and .h are not used (just use .v)
-      delete cell.w;
-      delete cell.h;
-    }
-  }
-}
-
-	allData = XLSX.utils.sheet_to_json(worksheet, {
-	  defval: "",
-	  raw: false,     // Ensure text is parsed
-	  rawNumbers: false,
-	  // Ensure rich-text HTML isn't used
-	  // This prevents it from using `h` field if present
-	  cellText: true,
-	  cellHTML: false
-	});
-  
-  window.vocabData = allData;
-  renderTable(allData);
-})
-
-  .catch(error => {
-    tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-    console.error(error);
-  });
+	      // Manually fix special characters
+	      if (workbook.Strings && Array.isArray(workbook.Strings)) {
+	        workbook.Strings.forEach(entry => {
+	          if (entry.t && typeof entry.t === "string") {
+	            //entry.t = entry.t.replace(/ø/g, "ß").replace(/Ó/g, "Ü");
+	          }
+	        });
+	      }
+	
+	      const worksheet = workbook.Sheets[SHEET_NAME];
+	      if (!worksheet) throw new Error(`Sheet "${SHEET_NAME}" not found.`);
+	
+	      // Fix each cell content too
+	      for (const cellAddress in worksheet) {
+	        if (!cellAddress.startsWith('!')) {
+	          const cell = worksheet[cellAddress];
+	          if (cell && typeof cell.v === 'string') {
+	            //cell.v = cell.v.replace(/ø/g, "ß").replace(/Ó/g, "Ü");
+	            delete cell.w;
+	            delete cell.h;
+	          }
+	        }
+	      }
+	
+	      allData = XLSX.utils.sheet_to_json(worksheet, {
+	        defval: "",
+	        raw: false,
+	        rawNumbers: false,
+	        cellText: true,
+	        cellHTML: false
+	      });
+	
+	      window.vocabData = allData;
+	      renderTable(allData);
+	    };
+	    reader.readAsBinaryString(blob);
+	  })
+	  .catch(error => {
+	    tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+	    console.error("Error loading/parsing Excel:", error);
+	  });
 	
 	
   // Toggle dropdown visibility
