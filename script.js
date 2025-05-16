@@ -16,17 +16,33 @@ document.addEventListener("DOMContentLoaded", () => {
   let allData = [];
 
   // Fetch and parse Excel
+//fetch("Vocabulary.xlsx")
+//  .then(response => {
+//    if (!response.ok) throw new Error("Failed to load Excel file.");
+//    return response.arrayBuffer();
+//  })
+//.then(arrayBuffer => {
+//  const workbook = XLSX.read(arrayBuffer, {
+//    type: "array",
+//    codepage: 65001,
+//    WTF: true // Add this here
+//  });
 fetch("Vocabulary.xlsx")
-  .then(response => {
-    if (!response.ok) throw new Error("Failed to load Excel file.");
-    return response.arrayBuffer();
-  })
-.then(arrayBuffer => {
-  const workbook = XLSX.read(arrayBuffer, {
-    type: "array",
-    codepage: 65001,
-    WTF: true // Add this here
+  .then(response => response.blob())
+  .then(blob => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, {
+        type: "binary",
+        WTF: true
+      });
+
+      console.log(workbook); // Check characters
+    };
+    reader.readAsBinaryString(blob);
   });
+
 
 	console.log(workbook.Strings.map(s => s.t));
   // Manually fix: Replace all 'φ' with 'ß'
