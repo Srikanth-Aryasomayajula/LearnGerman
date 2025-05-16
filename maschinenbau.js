@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     	    flashcardContainer.style.display = "none";
   	  } else if (flashcardViewRadio.checked) {
     		table.style.display = "none";
+		    iframe.style.display = "none"; 		
     		flashcardContainer.style.display = "block";
   		  renderFlashcards(allData);
   	  }
