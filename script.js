@@ -319,14 +319,14 @@ document.addEventListener("DOMContentLoaded", () => {
 			</head>
 			<body>
 				<table>
-    									<colgroup>
-					${columns.map(col => {
-						if (col === "Usage" || col === "Example statement with the preposition") {
-							return '<col style="width: 20%;">';
-						}
-						return '<col style="width: auto;">';
-					}).join("")}
-				</colgroup>
+    					<colgroup>
+						${columns.map(col => {
+							if (col === "Usage" || col === "Example statement with the preposition") {
+								return '<col style="width: 30%;">';
+							}
+							return '<col style="width: auto;">';
+						}).join("")}
+					</colgroup>
 					<thead><tr>${columns.map(col => `<th>${col}</th>`).join("")}</tr></thead>
 					<tbody>
 		`;
