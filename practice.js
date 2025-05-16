@@ -39,6 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
     startPractice(selectedSources, selectedLevels);
   });
 
+
+
+
+
   function createLevelDropdown() {
     const container = document.createElement("div");
     container.className = "dropdown-buttons";
@@ -377,4 +381,44 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
   });
 }
+
+function generateOptions(correctWord, vocabData, column) {
+      if (column === "Prepositions that go together with the verb/Noun/Adj.") {
+        const incorrectOptions = germanPrepositions
+          .filter(prep => prep !== correctWord)
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3);
+    
+        return [...incorrectOptions, correctWord].sort(() => 0.5 - Math.random());
+      }
+    const wordsFromSameColumn = vocabData
+      .map(entry => entry[column])
+      .filter(value => value && value !== "-")
+      .map(value => value.trim())
+      .filter(phrase => phrase !== correctWord);  // Exclude the correct word
+  
+    // Get individual words from the phrases
+    const allWords = wordsFromSameColumn.flatMap(phrase => phrase.split(/\s+/));
+  
+    // Select 3 random words from the available options (excluding the correct word)
+    const incorrectWords = Array.from(new Set(allWords))
+      .sort(() => 0.5 - Math.random())  // Shuffle
+      .slice(0, 3);  // Select 3 words randomly
+  
+    // Return a mix of incorrect options and the correct word
+    return [...incorrectWords, correctWord].sort(() => 0.5 - Math.random());
+  }
+  
+  function createOptionsHTML(blankId, correctWord, options) {
+    return `
+      <div class="option-group">
+        ${options.map(opt => `
+          <label>
+            <input type="radio" name="${blankId}" value="${opt}" data-correct="${opt === correctWord}" data-correct-answer="${correctWord}">
+            ${opt}
+          </label>
+        `).join("")}
+      </div>
+    `;
+  }
 });
