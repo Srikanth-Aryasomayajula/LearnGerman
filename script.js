@@ -297,9 +297,10 @@ document.addEventListener("DOMContentLoaded", () => {
     				<title>Selected Vocabulary Table</title>
 				<style>
 					body { 
-     						font-family: Calibri, sans-serif; 
-	   					padding: 50px;
+     						font-family: "Aptos Narrow", sans-serif; 
+	   					padding: 1px;
 	 					font-size: 11pt;
+       						font-weight: 400;
 	 				}
 					table { 
      						border-collapse: collapse; 
@@ -311,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	 					text-align: left;
        					}
 					th { 
-     						background-color: #ffffff;
+	   					background-color: cyan;
 	   				}
 				</style>
 			</head>
