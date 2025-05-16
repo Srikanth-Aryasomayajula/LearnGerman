@@ -246,7 +246,7 @@ function showFlashcard(row) {
 
   const columns = [
     "Level",
-    "Word<br>(with Article and Plural)",
+    ["Word (with Article and Plural)", "Word<br>(with Article and Plural)"],
     "Part of Speech",
     "Meaning",
     "Usage",
