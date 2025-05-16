@@ -294,16 +294,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			<html lang="en">
 			<head>
 				<meta charset="UTF-8">
-				<title>Selected Vocabulary Table</title>
+    				<title>Selected Vocabulary Table</title>
 				<style>
-					body { font-family: sans-serif; padding: 10px; }
+					body { font-family: sans-serif; padding: 8px; }
 					table { border-collapse: collapse; width: 100%; }
-					th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-					th { background-color: #f2f2f2; }
+					th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+					th { background-color: #ffffff; }
 				</style>
 			</head>
 			<body>
-				<h2>Selected Vocabulary Table</h2>
 				<table>
 					<thead><tr>${columns.map(col => `<th>${col}</th>`).join("")}</tr></thead>
 					<tbody>
@@ -335,7 +334,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	    iframe.style.display = "block";
 	  }
 	}
-
 		
 });
 
