@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         workbook.Strings.forEach(entry => {
           if (entry.t && typeof entry.t === "string") {
             // entry.t = entry.t.replace(/ø/g, "ß");
+		  console.log("Test1");
           }
         });
       }
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         workbook.Strings.forEach(entry => {
           if (entry.t && typeof entry.t === "string") {
             // entry.t = entry.t.replace(/Ó/g, "Ü");
+		  console.log("Test2");
           }
         });
       }
