@@ -493,7 +493,7 @@ iframe {
 /* Grammatik page */
 .grammatik-page iframe {
   width: calc(100vw - 30px);
-  height: calc(100vh - 135px);
+  height: calc(100vh - 145px);
   overflow: auto;
 }
 
