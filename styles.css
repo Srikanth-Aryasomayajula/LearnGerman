@@ -12,9 +12,10 @@ body {
   position: absolute;
   left: 1rem;
   height: 60px;
-  width: 110%;
+  width: auto;           /* natural width based on height */
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) scaleX(1.1); /* stretch width by 10% */
+  transform-origin: center;
   border-radius: 8px;
 }
 
