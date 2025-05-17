@@ -10,7 +10,7 @@ body {
 
 .site-logo {
   position: absolute;
-  left: 2rem;
+  left: 4rem;
   height: 60px;
   width: auto;           /* natural width based on height */
   top: 50%;
