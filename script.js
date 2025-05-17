@@ -1,16 +1,22 @@
 window.addEventListener('DOMContentLoaded', () => {
-  // Load navbar from external file
+  // Load navbar
   fetch('navbar.html')
     .then(response => response.text())
     .then(data => {
       document.getElementById('navbar-placeholder').innerHTML = data;
 
-      // Attach menu toggle button event (after navbar is injected)
       const toggleBtn = document.getElementById("menuToggleBtn");
       if (toggleBtn) {
         toggleBtn.addEventListener("click", () => {
           document.getElementById("menuContainer").classList.toggle("show-menu");
         });
       }
+    });
+
+  // Load footer
+  fetch('footer.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('footer-placeholder').innerHTML = data;
     });
 });
