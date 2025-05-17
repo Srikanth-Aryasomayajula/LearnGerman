@@ -500,14 +500,14 @@ iframe {
 /* Maschinenbau page */
 .maschinenbau-page iframe {
   width: calc(100vw - 360px);
-  height: calc(100vh - 210px);
+  height: calc(100vh - 270px);
   overflow: hidden; /* prevent outer scrollbars */
 }
 
 /* Fuehrerschein page */
 .fuehrerschein-page iframe {
   width: calc(100vw - 250px);
-  height: calc(100vh - 210px);
+  height: calc(100vh - 270px);
   overflow: hidden;
 }
 
