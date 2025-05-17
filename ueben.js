@@ -503,5 +503,26 @@ document.addEventListener("DOMContentLoaded", () => {
 	    });
 	}
 
-
+	function renderTable(data, columns) {
+	  const tableBody = document.querySelector("#tableBody");
+	  tableBody.innerHTML = "";
+	
+	  if (!data || data.length === 0) {
+	    const tr = document.createElement("tr");
+	    tr.innerHTML = <td colspan="${columns.length}">No entries found for this level.</td>;
+	    tableBody.appendChild(tr);
+	    return;
+	  }
+	
+	  data.forEach(row => {
+	    const tr = document.createElement("tr");
+	    columns.forEach(col => {
+	      const td = document.createElement("td");
+	      td.innerHTML = (row[col] || "").replace(/\r?\n/g, "<br>");
+	      tr.appendChild(td);
+	    });
+	    tableBody.appendChild(tr);
+	  });
+	}
+	
 });
