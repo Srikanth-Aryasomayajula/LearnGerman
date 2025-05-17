@@ -553,6 +553,7 @@ iframe {
     display: block;
   }
 
+  /* Only for mobile */
   .menu-container {
     visibility: hidden;
     opacity: 0;
