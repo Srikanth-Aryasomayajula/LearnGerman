@@ -1,96 +1,71 @@
 <!DOCTYPE html>
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Deutsch Lernen</title>
+  <title>Deutsch Lernen – Maschinenbau</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script src="xlsx.full.min.js"></script>
+  <script defer src="script.js"></script> <!-- For navbar and toggle logic -->
   <script defer src="maschinenbau.js"></script>
 
   <style>
-	  iframe {
-	    display: block;
-	    margin: 0 auto;         /* Center the iframe horizontally */
-	    width: calc(100vw - 360px);         
-	    height: calc(100vh - 200px); /* Approx height from below the button (adjust if needed) */
-	    border: 1px solid #ccc;                 /* Add visible border (customize color/width) */
-            padding: 1rem;
-	    margin: 1rem auto;
-	    border-radius: 8px;
-	    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-	    box-sizing: border-box;                 /* Include border in size calculation */
-	  }
-	
-	  body, html {
-	    margin: 0;
-	    padding: 0;
-	    margin: 0 auto;         /* Center the html horizontally */
-	    overflow: hidden;       /* Prevent outer scrollbars */
-	  }
-</style>
-	
+    iframe {
+      display: block;
+      margin: 1rem auto;
+      width: calc(100vw - 360px);
+      height: calc(100vh - 200px);
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
 </head>
-  
+
 <body class="bg-text">
-  <nav class="navbar">
-    <button class="toggle-menu" id="menuToggleBtn">&#9776;</button>
-  	<div class="menu-container" id="menuContainer"> 
-  		<a href="index.html" class="menu-button">Vokabular</a>
-  		<a href="grammatik.html" class="menu-button">Grammatik</a>
-  		<a href="maschinenbau.html" class="menu-button">Maschinenbau</a>
-  		<a href="fuehrerschein.html" class="menu-button">Führerschein</a>
-  		<a href="practice.html" class="menu-button">Üben</a>
-  	</div>
-  </nav>
- 
+  <!-- Shared navbar -->
+  <div id="navbar-placeholder"></div>
+
   <main class="main-content">
     <h1 class="main-title">Maschinenbau</h1>
-    
-	  <div class="dropdown-buttons" style="flex-direction: column;">
-		
-		<div class="view-mode">
-			<label><input type="radio" name="viewMode" id="viewFlashcards" checked /> Flashcards</label>
-			<label><input type="radio" name="viewMode" id="viewTable" /> Table</label>
-		</div>
-		<button id="displayTableBtn">Display</button>
-	
-		<!-- Empty div for flashcards -->
-		<div id="flashcardContainer" class="flashcard-container" style="display: none;"></div>
 
-		<!-- Embed iframe -->
-		<iframe id="maschinenbauFrame" src="maschinenbau_table.html" style="display:none;"></iframe>
-	  </div>
-	  
-		<table id="maschinenbauTable" class="vocab-table" style="display:none;">
-			<thead>
-		        <tr>
-		          <th>German</th>
-		          <th>English</th>
-		          <th>Example</th>
-		          <th>Remarks</th>
-		        </tr>
-		      </thead>
-		      <tbody></tbody>
-		    </table>
+    <div class="dropdown-buttons" style="flex-direction: column;">
+      <div class="view-mode">
+        <label><input type="radio" name="viewMode" id="viewFlashcards" checked /> Flashcards</label>
+        <label><input type="radio" name="viewMode" id="viewTable" /> Table</label>
+      </div>
 
-    <script>
-  	  document.getElementById("menuToggleBtn").addEventListener("click", function () {
-  	    document.getElementById("menuContainer").classList.toggle("show-menu");
-  	  });
-  	</script>
-    
+      <button id="displayTableBtn">Display</button>
+
+      <!-- Flashcards container -->
+      <div id="flashcardContainer" class="flashcard-container" style="display: none;"></div>
+
+      <!-- Table view -->
+      <table id="maschinenbauTable" class="vocab-table" style="display:none;">
+        <thead>
+          <tr>
+            <th>German</th>
+            <th>English</th>
+            <th>Example</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <!-- Embedded table fallback or additional view -->
+      <iframe id="maschinenbauFrame" src="maschinenbau_table.html" style="display:none;"></iframe>
+    </div>
   </main>
-  <script>
-    function resizeIframe(iframe) {
-      try {
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
-        iframe.style.height = doc.body.scrollHeight + 'px';
-        iframe.style.width = doc.body.scrollWidth + 'px'; // Optional, only if needed
-      } catch (e) {
-        console.error('Could not auto-resize iframe:', e);
-      }
-    }
-  </script>
+
 </body>
 </html>
