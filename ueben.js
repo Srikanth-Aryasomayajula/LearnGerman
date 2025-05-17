@@ -405,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function generateOptions(correctWord, vocabData, column) {
-		if (column === "Prepositions that go together with the verb/Noun/Adj.") {
+		if (column === "Linked Preposition(s)") {
 			const incorrectOptions = germanPrepositions
 				.filter(prep => prep !== correctWord)
 				.sort(() => 0.5 - Math.random())
