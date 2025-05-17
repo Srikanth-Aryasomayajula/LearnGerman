@@ -459,6 +459,59 @@ body {
   margin-top: 1rem;
 }
 
+/* Common iframe styles for all pages */
+iframe {
+  display: block;
+  margin: 1rem auto;       /* Center horizontally with vertical spacing */
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  box-sizing: border-box;  /* include border in size */
+}
+
+/* Page-specific iframe sizing */
+
+/* Vokabular page */
+.vokabular-page iframe {
+  width: calc(100vw - 30px);
+  height: calc(100vh - 210px);
+  overflow: auto; /* allow scroll if needed */
+}
+
+/* Grammatik page */
+.grammatik-page iframe {
+  width: calc(100vw - 30px);
+  height: calc(100vh - 60px);
+  overflow: auto;
+}
+
+/* Maschinenbau page */
+.maschinenbau-page iframe {
+  width: calc(100vw - 360px);
+  height: calc(100vh - 200px);
+  overflow: hidden; /* prevent outer scrollbars */
+}
+
+/* Fuehrerschein page */
+.fuehrerschein-page iframe {
+  width: calc(100vw - 250px);
+  height: calc(100vh - 200px);
+  overflow: hidden;
+}
+
+/* Hide scrollbars and prevent scrolling on these pages */
+.maschinenbau-page body,
+.fuehrerschein-page body,
+.grammatik-page body {
+  overflow: hidden;
+}
+
+/* Allow scrolling on vokabular page */
+.vokabular-page body {
+  overflow: auto;
+}
+
 
 /* Responsive layout for mobile */
 @media (max-width: 767px) {
