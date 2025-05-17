@@ -9,20 +9,22 @@ body {
 }
 
 .site-logo {
-  height: 40px;          /* adjust to fit your nav */
-  margin-left: 1rem;
-  vertical-align: left;
+  position: absolute;
+  left: 1rem;
+  height: 40px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .navbar {
-  background-color: #000000;
-  color: white;
-  padding: 1rem 0rem;
   display: flex;
-  gap: 1.5rem;
-  justify-content: center; /* Centers the navbar items horizontally */
-  align-items: center;     /* Ensures vertical alignment in case the navbar is taller */
-  width: 100%;             /* Make sure the navbar stretches across the full width */
+  align-items: center;
+  justify-content: center; /* centers all children */
+  position: relative;      /* needed for absolute positioning */
+  background-color: #000;
+  color: white;
+  padding: 1rem 0;
+  width: 100%;
 }
 
 .nav-link {
@@ -55,10 +57,10 @@ body {
   display: none; /* Hidden by default, shown in mobile */
 }
 
+/* Keep menus centered */
 .menu-container {
   display: flex;
   gap: 1rem;
-  flex-direction: row;
 }
 
 /* Menu link styles */
