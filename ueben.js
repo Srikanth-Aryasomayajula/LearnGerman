@@ -58,10 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				const maschinenbauData = fetchJsonData("maschinenbau");
+				fetchJsonData("maschinenbau");
 				console.log(maschinenbauData);
 			} else if (selectedSources.includes("Führerschein")) {
-				const fuehrerscheinData = fetchJsonData("maschinenbau");
+				fetchJsonData("fuehrerschein");
 				console.log(fuehrerscheinData);
 			} else {
 				levelDropdownContainer.style.display = "none";
