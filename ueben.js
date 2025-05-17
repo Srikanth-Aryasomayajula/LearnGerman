@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	let selectedLevels = [];
 	let SHEET_NAME;
 
+	// Define arrays to store loaded data
+	let maschinenbauData = [];
+	let fuehrerscheinData = [];
+
 	const levelDropdownContainer = createLevelDropdown();
 	practiceArea.parentNode.insertBefore(levelDropdownContainer, practiceArea);
 
@@ -54,10 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				const maschinenbauData = fetchExcelData("maschinenbau");
+				const maschinenbauData = fetchJsonData("maschinenbau");
 				console.log(maschinenbauData);
 			} else if (selectedSources.includes("Führerschein")) {
-				const fuehrerscheinData = fetchExcelData("fuehrerschein");
+				const fuehrerscheinData = fetchJsonData("maschinenbau");
 				console.log(fuehrerscheinData);
 			} else {
 				levelDropdownContainer.style.display = "none";
@@ -494,52 +498,25 @@ document.addEventListener("DOMContentLoaded", () => {
 	  fuehrerschein: ["German", "English", "Action to be done during Exam"]
 	};
 
-	// Modified renderTable that takes columns as argument
-	function renderTable(data, columns) {
-	  const tableBody = document.querySelector("#tableBody");
-	  tableBody.innerHTML = "";
-	
-	  if (!data || data.length === 0) {
-	    const tr = document.createElement("tr");
-	    tr.innerHTML = `<td colspan="${columns.length}">No entries found for this level.</td>`;
-	    tableBody.appendChild(tr);
-	    return;
-	  }
-	
-	  data.forEach(row => {
-	    const tr = document.createElement("tr");
-	    columns.forEach(col => {
-	      const td = document.createElement("td");
-	      td.innerHTML = (row[col] || "").replace(/\r?\n/g, "<br>");
-	      tr.appendChild(td);
+	// Fetch function that also assigns data to correct array
+	function fetchJsonData(sheetName) {
+	  fetch(`${sheetName}.json`)
+	    .then(response => {
+	      if (!response.ok) throw new Error(`Failed to load ${sheetName}.json`);
+	      return response.json();
+	    })
+	    .then(data => {
+	      console.log(`Data from ${sheetName}.json:`, data);
+	      if (sheetName === "maschinenbau") {
+	        maschinenbauData = data;
+	      } else if (sheetName === "fuehrerschein") {
+	        fuehrerscheinData = data;
+	      }
+	      // You can now use renderTable(data, sheetColumns[sheetName]) if needed
+	    })
+	    .catch(error => {
+	      console.error(`Error loading ${sheetName}.json:`, error);
 	    });
-	    tableBody.appendChild(tr);
-	  });
 	}
-
-	// Function to fetch JSON and render table
-function loadSheet(sheetName) {
-  const columns = sheetColumns[sheetName];
-  if (!columns) {
-    console.error(`No columns defined for sheet: ${sheetName}`);
-    return;
-  }
-
-  fetch(`${sheetName}.json`)
-    .then(response => {
-      if (!response.ok) throw new Error("Failed to load JSON data.");
-      return response.json();
-    })
-    .then(data => {
-      renderTable(data, columns);
-    })
-    .catch(error => {
-      const tableBody = document.querySelector("#tableBody");
-      if (tableBody) {
-        tableBody.innerHTML = `<tr><td colspan="${columns.length}">Error loading data: ${error.message}</td></tr>`;
-      }
-      console.error(error);
-    });
-}
 
 });
