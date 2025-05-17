@@ -311,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		const prevBtn = document.createElement("button");
 		prevBtn.textContent = "Previous";
-		prevBtn.className = "nav-button";
+		// prevBtn.className = "nav-button";
 		prevBtn.style.display = currentIndex === 0 ? "none" : "inline-block";
 		prevBtn.addEventListener("click", () => {
 			if (currentIndex > 0) {
@@ -326,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		const nextBtn = document.createElement("button");
 		nextBtn.textContent = "Next";
-		nextBtn.className = "nav-button";
+		// nextBtn.className = "nav-button";
 		nextBtn.style.display = "none";
 		nextBtn.addEventListener("click", () => {
 			if (currentIndex < filteredData.length - 1) {
