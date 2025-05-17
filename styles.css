@@ -493,21 +493,21 @@ iframe {
 /* Grammatik page */
 .grammatik-page iframe {
   width: calc(100vw - 30px);
-  height: calc(100vh - 95px);
+  height: calc(100vh - 135px);
   overflow: auto;
 }
 
 /* Maschinenbau page */
 .maschinenbau-page iframe {
   width: calc(100vw - 360px);
-  height: calc(100vh - 200px);
+  height: calc(100vh - 240px);
   overflow: hidden; /* prevent outer scrollbars */
 }
 
 /* Fuehrerschein page */
 .fuehrerschein-page iframe {
   width: calc(100vw - 250px);
-  height: calc(100vh - 200px);
+  height: calc(100vh - 240px);
   overflow: hidden;
 }
 
