@@ -53,9 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				// code for Maschinenbau test
+				console.log(maschinenbauData);
 			} else if (selectedSources.includes("Führerschein")) {
-				// code for Führerschein test
+				console.log(fuehrerscheinData);
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
@@ -164,6 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function startPractice(selectedSources, selectedLevels) {
 		const vocabData = window.vocabData || [];
+		const maschinenbauData = window.maschinenbauData || [];
+		const fuehrerscheinData = window.fuehrerscheinData || [];
 
 		const data = vocabData.filter(row =>
 		  selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
