@@ -647,28 +647,8 @@ iframe {
     margin-bottom: 20px;
   }
 
-  /* For thin borders inside the iframe to be visible clearly */
-  #vokabularFrame {
-  	transform: scale(1.005);
-  	transform-origin: top left;
-  	width: calc(100vw / 1.005 - 30px);
-  	height: calc((100vh - 240px) / 1.005);
-  }
-  
-  #grammatikFrame {
-    outline: 4px solid black; /* fallback if table borders fail */
-    border: none; /* remove native iframe border if needed */
-  }
-
   .maschinenbau-page iframe {
     width: calc(100vw - 30px);
-  }
-
-  #maschinenbauFrame {
-  	transform: scale(1.5);
-  	transform-origin: top left;
-  	width: calc(100vw / 1.005 - 30px);
-  	height: calc((100vh - 240px) / 1.5);
   }
   
   /* Fixed footer at the bottom */
