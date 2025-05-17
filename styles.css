@@ -646,11 +646,26 @@ iframe {
   .loadPracticeBtn {
     margin-bottom: 20px;
   }
-
-  /* Maschinenbau page */
+  
   .maschinenbau-page iframe {
     width: calc(100vw - 30px);
   }
+
+  /* For thin borders inside the iframe to be visible clearly */
+  #vokabularFrame {
+  	transform: scale(1.005);
+  	transform-origin: top left;
+  	width: calc(100vw / 1.005 - 30px);
+  	height: calc((100vh - 240px) / 1.005);
+  }
+  
+  #grammatikFrame {
+  	transform: scale(1.005);
+  	transform-origin: top left;
+  	width: calc(100vw / 1.005 - 30px);
+  	height: calc((100vh - 135px) / 1.005);
+  }
+  
   /* Fixed footer at the bottom */
   .site-footer {
     font-size: 8px;
