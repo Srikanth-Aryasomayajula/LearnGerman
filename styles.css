@@ -523,7 +523,7 @@ iframe {
 .maschinenbau-page body,
 .fuehrerschein-page body,
 .grammatik-page body {
-  overflow: auto;
+  overflow: hidden;
 }
 
 /* Fixed footer at the bottom */
