@@ -8,6 +8,12 @@ body {
   align-items: center;
 }
 
+.site-logo {
+  height: 40px;          /* adjust to fit your nav */
+  margin-left: 1rem;
+  vertical-align: middle;
+}
+
 .navbar {
   background-color: #000000;
   color: white;
