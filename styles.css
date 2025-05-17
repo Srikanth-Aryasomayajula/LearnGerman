@@ -523,13 +523,19 @@ iframe {
   overflow: auto;
 }
 
+/* Fixed footer at the bottom */
 .site-footer {
   text-align: center;
   font-size: 0.9em;
   color: #666;
-  padding: 20px 0;
+  padding: 12px 0;
   border-top: 1px solid #ddd;
-  margin-top: 40px;
+  background-color: #f9f9f9;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
 }
 
 /* Responsive layout for mobile */
