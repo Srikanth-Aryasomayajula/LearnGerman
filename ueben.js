@@ -477,7 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			})
 			.then(data => {
 				window[`${SHEET_NAME}Data`] = data; // Dynamically assign to global window object
-				//renderTable(data); // Or your flashcard function if different
+				renderTable(data); // Or your flashcard function if different
 			})
 			.catch(error => {
 				const tableBody = document.querySelector("#tableBody"); // Make sure this element exists
@@ -487,5 +487,35 @@ document.addEventListener("DOMContentLoaded", () => {
 				console.error(error);
 			});
 	}
+
+	// Define columns for each sheet
+const sheetColumns = {
+  maschinenbau: ["German", "English", "Example", "Remarks"],
+  fuehrerschein: ["German", "English", "Action to be done during Exam"]
+};
+
+// Modified renderTable that takes columns as argument
+function renderTable(data, columns) {
+  const tableBody = document.querySelector("#tableBody");
+  tableBody.innerHTML = "";
+
+  if (!data || data.length === 0) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td colspan="${columns.length}">No entries found for this level.</td>`;
+    tableBody.appendChild(tr);
+    return;
+  }
+
+  data.forEach(row => {
+    const tr = document.createElement("tr");
+    columns.forEach(col => {
+      const td = document.createElement("td");
+      td.innerHTML = (row[col] || "").replace(/\r?\n/g, "<br>");
+      tr.appendChild(td);
+    });
+    tableBody.appendChild(tr);
+  });
+}
+	
 
 });
