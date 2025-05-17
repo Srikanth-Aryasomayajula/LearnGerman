@@ -493,7 +493,7 @@ iframe {
 /* Grammatik page */
 .grammatik-page iframe {
   width: calc(100vw - 30px);
-  height: calc(100vh - 135px);
+  height: calc(100vh - 165px);
   overflow: auto;
 }
 
@@ -511,19 +511,16 @@ iframe {
   overflow: hidden;
 }
 
-/* Hide scrollbars and prevent scrolling on these pages 
+/* Hide scrollbars and prevent scrolling on these pages */
 .maschinenbau-page body,
 .fuehrerschein-page body,
 .grammatik-page body {
   overflow: hidden;
-} */
+}
 
 /* Allow scrolling on vokabular page */
-.vokabular-page body,
-.maschinenbau-page body,
-.fuehrerschein-page body,
-.grammatik-page body {
-  overflow: hidden;
+.vokabular-page body {
+  overflow: auto;
 }
 
 /* Fixed footer at the bottom */
