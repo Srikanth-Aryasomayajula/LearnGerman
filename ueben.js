@@ -58,15 +58,17 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				fetchJsonData("maschinenbau").then(data => {
-				  maschinenbauData = data;
-				  console.log(maschinenbauData);
-				});
+					fetchJsonData("maschinenbau").then(() => {
+					  // ✅ Now it's safe to use maschinenbauData
+					  console.log("Now using maschinenbauData:", maschinenbauData);
+					  renderTable(maschinenbauData, sheetColumns["maschinenbau"]);
+					});
 			} else if (selectedSources.includes("Führerschein")) {
-				fetchJsonData("fuehrerschein").then(data => {
-				  fuehrerscheinData = data;
-				  console.log(fuehrerscheinData); // ✅ This now works correctly
-				});
+					fetchJsonData("maschinenbau").then(() => {
+					  // ✅ Now it's safe to use maschinenbauData
+					  console.log("Now using maschinenbauData:", maschinenbauData);
+					  renderTable(maschinenbauData, sheetColumns["maschinenbau"]);
+					});
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
