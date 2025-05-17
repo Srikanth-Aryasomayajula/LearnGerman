@@ -656,7 +656,8 @@ iframe {
   }
   
   #grammatikFrame {
-    outline: 1px solid black; /* fallback if table borders fail */
+    outline: 4px solid black; /* fallback if table borders fail */
+    border: none; /* remove native iframe border if needed */
   }
 
   .maschinenbau-page iframe {
