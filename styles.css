@@ -656,10 +656,7 @@ iframe {
   }
   
   #grammatikFrame {
-  	transform: scale(1.5);
-  	transform-origin: top left;
-  	width: calc(100vw / 1.005 - 30px);
-  	height: calc((100vh - 135px) / 1.5);
+    outline: 1px solid black; /* fallback if table borders fail */
   }
 
   .maschinenbau-page iframe {
