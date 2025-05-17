@@ -11,9 +11,10 @@ body {
 .site-logo {
   position: absolute;
   left: 1rem;
-  height: 40px;
+  height: 60px;
   top: 50%;
   transform: translateY(-50%);
+  border-radius: 8px;
 }
 
 .navbar {
