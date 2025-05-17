@@ -650,6 +650,11 @@ iframe {
   .maschinenbau-page iframe {
     width: calc(100vw - 30px);
   }
+
+  /* Fuehrerschein page */
+.fuehrerschein-page iframe {
+  width: calc(100vw - 30px);
+}
   
   /* Fixed footer at the bottom */
   .site-footer {
