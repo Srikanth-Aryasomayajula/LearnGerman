@@ -53,9 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				console.log(maschinenbauData);
+				loadScript("maschinenbau.js", () => {
+					// Use maschinenbauData here
+					console.log("Maschinenbau data:", window.maschinenbauData);
+				});
 			} else if (selectedSources.includes("Führerschein")) {
-				console.log(fuehrerscheinData);
+				loadScript("fuehrerschein.js", () => {
+					// Use fuehrerscheinData here
+					console.log("Führerschein data:", window.fuehrerscheinData);
+				});
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
@@ -465,5 +471,20 @@ document.addEventListener("DOMContentLoaded", () => {
 				input.parentNode.appendChild(correctDisplay);
 			});
 		});
+	}
+
+	// Function to call maschinenbauData and fuehrerscheinData
+	function loadScript(scriptName, callback) {
+		if (document.querySelector(`script[src="${scriptName}"]`)) {
+			// Script is already loaded or being loaded
+			if (callback) callback();
+			return;
+  		}
+
+		const script = document.createElement("script");
+		script.src = scriptName;
+		script.defer = true;
+		if (callback) script.onload = callback;
+		document.head.appendChild(script);
 	}
 });
