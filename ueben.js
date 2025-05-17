@@ -509,7 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	  if (!data || data.length === 0) {
 	    const tr = document.createElement("tr");
-	    tr.innerHTML = <td colspan="${columns.length}">No entries found for this level.</td>;
+	    tr.innerHTML = `<td colspan="${columns.length}">No entries found for this level.</td>`;  // ✅ Fixed
 	    tableBody.appendChild(tr);
 	    return;
 	  }
@@ -524,5 +524,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	    tableBody.appendChild(tr);
 	  });
 	}
+
 	
 });
