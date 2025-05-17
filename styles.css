@@ -647,6 +647,10 @@ iframe {
     margin-bottom: 20px;
   }
 
+  /* Maschinenbau page */
+  .maschinenbau-page iframe {
+    width: calc(100vw - 30px);
+  }
   /* Fixed footer at the bottom */
   .site-footer {
     font-size: 8px;
