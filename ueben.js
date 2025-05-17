@@ -322,6 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		const submitBtn = document.createElement("button");
 		submitBtn.textContent = "Submit";
+		submitBtn.className = "loadPracticeBtn";
 		submitBtn.id = "submitAnswers";
 
 		const nextBtn = document.createElement("button");
