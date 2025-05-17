@@ -58,17 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-					fetchJsonData("maschinenbau").then(() => {
-					  // ✅ Now it's safe to use maschinenbauData
-					  console.log("Now using maschinenbauData:", maschinenbauData);
-					  renderTable(maschinenbauData, sheetColumns["maschinenbau"]);
-					});
+				fetchJsonData("maschinenbau").then(() => {
+				  console.log("Now using maschinenbauData:", maschinenbauData);
+				  renderTable(maschinenbauData, sheetColumns["maschinenbau"]);
+				});
 			} else if (selectedSources.includes("Führerschein")) {
-					fetchJsonData("maschinenbau").then(() => {
-					  // ✅ Now it's safe to use maschinenbauData
-					  console.log("Now using maschinenbauData:", maschinenbauData);
-					  renderTable(maschinenbauData, sheetColumns["maschinenbau"]);
-					});
+				fetchJsonData("fuehrerschein").then(() => {
+				  console.log("Now using fuehrerscheinData:", fuehrerscheinData);
+				  renderTable(fuehrerscheinData, sheetColumns["fuehrerschein"]);
+				});
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
@@ -478,26 +476,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 
-	// Fetch and parse data from JSON (maschinenbauData and fuehrerscheinData)
-	function fetchExcelData(SHEET_NAME) {
-		fetch(`${SHEET_NAME}.json`)
-			.then(response => {
-				if (!response.ok) throw new Error("Failed to load JSON data.");
-				return response.json();
-			})
-			.then(data => {
-				window[`${SHEET_NAME}Data`] = data; // Dynamically assign to global window object
-				renderTable(data); // Or your flashcard function if different
-			})
-			.catch(error => {
-				const tableBody = document.querySelector("#tableBody"); // Make sure this element exists
-				if (tableBody) {
-					tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
-				}
-				console.error(error);
-			});
-	}
-
 	// Define columns for each sheet
 	const sheetColumns = {
 	  maschinenbau: ["German", "English", "Example", "Remarks"],
@@ -506,23 +484,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Fetch function that also assigns data to correct array
 	function fetchJsonData(sheetName) {
-	  fetch(`${sheetName}.json`)
+	  return fetch(`${sheetName}.json`)  // ✅ Return the Promise
 	    .then(response => {
 	      if (!response.ok) throw new Error(`Failed to load ${sheetName}.json`);
 	      return response.json();
 	    })
 	    .then(data => {
-	      console.log(`Data from ${sheetName}.json:`, data);
 	      if (sheetName === "maschinenbau") {
 	        maschinenbauData = data;
 	      } else if (sheetName === "fuehrerschein") {
 	        fuehrerscheinData = data;
 	      }
-	      // You can now use renderTable(data, sheetColumns[sheetName]) if needed
+	      console.log(`✅ ${sheetName}Data loaded:`, data);
+	      return data; // Optional: return the data for further chaining
 	    })
 	    .catch(error => {
 	      console.error(`Error loading ${sheetName}.json:`, error);
 	    });
 	}
+
 
 });
