@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	let filteredData = [];
 	let currentIndex = 0;
 	let selectedLevels = [];
+	let SHEET_NAME;
 
 	const levelDropdownContainer = createLevelDropdown();
 	practiceArea.parentNode.insertBefore(levelDropdownContainer, practiceArea);
@@ -53,15 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				loadScript("maschinenbau.js", () => {
-					// Use maschinenbauData here
-					console.log("Maschinenbau data:", window.maschinenbauData);
-				});
+				fetchExcelData("maschinenbau");
+				console.log(maschinenbauData);
 			} else if (selectedSources.includes("Führerschein")) {
-				loadScript("fuehrerschein.js", () => {
-					// Use fuehrerscheinData here
-					console.log("Führerschein data:", window.fuehrerscheinData);
-				});
+				fetchExcelData("fuehrerschein");
+				console.log(fuehrerscheinData);
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
@@ -170,8 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function startPractice(selectedSources, selectedLevels) {
 		const vocabData = window.vocabData || [];
-		const maschinenbauData = window.maschinenbauData || [];
-		const fuehrerscheinData = window.fuehrerscheinData || [];
 
 		const data = vocabData.filter(row =>
 		  selectedSources.includes((row["Topic"] || row["SheetName"] || "Vokabular").trim()) &&
@@ -473,18 +468,24 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 
-	// Function to call maschinenbauData and fuehrerscheinData
-	function loadScript(scriptName, callback) {
-		if (document.querySelector(`script[src="${scriptName}"]`)) {
-			// Script is already loaded or being loaded
-			if (callback) callback();
-			return;
-  		}
-
-		const script = document.createElement("script");
-		script.src = scriptName;
-		script.defer = true;
-		if (callback) script.onload = callback;
-		document.head.appendChild(script);
+	// Fetch and parse data from JSON (maschinenbauData and fuehrerscheinData)
+	function fetchExcelData(SHEET_NAME) {
+		fetch(`${SHEET_NAME}.json`)
+			.then(response => {
+				if (!response.ok) throw new Error("Failed to load JSON data.");
+				return response.json();
+			})
+			.then(data => {
+				window[`${SHEET_NAME}Data`] = data; // Dynamically assign to global window object
+				renderTable(data); // Or your flashcard function if different
+			})
+			.catch(error => {
+				const tableBody = document.querySelector("#tableBody"); // Make sure this element exists
+				if (tableBody) {
+					tableBody.innerHTML = `<tr><td colspan="12">Error loading data: ${error.message}</td></tr>`;
+				}
+				console.error(error);
+			});
 	}
+
 });
