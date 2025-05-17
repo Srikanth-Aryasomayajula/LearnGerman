@@ -1,63 +1,59 @@
 <!DOCTYPE html>
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Deutsch Lernen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deutsch Lernen – Üben</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <script src="xlsx.full.min.js"></script>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <script src="xlsx.full.min.js" defer></script>
+  <script src="vokabular.js" defer></script>
+  <script src="ueben.js" defer></script>
 </head>
-  
+
 <body class="bg-text">
   <nav class="navbar">
-	<button class="toggle-menu" id="menuToggleBtn">&#9776;</button>
-	
-	<div class="menu-container" id="menuContainer"> 
-		<a href="index.html" class="menu-button">Vokabular</a>
-		<a href="grammatik.html" class="menu-button">Grammatik</a>
-		<a href="maschinenbau.html" class="menu-button">Maschinenbau</a>
-		<a href="fuehrerschein.html" class="menu-button">Führerschein</a>
-		<a href="practice.html" class="menu-button">Üben</a>
-	</div>
+    <button class="toggle-menu" id="menuToggleBtn">&#9776;</button>
+    <div class="menu-container" id="menuContainer">
+      <a href="index.html" class="menu-button">Vokabular</a>
+      <a href="grammatik.html" class="menu-button">Grammatik</a>
+      <a href="maschinenbau.html" class="menu-button">Maschinenbau</a>
+      <a href="fuehrerschein.html" class="menu-button">Führerschein</a>
+      <a href="practice.html" class="menu-button">Üben</a>
+    </div>
   </nav>
 
   <main class="main-content">
     <h1 class="main-title">Üben</h1>
-	<!-- Dummy element to prevent script.js from crashing -->
-	<div id="dropdownOptions" style="display: none;"></div>
 
-	<!-- Dummy dropdownHeader to prevent event listener crash -->
-	<div id="dropdownHeader" style="display: none;">Header</div>
+    <!-- Hidden elements required for shared JS -->
+    <div id="dropdownOptions" style="display: none;"></div>
+    <div id="dropdownHeader" style="display: none;">Header</div>
+    <table id="vocabTable" style="display: none;">
+      <tbody></tbody>
+    </table>
+    <button id="displayTableBtn" style="display: none;"></button>
+    <button id="clearSelection" style="display: none;"></button>
 
-	<!-- Dummy vocabTable to avoid null tableBody reference -->
-	<table id="vocabTable" style="display: none;">
-	  <tbody></tbody>
-	</table>
+    <!-- Practice source selector -->
+    <section id="sourceSelector">
+      <div class="checkbox-row">
+        <label><input type="checkbox" value="Vokabular" /> Vokabular</label>
+        <label><input type="checkbox" value="Grammatik" /> Grammatik</label>
+        <label><input type="checkbox" value="Maschinenbau" /> Maschinenbau</label>
+        <label><input type="checkbox" value="Führerschein" /> Führerschein</label>
+      </div>
+      <button id="loadPracticeBtn" class="loadPracticeBtn">Start Practice</button>
+    </section>
 
-	<!-- Dummy displayTableBtn to prevent crash -->
-	<button id="displayTableBtn" style="display: none;"></button>
-	<button id="clearSelection" style="display: none;"></button>
-	  
-	<div id="sourceSelector">
-	<div class="checkbox-row">
-		<label><input type="checkbox" value="Vokabular" /> Vokabular</label>
-		<label><input type="checkbox" value="Grammatik" /> Grammatik</label>
-		<label><input type="checkbox" value="Maschinenbau" /> Maschinenbau</label>
-		<label><input type="checkbox" value="Führerschein" /> Führerschein</label>
-	</div>
-		<button id="loadPracticeBtn" class="loadPracticeBtn">Start Practice</button>
-	</div>
-    
-	<div id="practiceArea"></div>
-	
-	<script>
-	  document.getElementById("menuToggleBtn").addEventListener("click", function () {
-	    document.getElementById("menuContainer").classList.toggle("show-menu");
-	  });
-	</script>
-    
+    <!-- Area to show practice content -->
+    <div id="practiceArea"></div>
   </main>
-  <script src="vokabular.js" defer></script>
-  <script src="ueben.js" defer></script>
+
+  <script>
+    document.getElementById("menuToggleBtn").addEventListener("click", () => {
+      document.getElementById("menuContainer").classList.toggle("show-menu");
+    });
+  </script>
 </body>
 </html>
