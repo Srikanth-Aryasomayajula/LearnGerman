@@ -648,6 +648,12 @@ iframe {
   }
 }
 
+/* Fixed footer at the bottom */
+.site-footer {
+  font-size: 0.7em;
+  padding: 3px 0;
+}
+
 @media (hover: none) {
   .menu-button:hover {
     background-color: #2563eb;
