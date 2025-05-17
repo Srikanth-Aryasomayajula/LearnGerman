@@ -489,33 +489,57 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	// Define columns for each sheet
-const sheetColumns = {
-  maschinenbau: ["German", "English", "Example", "Remarks"],
-  fuehrerschein: ["German", "English", "Action to be done during Exam"]
-};
+	const sheetColumns = {
+	  maschinenbau: ["German", "English", "Example", "Remarks"],
+	  fuehrerschein: ["German", "English", "Action to be done during Exam"]
+	};
 
-// Modified renderTable that takes columns as argument
-function renderTable(data, columns) {
-  const tableBody = document.querySelector("#tableBody");
-  tableBody.innerHTML = "";
+	// Modified renderTable that takes columns as argument
+	function renderTable(data, columns) {
+	  const tableBody = document.querySelector("#tableBody");
+	  tableBody.innerHTML = "";
+	
+	  if (!data || data.length === 0) {
+	    const tr = document.createElement("tr");
+	    tr.innerHTML = `<td colspan="${columns.length}">No entries found for this level.</td>`;
+	    tableBody.appendChild(tr);
+	    return;
+	  }
+	
+	  data.forEach(row => {
+	    const tr = document.createElement("tr");
+	    columns.forEach(col => {
+	      const td = document.createElement("td");
+	      td.innerHTML = (row[col] || "").replace(/\r?\n/g, "<br>");
+	      tr.appendChild(td);
+	    });
+	    tableBody.appendChild(tr);
+	  });
+	}
 
-  if (!data || data.length === 0) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td colspan="${columns.length}">No entries found for this level.</td>`;
-    tableBody.appendChild(tr);
+	// Function to fetch JSON and render table
+function loadSheet(sheetName) {
+  const columns = sheetColumns[sheetName];
+  if (!columns) {
+    console.error(`No columns defined for sheet: ${sheetName}`);
     return;
   }
 
-  data.forEach(row => {
-    const tr = document.createElement("tr");
-    columns.forEach(col => {
-      const td = document.createElement("td");
-      td.innerHTML = (row[col] || "").replace(/\r?\n/g, "<br>");
-      tr.appendChild(td);
+  fetch(`${sheetName}.json`)
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to load JSON data.");
+      return response.json();
+    })
+    .then(data => {
+      renderTable(data, columns);
+    })
+    .catch(error => {
+      const tableBody = document.querySelector("#tableBody");
+      if (tableBody) {
+        tableBody.innerHTML = `<tr><td colspan="${columns.length}">Error loading data: ${error.message}</td></tr>`;
+      }
+      console.error(error);
     });
-    tableBody.appendChild(tr);
-  });
 }
-	
 
 });
