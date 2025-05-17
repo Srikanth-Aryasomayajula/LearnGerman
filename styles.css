@@ -486,7 +486,7 @@ iframe {
 /* Vokabular page */
 .vokabular-page iframe {
   width: calc(100vw - 30px);
-  height: calc(100vh - 260px);
+  height: calc(100vh - 250px);
   overflow: auto; /* allow scroll if needed */
 }
 
