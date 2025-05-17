@@ -511,15 +511,18 @@ iframe {
   overflow: hidden;
 }
 
-/* Hide scrollbars and prevent scrolling on these pages */
+/* Hide scrollbars and prevent scrolling on these pages 
 .maschinenbau-page body,
 .fuehrerschein-page body,
 .grammatik-page body {
   overflow: hidden;
-}
+} */
 
 /* Allow scrolling on vokabular page */
-.vokabular-page body {
+.vokabular-page body,
+.maschinenbau-page body,
+.fuehrerschein-page body,
+.grammatik-page body {
   overflow: auto;
 }
 
