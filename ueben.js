@@ -477,7 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			})
 			.then(data => {
 				window[`${SHEET_NAME}Data`] = data; // Dynamically assign to global window object
-				renderTable(data); // Or your flashcard function if different
+				//renderTable(data); // Or your flashcard function if different
 			})
 			.catch(error => {
 				const tableBody = document.querySelector("#tableBody"); // Make sure this element exists
