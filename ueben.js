@@ -59,10 +59,20 @@ document.addEventListener("DOMContentLoaded", () => {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
 				// code for Maschinenbau test
-				loadJsonData("Maschinenbau");
+				const tempMechData = loadJsonData("Maschinenbau");
+				console.log(typeof tempMechData);
+				console.log(Array.isArray(tempMechData)); // Should return true
+				console.log(tempMechData);
+				console.log(tempMechData[0]);
+				console.log(tempMechData.length); 
 			} else if (selectedSources.includes("Führerschein")) {
 				// code for Führerschein test
-				loadJsonData("Führerschein");
+				const tempLicData = loadJsonData("Führerschein");
+				console.log(typeof tempLicData);
+				console.log(Array.isArray(tempLicData)); // Should return true
+				console.log(tempLicData);
+				console.log(tempLicData[0]);
+				console.log(tempLicData.length); 
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
