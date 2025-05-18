@@ -584,7 +584,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					const correctPhrase = value.trim(); // For "English/Example/Remarks/Action to be done during Exam", blank the whole phrase.
 					const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
 					if (col === "English") {
-						const options = generateOptionsMechLic(correctPhrase, window.maschinenbauData || [], col);
+						const options = generateOptionsMechLic(correctPhrase, entry || [], col);
 						td.innerHTML = `<span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							  <br>${createOptionsHTML(blankId, correctPhrase, options)}`;
 					} else {
