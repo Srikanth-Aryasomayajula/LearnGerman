@@ -59,20 +59,24 @@ document.addEventListener("DOMContentLoaded", () => {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
 				// code for Maschinenbau test
-				const tempMechData = async loadJsonData("Maschinenbau");
-				console.log(typeof tempMechData);
-				console.log(Array.isArray(tempMechData)); // Should return true
-				console.log(tempMechData);
-				console.log(tempMechData[0]);
-				console.log(tempMechData.length); 
+				(async () => {
+					const tempMechData = await loadJsonData("Maschinenbau");
+					console.log(typeof tempMechData);            // "object"
+					console.log(Array.isArray(tempMechData));    // true (if your JSON is an array)
+					console.log(tempMechData);
+					console.log(tempMechData[0]);
+					console.log(tempMechData.length);
+				})();
 			} else if (selectedSources.includes("Führerschein")) {
 				// code for Führerschein test
-				const tempLicData = async loadJsonData("Führerschein");
-				console.log(typeof tempLicData);
-				console.log(Array.isArray(tempLicData)); // Should return true
-				console.log(tempLicData);
-				console.log(tempLicData[0]);
-				console.log(tempLicData.length); 
+				(async () => {
+					const tempLicData = await loadJsonData("Führerschein");
+					console.log(typeof tempLicData);            // "object"
+					console.log(Array.isArray(tempLicData));    // true (if your JSON is an array)
+					console.log(tempLicData);
+					console.log(tempLicData[0]);
+					console.log(tempLicData.length);
+				})();
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
@@ -513,9 +517,12 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 	
 			console.log(`${sheet_name} data loaded:`, data.length, "items");
+	
+			return data;  // <--- Return the loaded data here!
 		} catch (error) {
 			console.error("Error loading data:", error);
 			alert(`Could not load data for ${sheet_name}.json`);
+			return null;  // Return null on error
 		}
 	}
 	
