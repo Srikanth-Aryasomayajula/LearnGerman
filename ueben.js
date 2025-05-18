@@ -46,37 +46,52 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// Select the topic of practice
-	function loadFlashcards() {
-		loadButton.addEventListener("click", async () => {
-			const selectedSources = getSelectedValues(checkboxes);
-			if (selectedSources.length === 0) {
-				return alert("Please select at least one topic.");
-			}
-	
-			if (selectedSources.includes("Vokabular")) {
-				levelDropdownContainer.style.display = "flex";
-				secondStartBtn.style.display = "inline-block";
-			} else if (selectedSources.includes("Grammatik")) {
-				// code for grammatik test
-			} else if (selectedSources.includes("Maschinenbau")) {
-				(async () => {
-					const data = await loadJsonData("Maschinenbau");
-					window.maschinenbauData = data;
-					startPracticeMechLicense("Maschinenbau");
-				})();
-			} else if (selectedSources.includes("Führerschein")) {
-				(async () => {
-					const data = await loadJsonData("Führerschein");
-					window.fuehrerscheinData = data;
-					startPracticeMechLicense("Führerschein");
-				})();
+function loadFlashcards() {
+	loadButton.addEventListener("click", async () => {
+		const selectedSources = getSelectedValues(checkboxes);
+		if (selectedSources.length === 0) {
+			return alert("Please select at least one topic.");
+		}
+
+		const hasVokabular = selectedSources.includes("Vokabular");
+		const otherSources = selectedSources.filter(src => src !== "Vokabular");
+
+		if (hasVokabular) {
+			// Show dropdown and second button for Vokabular
+			levelDropdownContainer.style.display = "flex";
+			secondStartBtn.style.display = "inline-block";
+
+			// Handle second start button click (only once)
+			secondStartBtn.onclick = () => {
+				const selectedLevels = getSelectedValues(levelCheckboxes); // assumes you have levelCheckboxes defined
+				startPractice(["Vokabular"], selectedLevels);
+			};
+		} else {
+			// Hide Vokabular-specific UI
+			levelDropdownContainer.style.display = "none";
+			secondStartBtn.style.display = "none";
+		}
+
+		// Handle other sources immediately
+		for (const source of otherSources) {
+			if (source === "Grammatik") {
+				// Optional: insert Grammatik logic here
+			} else if (source === "Maschinenbau") {
+				const data = await loadJsonData("Maschinenbau");
+				window.maschinenbauData = data;
+				startPracticeMechLicense("Maschinenbau");
+			} else if (source === "Führerschein") {
+				const data = await loadJsonData("Führerschein");
+				window.fuehrerscheinData = data;
+				startPracticeMechLicense("Führerschein");
 			} else {
-				levelDropdownContainer.style.display = "none";
-				secondStartBtn.style.display = "none";
-				startPractice(selectedSources, []);
+				// fallback for unknown sources
+				startPractice([source], []);
 			}
-		});
-	}
+		}
+	});
+}
+
 
 
 	// Create dropdown to select the level in vocabulary
