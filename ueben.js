@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Second start button
 	secondStartBtn.addEventListener("click", () => {
-		const selectedSources = getSelectedValues(checkboxes);
+		selectedLevels = getSelectedLevels(levelCheckboxes);
 		if (selectedLevels.length === 0) return alert("Please select at least one level.");
 		const selectedSources = getSelectedValues(checkboxes);
 		startPractice(selectedSources, selectedLevels);
@@ -48,8 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Select the topic of practice
 	function loadFlashcards() {
 		loadButton.addEventListener("click", async () => {
-			const selectedRadio = document.querySelector('input[name="source"]:checked');
-			const selectedSources = selectedRadio ? [selectedRadio.value] : [];
+			const selectedSources = getSelectedValues(checkboxes);
 			if (selectedSources.length === 0) {
 				return alert("Please select at least one topic.");
 			}
