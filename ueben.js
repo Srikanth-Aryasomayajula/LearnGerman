@@ -562,10 +562,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		table.className = "flashcard-table";
 		
 		let columns = [];
+		let sheet_data = [];
+		
 		if (sheet_name === "Maschinenbau") {
 			columns = ["German", "English", "Example", "Remarks"];
+			sheet_data = window.maschinenbauData;
 		} else if (sheet_name === "Führerschein") {
 			columns = ["German", "English", "Action to be done during Exam"];
+			sheet_data = window.fuehrerscheinData;
 		}
 
 		console.log("Rendering entry:", entry);
@@ -584,7 +588,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					const correctPhrase = value.trim(); // For "English/Example/Remarks/Action to be done during Exam", blank the whole phrase.
 					const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
 					if (col === "English") {
-						const options = generateOptionsMechLic(correctPhrase, window.maschinenbauData || window.fuehrerscheinData || [], col);
+						const options = generateOptionsMechLic(correctPhrase, sheet_data || [], col);
 						td.innerHTML = `<span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							  <br>${createOptionsHTML(blankId, correctPhrase, options)}`;
 					} else {
