@@ -107,7 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
 				allData.filter(row => selectedLevels.includes((row["Level"] || "").trim()))
 			);
 			console.log(typeof allData);
+			console.log(Array.isArray(allData)); // Should return true
 			console.log(allData);
+			console.log(allData[0]);
+			console.log(allData.length); 
 		}
 	});
 
