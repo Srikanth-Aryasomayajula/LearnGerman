@@ -381,7 +381,8 @@ document.addEventListener("DOMContentLoaded", () => {
 						const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
 						const parentDiv = (checked || correctInput).closest("div"); // works for both blank and incorrect
 						const existing = parentDiv.querySelector(".correct-combo");
-
+						console.log (correctInput);
+						console.log (typeof correctInput);
 						if (!existing) {
 							parentDiv.style.display = "block"; // Ensure parent allows line breaks
 							const correctAnswerSpan = document.createElement("div");
