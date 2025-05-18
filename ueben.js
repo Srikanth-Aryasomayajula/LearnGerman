@@ -48,7 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Select the topic of practice
 	function loadFlashcards() {
 		loadButton.addEventListener("click", async () => {
-			const selectedSources = getSelectedValues(checkboxes);
+			const selectedRadio = document.querySelector('input[name="source"]:checked');
+			console.log("Selected radio:", selectedRadio);  // <--- DEBUG
+			const selectedSources = selectedRadio ? [selectedRadio.value] : [];
 			if (selectedSources.length === 0) {
 				return alert("Please select at least one topic.");
 			}
