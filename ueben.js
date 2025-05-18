@@ -48,23 +48,24 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Select the topic of practice
 	function loadFlashcards() {
 		loadButton.addEventListener("click", async () => {
-			const selectedSources = document.querySelector('input[name="source"]:checked');
+			const selectedRadio = document.querySelector('input[name="source"]:checked');
+			const selectedSources = selectedRadio ? [selectedRadio.value] : [];
 			if (selectedSources.length === 0) {
 				return alert("Please select at least one topic.");
 			}
 	
-			if (selectedSources === "Vokabular") {
+			if (selectedSources.includes("Vokabular")) {
 				levelDropdownContainer.style.display = "flex";
 				secondStartBtn.style.display = "inline-block";
-			} else if (selectedSources === "Grammatik") {
+			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
-			} else if (selectedSources === "Maschinenbau") {
+			} else if (selectedSources.includes("Maschinenbau")) {
 				(async () => {
 					const data = await loadJsonData("Maschinenbau");
 					window.maschinenbauData = data;
 					startPracticeMechLicense("Maschinenbau");
 				})();
-			} else if (selectedSources === "Führerschein") {
+			} else if (selectedSources.includes("Führerschein")) {
 				(async () => {
 					const data = await loadJsonData("Führerschein");
 					window.fuehrerscheinData = data;
