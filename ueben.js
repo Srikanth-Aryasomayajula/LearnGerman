@@ -53,18 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
 				return alert("Please select at least one topic.");
 			}
 	
-			if (selectedSources.includes("Vokabular")) {
+			if (selectedSources === "Vokabular") {
 				levelDropdownContainer.style.display = "flex";
 				secondStartBtn.style.display = "inline-block";
-			} else if (selectedSources.includes("Grammatik")) {
+			} else if (selectedSources === "Grammatik")) {
 				// code for grammatik test
-			} else if (selectedSources.includes("Maschinenbau")) {
+			} else if (selectedSources === "Maschinenbau")) {
 				(async () => {
 					const data = await loadJsonData("Maschinenbau");
 					window.maschinenbauData = data;
 					startPracticeMechLicense("Maschinenbau");
 				})();
-			} else if (selectedSources.includes("Führerschein")) {
+			} else if (selectedSources === "Führerschein")) {
 				(async () => {
 					const data = await loadJsonData("Führerschein");
 					window.fuehrerscheinData = data;
