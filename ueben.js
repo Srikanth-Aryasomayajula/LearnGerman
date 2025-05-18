@@ -60,12 +60,14 @@ document.addEventListener("DOMContentLoaded", () => {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
 				(async () => {
-					await loadJsonData("Maschinenbau");
+					const data = await loadJsonData("Maschinenbau");
+					window.maschinenbauData = data;
 					startPracticeMechLicense("Maschinenbau");
 				})();
 			} else if (selectedSources.includes("Führerschein")) {
 				(async () => {
-					await loadJsonData("Führerschein");
+					const data = await loadJsonData("Führerschein");
+					window.fuehrerscheinData = data;
 					startPracticeMechLicense("Führerschein");
 				})();
 			} else {
