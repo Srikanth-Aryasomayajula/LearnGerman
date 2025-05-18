@@ -47,26 +47,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Select the topic of practice
 	function loadFlashcards() {
-		loadButton.addEventListener("click", () => {
+		loadButton.addEventListener("click", async () => {
 			const selectedSources = getSelectedValues(checkboxes);
 			if (selectedSources.length === 0) {
 				return alert("Please select at least one topic.");
 			}
+	
 			if (selectedSources.includes("Vokabular")) {
 				levelDropdownContainer.style.display = "flex";
 				secondStartBtn.style.display = "inline-block";
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				(async () => {
-					await loadJsonData("Maschinenbau");
-					startPracticeMechLicense("Maschinenbau");
-				})();
+				await loadJsonData("Maschinenbau");  // ✅ wait for it to load
+				startPracticeMechLicense("Maschinenbau");
 			} else if (selectedSources.includes("Führerschein")) {
-				(async () => {
-					await loadJsonData("Führerschein");
-					startPracticeMechLicense("Führerschein");
-				})();
+				await loadJsonData("Führerschein");  // ✅ wait for it to load
+				startPracticeMechLicense("Führerschein");
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
@@ -74,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		});
 	}
+
 
 	// Create dropdown to select the level in vocabulary
 	function createLevelDropdown() {
