@@ -58,14 +58,10 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				(async () => {
-					const maschinenbauData = await loadJsonData("Maschinenbau");
-				})();
+				await loadJsonData("Maschinenbau");  // wait for it to load
 				startPracticeMechLicense("Maschinenbau");
 			} else if (selectedSources.includes("Führerschein")) {
-				(async () => {
-					const fuehrerscheinData = await loadJsonData("Führerschein");
-				})();
+				await loadJsonData("Führerschein");  // wait for it to load
 				startPracticeMechLicense("Führerschein");
 			} else {
 				levelDropdownContainer.style.display = "none";
