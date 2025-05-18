@@ -61,12 +61,12 @@ document.addEventListener("DOMContentLoaded", () => {
 				(async () => {
 					const maschinenbauData = await loadJsonData("Maschinenbau");
 				})();
-				startPracticeMechLicense(sheet_name);
+				startPracticeMechLicense("Maschinenbau");
 			} else if (selectedSources.includes("Führerschein")) {
 				(async () => {
 					const fuehrerscheinData = await loadJsonData("Führerschein");
 				})();
-				startPracticeMechLicense(sheet_name);
+				startPracticeMechLicense("Führerschein");
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
