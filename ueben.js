@@ -409,8 +409,9 @@ document.addEventListener("DOMContentLoaded", () => {
 			const tenseColumns = ["Past (Präteritum)", "Perfect (Partizip II)", "Plusquamperfekt", "Futur I", "Futur II"];
 			evaluateTextInputs(tenseColumns);
 
-			const total = document.querySelectorAll("input[type='radio']").length / 4;
-			resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
+			const total = document.querySelectorAll("input[type='radio']").length;
+			const totalGroups = new Set([...document.querySelectorAll("input[type='radio']")].map(r => r.name)).size;
+			resultDisplay.textContent = `You got ${correct} of ${totalGroups} correct.`;
 
 			submitBtn.style.display = "none";
 			if (currentIndex > 0) prevBtn.style.display = "inline-block";
