@@ -559,12 +559,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		const table = document.createElement("table");
 		table.className = "flashcard-table";
 
+		let columns = [];
 		if (sheet_name === "Maschinenbau") {
 			const columns = ["German", "English", "Example", "Remarks"];
 		} else if (sheet_name === "Führerschein") {
 			const columns = ["German", "English", "Action to be done during Exam"];
 		}
-
+		
 		columns.forEach(col => {
 			const value = entry[col]?.trim();
 			if (value && value !== "-") {
