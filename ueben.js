@@ -54,74 +54,54 @@ function loadFlashcards() {
 			return alert("Please select at least one topic.");
 		}
 
-		// CASE 1: Vokabular is selected
 		if (selectedSources.includes("Vokabular")) {
-			let container = document.getElementById("levelDropdownContainer");
-			if (!container) {
-				// Create dropdown container and attach to DOM
-				container = createLevelDropdown();
-				document.body.appendChild(container); // or append to a specific container like mainArea
-				setupDropdownToggle(
-					container.querySelector("#dropdownHeader"),
-					container.querySelector("#dropdownOptions")
-				);
-				setupLevelCheckboxes(
-					Array.from(container.querySelectorAll("input[name='levelCheckbox']")),
-					container.querySelector("#dropdownHeader")
-				);
-			}
-
-			container.style.display = "flex";
-			const secondStartBtn = document.getElementById("startAfterLevelSelect");
+			// Show dropdown and second start button, wait for secondStartBtn click
+			levelDropdownContainer.style.display = "flex";
 			secondStartBtn.style.display = "inline-block";
 
-			// Prevent duplicate event listeners
+			// Attach handler for secondStartBtn (only once)
 			secondStartBtn.onclick = async () => {
-				const levels = getSelectedLevels(
-					Array.from(container.querySelectorAll("input[name='levelCheckbox']"))
-				);
-				// Prepare all data from other selected sources
 				const allData = [];
 
-				if (selectedSources.includes("Maschinenbau")) {
-					const data = await loadJsonData("Maschinenbau");
-					window.maschinenbauData = data;
-					allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
-				}
-				if (selectedSources.includes("Führerschein")) {
-					const data = await loadJsonData("Führerschein");
-					window.fuehrerscheinData = data;
-					allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
+				for (const source of selectedSources) {
+					if (source === "Maschinenbau") {
+						const data = await loadJsonData("Maschinenbau");
+						window.maschinenbauData = data;
+						allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
+					} else if (source === "Führerschein") {
+						const data = await loadJsonData("Führerschein");
+						window.fuehrerscheinData = data;
+						allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
+					}
 				}
 
-				// Start practice for Vokabular + others
-				startPractice(selectedSources, allData, levels);
-
-				container.style.display = "none";
+				// Start practice for Vokabular separately
+				startPractice(selectedSources, allData);
+				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
 			};
 
-			// 🛑 Wait for second button click — stop here
+			// Exit early, wait for secondStartBtn
 			return;
 		}
 
-		// CASE 2: No Vokabular — proceed as usual
+		// If Vokabular is not selected at all
 		const allData = [];
-
-		if (selectedSources.includes("Maschinenbau")) {
-			const data = await loadJsonData("Maschinenbau");
-			window.maschinenbauData = data;
-			allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
-		}
-		if (selectedSources.includes("Führerschein")) {
-			const data = await loadJsonData("Führerschein");
-			window.fuehrerscheinData = data;
-			allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
+		for (const source of selectedSources) {
+			if (source === "Maschinenbau") {
+				const data = await loadJsonData("Maschinenbau");
+				window.maschinenbauData = data;
+				allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
+			} else if (source === "Führerschein") {
+				const data = await loadJsonData("Führerschein");
+				window.fuehrerscheinData = data;
+				allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
+			}
 		}
 
 		if (allData.length > 0) {
 			shuffleArray(allData);
-			startPracticeMechLicense("Maschinenbau", allData); // or adjust based on dominant sheet
+			startPracticeMechLicense("Maschinenbau", allData); // pick appropriate sheet name
 		}
 	});
 }
