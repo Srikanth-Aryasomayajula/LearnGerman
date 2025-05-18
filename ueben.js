@@ -588,7 +588,9 @@ document.addEventListener("DOMContentLoaded", () => {
 					} else {
 						tr.classList.add("hidden-answer");
 						tr.style.display = "none";
-						td.innerHTML = value;
+						td.textContent = value;
+						console.log(value);
+						console.log(td)
 					}
 				} else {
 						td.innerHTML = value.replace(/\r?\n/g, "<br>");
