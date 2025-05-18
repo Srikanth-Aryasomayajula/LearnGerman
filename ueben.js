@@ -58,15 +58,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
-				// code for Maschinenbau test
 				(async () => {
 					const maschinenbauData = await loadJsonData("Maschinenbau");
 				})();
+				startPracticeMechLicense(sheet_name);
 			} else if (selectedSources.includes("Führerschein")) {
-				// code for Führerschein test
 				(async () => {
 					const fuehrerscheinData = await loadJsonData("Führerschein");
 				})();
+				startPracticeMechLicense(sheet_name);
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
@@ -476,12 +476,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 
-	// Define columns for each sheet
-	const sheetColumns = {
-	  maschinenbau: ["German", "English", "Example", "Remarks"],
-	  fuehrerschein: ["German", "English", "Action to be done during Exam"]
-	};
-
 	// Load maschinenbau.json and fuehrerschein.json
 	async function loadJsonData(sheet_name) {
 		try {
@@ -515,5 +509,185 @@ document.addEventListener("DOMContentLoaded", () => {
 			return null;  // Return null on error
 		}
 	}
-	
+
+	// Function to start practice Maschinenbau and Führerschein
+	function startPracticeMechLicense(sheet_name) {
+		let data = [];
+
+		// Select the appropriate dataset
+		if (sheet_name === "Maschinenbau") {
+			data = window.maschinenbauData || [];
+		} else if (sheet_name === "Führerschein") {
+			data = window.fuehrerscheinData || [];
+		} else {
+			console.error("Invalid sheet name:", sheet_name);
+			practiceArea.innerHTML = "Invalid sheet name.";
+			return;
+		}
+
+		// Check if data exists and render it
+		if (data.length > 0) {
+			filteredData = data.sort(() => 0.5 - Math.random());
+			currentIndex = 0;
+			renderPracticeFlashcardMechLic(filteredData[currentIndex],sheet_name);
+		} else {
+			practiceArea.innerHTML = "No data loaded.";
+		}
+
+		// Hide dropdowns
+		levelDropdownContainer.style.display = "none";
+		secondStartBtn.style.display = "none";
+	}
+
+	// Render practice flashcard for Maschinenbau and License
+	function renderPracticeFlashcardMechLic(entry,sheet_name) {
+		practiceArea.innerHTML = "";
+
+		const container = document.createElement("div");
+		container.className = "flashcard-container";
+
+		const card = document.createElement("div");
+		card.className = "flashcard";
+
+		const table = document.createElement("table");
+		table.className = "flashcard-table";
+
+		if (sheet_name === "Maschinenbau") {
+			const columns = ["German", "English", "Example", "Remarks"];
+		} else if (sheet_name === "Führerschein") {
+			const columns = ["German", "English", "Action to be done during Exam"];
+		}
+
+		columns.forEach(col => {
+			const value = entry[col]?.trim();
+			if (value && value !== "-") {
+				const tr = document.createElement("tr");
+				const th = document.createElement("th");
+				th.textContent = col;
+				const td = document.createElement("td");
+
+				// Handle "Meaning" and "Usage" specifically for blanks
+				if (col === "English" || col === "Example" || col === "Remarks" || col === "Action to be done during Exam") {
+					const correctPhrase = value.trim(); // For "English/Example/Remarks/Action to be done during Exam", blank the whole phrase.
+					const blankId = `${col.toLowerCase()}_blank_${Math.random().toString(36).substr(2, 6)}`;
+					if (col === "English") {
+						const options = generateOptionsMechLic(correctPhrase, window.maschinenbauData || [], col);
+						td.innerHTML = `<span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+							  <br>${createOptionsHTML(blankId, correctPhrase, options)}`;
+					}
+					else {
+						td.innerHTML = "we will print something";
+					}
+				} else {
+						td.innerHTML = value.replace(/\r?\n/g, "<br>");
+					}
+
+					tr.appendChild(th);
+					tr.appendChild(td);
+					table.appendChild(tr);
+			}
+		});
+
+		card.appendChild(table);
+		container.appendChild(card);
+
+		const resultDisplay = document.createElement("div");
+		resultDisplay.id = "practiceResult";
+		resultDisplay.className = "flashcard-progress";
+		container.appendChild(resultDisplay);
+
+		const buttonRow = document.createElement("div");
+		buttonRow.className = "button-wrapper";
+
+		const prevBtn = document.createElement("button");
+		prevBtn.textContent = "Previous";
+		prevBtn.className = "loadPracticeBtn";
+		prevBtn.style.display = currentIndex === 0 ? "none" : "inline-block";
+		prevBtn.addEventListener("click", () => {
+			if (currentIndex > 0) {
+				currentIndex--;
+				renderPracticeFlashcardMechLic(filteredData[currentIndex],sheet_name);
+			}
+		});
+
+		const submitBtn = document.createElement("button");
+		submitBtn.textContent = "Submit";
+		submitBtn.className = "loadPracticeBtn";
+		submitBtn.id = "submitAnswers";
+
+		const nextBtn = document.createElement("button");
+		nextBtn.textContent = "Next";
+		nextBtn.className = "loadPracticeBtn";
+		nextBtn.style.display = "none";
+		nextBtn.addEventListener("click", () => {
+			if (currentIndex < filteredData.length - 1) {
+				currentIndex++;
+				renderPracticeFlashcardMechLic(filteredData[currentIndex],sheet_name);
+			}
+		});
+
+		buttonRow.appendChild(prevBtn);
+		buttonRow.appendChild(submitBtn);
+		buttonRow.appendChild(nextBtn);
+		container.appendChild(buttonRow);
+
+		practiceArea.appendChild(container);
+
+		submitBtn.addEventListener("click", () => {
+			let correct = 0;
+			const radioGroups = new Set();
+			document.querySelectorAll("input[type='radio']").forEach(r => radioGroups.add(r.name));
+
+			radioGroups.forEach(groupName => {
+				const checked = document.querySelector(`input[name='${groupName}']:checked`);
+				const inputs = document.querySelectorAll(`input[name='${groupName}']`);
+				if (checked) {
+					const isCorrect = checked.dataset.correct === "true";
+					const answerCell = checked.closest("td");
+
+					const resultIcon = document.createElement("span");
+					resultIcon.textContent = isCorrect ? "✅" : "❌";
+					resultIcon.style.color = isCorrect ? "green" : "red";
+					checked.parentNode.appendChild(resultIcon);
+
+					if (!isCorrect) {
+						const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
+						const parentDiv = (checked || correctInput).closest("div"); // works for both blank and incorrect
+						const existing = parentDiv.querySelector(".correct-combo");
+
+						if (!existing) {
+							parentDiv.style.display = "block"; // Ensure parent allows line breaks
+							const correctAnswerSpan = document.createElement("div");
+							correctAnswerSpan.className = "correct-combo";
+							correctAnswerSpan.textContent = `Answer: ${correctInput.dataset.correctAnswer}`;
+							correctAnswerSpan.style.cssText = "color: blue; margin-top: 4px; display: block;";
+							parentDiv.appendChild(correctAnswerSpan);
+						}
+					}
+					if (isCorrect) correct++;
+				} else {
+					// No radio selected — treat as wrong
+					const answerCell = inputs[0]?.closest("td");
+					const resultIcon = document.createElement("span");
+					resultIcon.textContent = "❌";
+					resultIcon.style.color = "red";
+					inputs[0].parentNode.appendChild(resultIcon);
+
+					const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
+					const correctAnswerSpan = document.createElement("div");
+					correctAnswerSpan.textContent = `Answer: ${correctInput.dataset.correctAnswer}`;
+					correctAnswerSpan.style.color = "blue";
+					answerCell.appendChild(correctAnswerSpan);
+				}
+			});
+
+			const total = document.querySelectorAll("input[type='radio']").length / 4;
+			resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
+
+			submitBtn.style.display = "none";
+			if (currentIndex > 0) prevBtn.style.display = "inline-block";
+			if (currentIndex < filteredData.length - 1) nextBtn.style.display = "inline-block";
+		});
+	}
+
 });
