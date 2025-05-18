@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
 				// code for Maschinenbau test
-				const tempMechData = loadJsonData("Maschinenbau");
+				const tempMechData = async loadJsonData("Maschinenbau");
 				console.log(typeof tempMechData);
 				console.log(Array.isArray(tempMechData)); // Should return true
 				console.log(tempMechData);
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				console.log(tempMechData.length); 
 			} else if (selectedSources.includes("Führerschein")) {
 				// code for Führerschein test
-				const tempLicData = loadJsonData("Führerschein");
+				const tempLicData = async loadJsonData("Führerschein");
 				console.log(typeof tempLicData);
 				console.log(Array.isArray(tempLicData)); // Should return true
 				console.log(tempLicData);
