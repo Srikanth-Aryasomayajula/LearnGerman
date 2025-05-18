@@ -585,9 +585,12 @@ document.addEventListener("DOMContentLoaded", () => {
 						const options = generateOptionsMechLic(correctPhrase, window.maschinenbauData || [], col);
 						td.innerHTML = `<span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							  <br>${createOptionsHTML(blankId, correctPhrase, options)}`;
-					}
-					else {
-						td.innerHTML = "we will print something";
+					} else {
+						const hiddenDiv = document.createElement("div");
+						hiddenDiv.className = "hidden-answer";
+						hiddenDiv.textContent = value;
+						hiddenDiv.style.display = "none";
+						td.appendChild(hiddenDiv);
 					}
 				} else {
 						td.innerHTML = value.replace(/\r?\n/g, "<br>");
@@ -693,6 +696,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 
 			const total = document.querySelectorAll("input[type='radio']").length / 4;
+			document.querySelectorAll(".hidden-answer").forEach(el => el.style.display = "block");
 			resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
 
 			submitBtn.style.display = "none";
