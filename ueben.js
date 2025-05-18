@@ -697,7 +697,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 
 			const total = document.querySelectorAll("input[type='radio']").length / 4;
-			document.querySelectorAll(".hidden-answer").forEach(el => el.style.display = "block");
+			document.querySelectorAll(".hidden-answer").forEach(el => el.style.display = "table-row");
 			resultDisplay.textContent = `You got ${correct} of ${total} correct.`;
 
 			submitBtn.style.display = "none";
