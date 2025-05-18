@@ -46,62 +46,38 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// Select the topic of practice
-function loadFlashcards() {
-	loadButton.addEventListener("click", async () => {
-		const selectedSources = getSelectedValues(checkboxes);
-		if (selectedSources.length === 0) {
-			return alert("Please select at least one topic.");
-		}
-
-		const allData = [];
-
-		if (selectedSources.includes("Vokabular")) {
-			levelDropdownContainer.style.display = "flex";
-			secondStartBtn.style.display = "inline-block";
-		}
-
-		if (selectedSources.includes("Grammatik")) {
-			// code for grammatik test
-		}
-
-		if (selectedSources.includes("Maschinenbau")) {
-			const data = await loadJsonData("Maschinenbau");
-			window.maschinenbauData = data;
-			allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
-		}
-
-		if (selectedSources.includes("Führerschein")) {
-			const data = await loadJsonData("Führerschein");
-			window.fuehrerscheinData = data;
-			allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
-		}
-
-		if (
-			!selectedSources.includes("Vokabular") &&
-			!selectedSources.includes("Grammatik") &&
-			allData.length === 0
-		) {
-			levelDropdownContainer.style.display = "none";
-			secondStartBtn.style.display = "none";
-			startPractice(selectedSources, []);
-		}
-
-		if (allData.length > 0) {
-			shuffleArray(allData); // randomize order
-			startPracticeMechLicense(allData); // pass all combined entries
-		}
-	});
-}
-
-
-
-
-	function shuffleArray(array) {
-		for (let i = array.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[array[i], array[j]] = [array[j], array[i]];
-		}
+	function loadFlashcards() {
+		loadButton.addEventListener("click", async () => {
+			const selectedSources = getSelectedValues(checkboxes);
+			if (selectedSources.length === 0) {
+				return alert("Please select at least one topic.");
+			}
+	
+			if (selectedSources.includes("Vokabular")) {
+				levelDropdownContainer.style.display = "flex";
+				secondStartBtn.style.display = "inline-block";
+			} else if (selectedSources.includes("Grammatik")) {
+				// code for grammatik test
+			} else if (selectedSources.includes("Maschinenbau")) {
+				(async () => {
+					const data = await loadJsonData("Maschinenbau");
+					window.maschinenbauData = data;
+					startPracticeMechLicense("Maschinenbau");
+				})();
+			} else if (selectedSources.includes("Führerschein")) {
+				(async () => {
+					const data = await loadJsonData("Führerschein");
+					window.fuehrerscheinData = data;
+					startPracticeMechLicense("Führerschein");
+				})();
+			} else {
+				levelDropdownContainer.style.display = "none";
+				secondStartBtn.style.display = "none";
+				startPractice(selectedSources, []);
+			}
+		});
 	}
+
 
 	// Create dropdown to select the level in vocabulary
 	function createLevelDropdown() {
