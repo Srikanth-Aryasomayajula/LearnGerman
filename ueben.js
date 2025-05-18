@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 	const loadButton = document.getElementById("loadPracticeBtn");
-	const checkboxes = document.querySelectorAll("#sourceSelector input[type='checkbox']");
+	const checkboxes = document.querySelectorAll("#sourceSelector input[type='radio']");
 	const practiceArea = document.getElementById("practiceArea");
 
 	let filteredData = [];
