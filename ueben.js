@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Select the topic of practice
 	function loadFlashcards() {
 		loadButton.addEventListener("click", async () => {
-			const selectedSources = document.querySelector('input[name="topic"]:checked');
+			const selectedSources = document.querySelector('input[name="source"]:checked');
 			if (selectedSources.length === 0) {
 				return alert("Please select at least one topic.");
 			}
