@@ -53,44 +53,46 @@ function loadFlashcards() {
 			return alert("Please select at least one topic.");
 		}
 
-		const hasVokabular = selectedSources.includes("Vokabular");
+		const includesVokabular = selectedSources.includes("Vokabular");
 		const otherSources = selectedSources.filter(src => src !== "Vokabular");
 
-		if (hasVokabular) {
-			// Show dropdown and second button for Vokabular
+		if (includesVokabular) {
 			levelDropdownContainer.style.display = "flex";
 			secondStartBtn.style.display = "inline-block";
-
-			// Handle second start button click (only once)
-			secondStartBtn.onclick = () => {
-				const selectedLevels = getSelectedValues(levelCheckboxes); // assumes you have levelCheckboxes defined
-				startPractice(["Vokabular"], selectedLevels);
+			
+			// Attach a one-time event listener to avoid duplicates
+			const handler = async () => {
+				secondStartBtn.removeEventListener("click", handler);
+				startPractice(["Vokabular"], getSelectedLevels()); // or pass [] if not using level filtering
 			};
-		} else {
-			// Hide Vokabular-specific UI
+			secondStartBtn.addEventListener("click", handler);
+		}
+
+		if (otherSources.length > 0) {
+			for (const source of otherSources) {
+				if (source === "Grammatik") {
+					// code for grammatik test
+				} else if (source === "Maschinenbau") {
+					const data = await loadJsonData("Maschinenbau");
+					window.maschinenbauData = data;
+					startPracticeMechLicense("Maschinenbau");
+				} else if (source === "Führerschein") {
+					const data = await loadJsonData("Führerschein");
+					window.fuehrerscheinData = data;
+					startPracticeMechLicense("Führerschein");
+				} else {
+					startPractice([source], []);
+				}
+			}
+		}
+
+		if (!includesVokabular) {
 			levelDropdownContainer.style.display = "none";
 			secondStartBtn.style.display = "none";
 		}
-
-		// Handle other sources immediately
-		for (const source of otherSources) {
-			if (source === "Grammatik") {
-				// Optional: insert Grammatik logic here
-			} else if (source === "Maschinenbau") {
-				const data = await loadJsonData("Maschinenbau");
-				window.maschinenbauData = data;
-				startPracticeMechLicense("Maschinenbau");
-			} else if (source === "Führerschein") {
-				const data = await loadJsonData("Führerschein");
-				window.fuehrerscheinData = data;
-				startPracticeMechLicense("Führerschein");
-			} else {
-				// fallback for unknown sources
-				startPractice([source], []);
-			}
-		}
 	});
 }
+
 
 
 
