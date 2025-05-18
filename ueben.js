@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		submitBtn.addEventListener("click", () => {
 			let correct = 0;
 			const radioGroups = new Set();
-			document.querySelectorAll("input[type='radio']").forEach(r => radioGroups.add(r.name));
+			document.querySelectorAll("input[type='radio']:not([name='category'])").forEach(r => radioGroups.add(r.name));
 
 			radioGroups.forEach(groupName => {
 				const checked = document.querySelector(`input[name='${groupName}']:checked`);
