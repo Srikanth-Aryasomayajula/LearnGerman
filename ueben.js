@@ -60,22 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else if (selectedSources.includes("Maschinenbau")) {
 				// code for Maschinenbau test
 				(async () => {
-					const tempMechData = await loadJsonData("Maschinenbau");
-					console.log(typeof tempMechData);            // "object"
-					console.log(Array.isArray(tempMechData));    // true (if your JSON is an array)
-					console.log(tempMechData);
-					console.log(tempMechData[0]);
-					console.log(tempMechData.length);
+					const maschinenbauData = await loadJsonData("Maschinenbau");
 				})();
 			} else if (selectedSources.includes("Führerschein")) {
 				// code for Führerschein test
 				(async () => {
-					const tempLicData = await loadJsonData("Führerschein");
-					console.log(typeof tempLicData);            // "object"
-					console.log(Array.isArray(tempLicData));    // true (if your JSON is an array)
-					console.log(tempLicData);
-					console.log(tempLicData[0]);
-					console.log(tempLicData.length);
+					const fuehrerscheinData = await loadJsonData("Führerschein");
 				})();
 			} else {
 				levelDropdownContainer.style.display = "none";
