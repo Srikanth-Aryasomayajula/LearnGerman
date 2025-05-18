@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Second start button
 	secondStartBtn.addEventListener("click", () => {
-		selectedLevels = getSelectedLevels(levelCheckboxes);
+		const selectedSources = getSelectedValues(checkboxes);
 		if (selectedLevels.length === 0) return alert("Please select at least one level.");
 		const selectedSources = getSelectedValues(checkboxes);
 		startPractice(selectedSources, selectedLevels);
