@@ -587,11 +587,7 @@ document.addEventListener("DOMContentLoaded", () => {
 							  <br>${createOptionsHTML(blankId, correctPhrase, options)}`;
 					} else {
 						tr.classList.add("hidden-answer");
-						td.textContent = value;
-						console.log(value);
-						console.log(td);
-						console.log(tr);
-						console.log(th);
+						td.innerHTML = value.replace(/\r?\n/g, "<br>");
 					}
 				} else {
 						td.innerHTML = value.replace(/\r?\n/g, "<br>");
