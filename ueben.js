@@ -368,8 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			radioGroups.forEach(groupName => {
 				const checked = document.querySelector(`input[name='${groupName}']:checked`);
 				const inputs = document.querySelectorAll(`input[name='${groupName}']`);
-				console.log(inputs);
-				console.log(typeof inputs);
+
 				if (checked) {
 					const isCorrect = checked.dataset.correct === "true";
 					const answerCell = checked.closest("td");
@@ -383,8 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
 						const correctInput = Array.from(inputs).find(i => i.dataset.correct === "true");
 						const parentDiv = (checked || correctInput).closest("div"); // works for both blank and incorrect
 						const existing = parentDiv.querySelector(".correct-combo");
-						console.log (correctInput);
-						console.log (typeof correctInput);
+
 						if (!existing) {
 							parentDiv.style.display = "block"; // Ensure parent allows line breaks
 							const correctAnswerSpan = document.createElement("div");
@@ -509,8 +507,6 @@ document.addEventListener("DOMContentLoaded", () => {
 				fuehrerscheinData = data;
 			}
 	
-			console.log(`${sheet_name} data loaded:`, data.length, "items");
-	
 			return data;  // <--- Return the loaded data here!
 		} catch (error) {
 			console.error("Error loading data:", error);
@@ -526,11 +522,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Select the appropriate dataset
 		if (sheet_name === "Maschinenbau") {
 			data = window.maschinenbauData || [];
-			console.log("Maschinenbau data loaded");
-			console.log(data);
 		} else if (sheet_name === "Führerschein") {
 			data = window.fuehrerscheinData || [];
-			console.log("Führerschein data loaded");
 		} else {
 			console.error("Invalid sheet name:", sheet_name);
 			practiceArea.innerHTML = "Invalid sheet name.";
@@ -575,9 +568,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			sheet_data = window.fuehrerscheinData;
 		}
 
-		console.log("Rendering entry:", entry);
-		console.log("Using columns:", columns);
-		console.log("Using sheet name:", sheet_name);
 		columns.forEach(col => {
 			const value = entry[col]?.trim();
 			if (value && value !== "-") {
