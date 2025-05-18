@@ -565,7 +565,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		} else if (sheet_name === "Führerschein") {
 			const columns = ["German", "English", "Action to be done during Exam"];
 		}
-		
+
+		console.log("Rendering entry:", entry);
+		console.log("Using columns:", columns);
 		columns.forEach(col => {
 			const value = entry[col]?.trim();
 			if (value && value !== "-") {
