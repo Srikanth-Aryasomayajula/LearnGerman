@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (!selectedRadio) {
 				return alert("Please select at least one topic.");
 			}
-			const selectedRadio = document.querySelector('input[name="source"]:checked');
 			console.log("Selected radio:", selectedRadio);  // <--- DEBUG
 		
 			const selectedSources = [selectedRadio.value]; // Mimics checkbox array
