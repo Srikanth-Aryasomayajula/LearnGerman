@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 			console.log("Selected radio:", selectedRadio);  // <--- DEBUG
 		
-			//const selectedSources = [selectedRadio.value]; // Mimics checkbox array
+			selectedSources = [selectedRadio.value]; // Mimics checkbox array
 			console.log("Selected sources:", selectedSources);  // <--- DEBUG
 			
 			if (selectedSources.includes("Vokabular")) {
