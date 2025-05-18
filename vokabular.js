@@ -111,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Clear selection
 	clearBtn.addEventListener("click", clearSelection);
+	dropdownHeader.textContent = "Select Level(s)";  // Reset dropdown header text
 
 	// Function to clear selection
 	function clearSelection() {
@@ -127,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			iframe.style.display = "none";
 		}
 		
-		dropdownHeader.textContent = "Select Level(s)";  // Reset dropdown header text
 	}
 	
 
