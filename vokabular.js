@@ -110,8 +110,10 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// Clear selection
-	clearBtn.addEventListener("click", clearSelection);
-	dropdownHeader.textContent = "Select Level(s)";  // Reset dropdown header text
+	clearBtn.addEventListener("click", () => {
+		clearSelection();
+		dropdownHeader.textContent = "Select Level(s)";
+	});
 
 	// Function to clear selection
 	function clearSelection() {
