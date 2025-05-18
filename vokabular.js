@@ -106,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			renderFlashcards(
 				allData.filter(row => selectedLevels.includes((row["Level"] || "").trim()))
 			);
+			console.log(allData);
 		}
 	});
 
