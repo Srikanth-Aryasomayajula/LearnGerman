@@ -84,12 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Display the table/flashcards when the button is clicked
 	displayTableBtn.addEventListener("click", () => {
+		clearSelection();
+		
 		if (selectedLevels.length === 0) {
 			alert("Please select the level");
 			return;
 		}
-
-		clearSelection();
 		
 		const filteredData = allData.filter(row =>
 			selectedLevels.includes((row["Level"] || "").trim())
