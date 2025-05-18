@@ -517,8 +517,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Select the appropriate dataset
 		if (sheet_name === "Maschinenbau") {
 			data = window.maschinenbauData || [];
+			console.log("Maschinenbau data loaded");
 		} else if (sheet_name === "Führerschein") {
 			data = window.fuehrerscheinData || [];
+			console.log("Führerschein data loaded");
 		} else {
 			console.error("Invalid sheet name:", sheet_name);
 			practiceArea.innerHTML = "Invalid sheet name.";
