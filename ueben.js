@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	let filteredData = [];
 	let currentIndex = 0;
 	let selectedLevels = [];
-	let columns = [];
 	let SHEET_NAME;
 
 	// Define arrays to store loaded data
@@ -559,7 +558,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		const table = document.createElement("table");
 		table.className = "flashcard-table";
-
+		
+		let columns = [];
 		if (sheet_name === "Maschinenbau") {
 			const columns = ["German", "English", "Example", "Remarks"];
 		} else if (sheet_name === "Führerschein") {
@@ -568,6 +568,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		console.log("Rendering entry:", entry);
 		console.log("Using columns:", columns);
+		console.log("Using sheet name:", sheet_name);
 		columns.forEach(col => {
 			const value = entry[col]?.trim();
 			if (value && value !== "-") {
