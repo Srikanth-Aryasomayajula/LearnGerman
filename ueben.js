@@ -56,15 +56,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (selectedSources === "Vokabular") {
 				levelDropdownContainer.style.display = "flex";
 				secondStartBtn.style.display = "inline-block";
-			} else if (selectedSources === "Grammatik")) {
+			} else if (selectedSources === "Grammatik") {
 				// code for grammatik test
-			} else if (selectedSources === "Maschinenbau")) {
+			} else if (selectedSources === "Maschinenbau") {
 				(async () => {
 					const data = await loadJsonData("Maschinenbau");
 					window.maschinenbauData = data;
 					startPracticeMechLicense("Maschinenbau");
 				})();
-			} else if (selectedSources === "Führerschein")) {
+			} else if (selectedSources === "Führerschein") {
 				(async () => {
 					const data = await loadJsonData("Führerschein");
 					window.fuehrerscheinData = data;
