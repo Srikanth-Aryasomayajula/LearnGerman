@@ -592,6 +592,7 @@ document.addEventListener("DOMContentLoaded", () => {
 						console.log(value);
 						console.log(td);
 						console.log(tr);
+						console.log(th);
 					}
 				} else {
 						td.innerHTML = value.replace(/\r?\n/g, "<br>");
