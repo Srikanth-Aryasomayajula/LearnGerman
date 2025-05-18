@@ -49,12 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	function loadFlashcards() {
 		loadButton.addEventListener("click", async () => {
 			const selectedRadio = document.querySelector('input[name="source"]:checked');
+			const selectedSources = selectedRadio ? [selectedRadio.value] : [];
 			if (!selectedRadio) {
 				return alert("Please select at least one topic.");
 			}
 			console.log("Selected radio:", selectedRadio);  // <--- DEBUG
 		
-			const selectedSources = [selectedRadio.value]; // Mimics checkbox array
+			//const selectedSources = [selectedRadio.value]; // Mimics checkbox array
 			console.log("Selected sources:", selectedSources);  // <--- DEBUG
 			
 			if (selectedSources.includes("Vokabular")) {
