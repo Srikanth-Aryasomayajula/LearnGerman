@@ -701,31 +701,24 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 
-		function generateOptionsMechLic(correctWord, sheetData, column) {
-			if (column === "English") {
-				const incorrectOptions = germanPrepositions
-					.filter(prep => prep !== correctWord)
-					.sort(() => 0.5 - Math.random())
-					.slice(0, 3);
-			
-				return [...incorrectOptions, correctWord].sort(() => 0.5 - Math.random());
-			}
-			const wordsFromSameColumn = sheetData
-				.map(entry => entry[column])
-				.filter(value => value && value !== "-")
-				.map(value => value.trim())
-				.filter(phrase => phrase !== correctWord);  // Exclude the correct word
-		  
-			// Get individual words from the phrases
-			const allWords = wordsFromSameColumn.flatMap(phrase => phrase.split(/\s+/));
-		  
-			// Select 3 random words from the available options (excluding the correct word)
-			const incorrectWords = Array.from(new Set(allWords))
-				.sort(() => 0.5 - Math.random())  // Shuffle
-				.slice(0, 3);  // Select 3 words randomly
-		  
-			// Return a mix of incorrect options and the correct word
-			return [...incorrectWords, correctWord].sort(() => 0.5 - Math.random());
-		}
+	function generateOptionsMechLic(correctWord, sheetData, column) {
+
+		const wordsFromSameColumn = sheetData
+			.map(entry => entry[column])
+			.filter(value => value && value !== "-")
+			.map(value => value.trim())
+			.filter(phrase => phrase !== correctWord);  // Exclude the correct word
+	  
+		// Get individual words from the phrases
+		const allWords = wordsFromSameColumn.flatMap(phrase => phrase.split(/\s+/));
+	  
+		// Select 3 random words from the available options (excluding the correct word)
+		const incorrectWords = Array.from(new Set(allWords))
+			.sort(() => 0.5 - Math.random())  // Shuffle
+			.slice(0, 3);  // Select 3 words randomly
+	  
+		// Return a mix of incorrect options and the correct word
+		return [...incorrectWords, correctWord].sort(() => 0.5 - Math.random());
+	}
 		
 });
