@@ -716,8 +716,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			.map(value => value.trim())
 			.filter(phrase => phrase !== correctWord);  // Exclude the correct word
 	  
-		// Get individual words from the phrases
-		const allWords = wordsFromSameColumn.flatMap(phrase => phrase.split(/\s+/));
+		// Get individual phrases from the same column
+		const incorrectWords = wordsFromSameColumn.sort(() => 0.5 - Math.random()).slice(0, 3);
 	  
 		// Select 3 random words from the available options (excluding the correct word)
 		const incorrectWords = Array.from(new Set(allWords))
