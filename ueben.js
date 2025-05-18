@@ -587,7 +587,6 @@ document.addEventListener("DOMContentLoaded", () => {
 							  <br>${createOptionsHTML(blankId, correctPhrase, options)}`;
 					} else {
 						tr.classList.add("hidden-answer");
-						tr.style.display = "none";
 						td.textContent = value;
 						console.log(value);
 						console.log(td);
