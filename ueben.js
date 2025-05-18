@@ -46,86 +46,86 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// Select the topic of practice
-	function loadFlashcards() {
-		loadButton.addEventListener("click", async () => {
-			const selectedSources = getSelectedValues(checkboxes);
-	
-			if (selectedSources.length === 0) {
-				return alert("Please select at least one topic.");
+function loadFlashcards() {
+	loadButton.addEventListener("click", async () => {
+		const selectedSources = getSelectedValues(checkboxes);
+
+		if (selectedSources.length === 0) {
+			return alert("Please select at least one topic.");
+		}
+
+		// CASE 1: Vokabular is selected
+		if (selectedSources.includes("Vokabular")) {
+			let container = document.getElementById("levelDropdownContainer");
+			if (!container) {
+				// Create dropdown container and attach to DOM
+				container = createLevelDropdown();
+				document.body.appendChild(container); // or append to a specific container like mainArea
+				setupDropdownToggle(
+					container.querySelector("#dropdownHeader"),
+					container.querySelector("#dropdownOptions")
+				);
+				setupLevelCheckboxes(
+					Array.from(container.querySelectorAll("input[name='levelCheckbox']")),
+					container.querySelector("#dropdownHeader")
+				);
 			}
-	
-			// If Vokabular is one of the selected topics, show level dropdown and STOP further logic
-			if (selectedSources.includes("Vokabular")) {
-				let container = document.getElementById("levelDropdownContainer");
-				if (!container) {
-					container = createLevelDropdown();
-					document.body.appendChild(container); // You can replace with your target DOM node
-					setupDropdownToggle(
-						container.querySelector("#dropdownHeader"),
-						container.querySelector("#dropdownOptions")
-					);
-					setupLevelCheckboxes(
-						Array.from(container.querySelectorAll("input[name='levelCheckbox']")),
-						container.querySelector("#dropdownHeader")
-					);
+
+			container.style.display = "flex";
+			const secondStartBtn = document.getElementById("startAfterLevelSelect");
+			secondStartBtn.style.display = "inline-block";
+
+			// Prevent duplicate event listeners
+			secondStartBtn.onclick = async () => {
+				const levels = getSelectedLevels(
+					Array.from(container.querySelectorAll("input[name='levelCheckbox']"))
+				);
+				// Prepare all data from other selected sources
+				const allData = [];
+
+				if (selectedSources.includes("Maschinenbau")) {
+					const data = await loadJsonData("Maschinenbau");
+					window.maschinenbauData = data;
+					allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
 				}
-	
-				container.style.display = "flex";
-				const secondStartBtn = document.getElementById("startAfterLevelSelect");
-				secondStartBtn.style.display = "inline-block";
-	
-				// Prevent double binding
-				secondStartBtn.onclick = async () => {
-					const selectedLevels = getSelectedLevels(
-						Array.from(container.querySelectorAll("input[name='levelCheckbox']"))
-					);
-	
-					const allData = [];
-	
-					// Load data for other sources if selected
-					if (selectedSources.includes("Maschinenbau")) {
-						const data = await loadJsonData("Maschinenbau");
-						window.maschinenbauData = data;
-						allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
-					}
-					if (selectedSources.includes("Führerschein")) {
-						const data = await loadJsonData("Führerschein");
-						window.fuehrerscheinData = data;
-						allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
-					}
-	
-					// Start the Vokabular practice logic + additional data
-					startPractice(selectedSources, allData, selectedLevels);
-	
-					// Clean up UI
-					container.style.display = "none";
-					secondStartBtn.style.display = "none";
-				};
-	
-				// Do not continue further; wait for second start
-				return;
-			}
-	
-			// No Vokabular selected — load other sheets directly
-			const allData = [];
-	
-			if (selectedSources.includes("Maschinenbau")) {
-				const data = await loadJsonData("Maschinenbau");
-				window.maschinenbauData = data;
-				allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
-			}
-			if (selectedSources.includes("Führerschein")) {
-				const data = await loadJsonData("Führerschein");
-				window.fuehrerscheinData = data;
-				allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
-			}
-	
-			if (allData.length > 0) {
-				shuffleArray(allData);
-				startPracticeMechLicense("Maschinenbau", allData);
-			}
-		});
-	}
+				if (selectedSources.includes("Führerschein")) {
+					const data = await loadJsonData("Führerschein");
+					window.fuehrerscheinData = data;
+					allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
+				}
+
+				// Start practice for Vokabular + others
+				startPractice(selectedSources, allData, levels);
+
+				container.style.display = "none";
+				secondStartBtn.style.display = "none";
+			};
+
+			// 🛑 Wait for second button click — stop here
+			return;
+		}
+
+		// CASE 2: No Vokabular — proceed as usual
+		const allData = [];
+
+		if (selectedSources.includes("Maschinenbau")) {
+			const data = await loadJsonData("Maschinenbau");
+			window.maschinenbauData = data;
+			allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
+		}
+		if (selectedSources.includes("Führerschein")) {
+			const data = await loadJsonData("Führerschein");
+			window.fuehrerscheinData = data;
+			allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
+		}
+
+		if (allData.length > 0) {
+			shuffleArray(allData);
+			startPracticeMechLicense("Maschinenbau", allData); // or adjust based on dominant sheet
+		}
+	});
+}
+
 
 
 	function shuffleArray(array) {
