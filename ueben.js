@@ -561,9 +561,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		
 		let columns = [];
 		if (sheet_name === "Maschinenbau") {
-			const columns = ["German", "English", "Example", "Remarks"];
+			columns = ["German", "English", "Example", "Remarks"];
 		} else if (sheet_name === "Führerschein") {
-			const columns = ["German", "English", "Action to be done during Exam"];
+			columns = ["German", "English", "Action to be done during Exam"];
 		}
 
 		console.log("Rendering entry:", entry);
