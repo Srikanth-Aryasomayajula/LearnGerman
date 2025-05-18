@@ -59,10 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
 				// code for Maschinenbau test
-				loadJsonData(Maschinenbau);
+				loadJsonData("Maschinenbau");
 			} else if (selectedSources.includes("Führerschein")) {
 				// code for Führerschein test
-				loadJsonData(Führerschein);
+				loadJsonData("Führerschein");
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
