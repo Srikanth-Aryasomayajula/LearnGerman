@@ -539,6 +539,39 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 
+	// Load maschinenbau.json and fuehrerschein.json
+	async function loadJsonData(sheet_name) {
+		try {
+			let response;
+			if (sheet_name === "Maschinenbau") {
+				response = await fetch("maschinenbau.json");
+			} else if (sheet_name === "Führerschein") {
+				response = await fetch("fuehrerschein.json");
+			} else {
+				throw new Error("Invalid sheet name");
+			}
+	
+			if (!response.ok) {
+				throw new Error(`Failed to load ${sheet_name}.json`);
+			}
+	
+			const data = await response.json();
+	
+			if (sheet_name === "Maschinenbau") {
+				maschinenbauData = data;
+			} else if (sheet_name === "Führerschein") {
+				fuehrerscheinData = data;
+			}
+	
+			console.log(`${sheet_name} data loaded:`, data.length, "items");
+	
+			return data;  // <--- Return the loaded data here!
+		} catch (error) {
+			console.error("Error loading data:", error);
+			alert(`Could not load data for ${sheet_name}.json`);
+			return null;  // Return null on error
+		}
+	}
 
 	// Function to start practice Maschinenbau and Führerschein
 	function startPracticeMechLicense(data) {
