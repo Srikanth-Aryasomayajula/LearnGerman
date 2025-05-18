@@ -482,48 +482,5 @@ document.addEventListener("DOMContentLoaded", () => {
 	  fuehrerschein: ["German", "English", "Action to be done during Exam"]
 	};
 
-	// Fetch function that also assigns data to correct array
-	function fetchJsonData(sheetName) {
-	  return fetch(`${sheetName}.json`)  // ✅ Return the Promise
-	    .then(response => {
-	      if (!response.ok) throw new Error(`Failed to load ${sheetName}.json`);
-	      return response.json();
-	    })
-	    .then(data => {
-	      if (sheetName === "maschinenbau") {
-	        maschinenbauData = data;
-	      } else if (sheetName === "fuehrerschein") {
-	        fuehrerscheinData = data;
-	      }
-	      console.log(`✅ ${sheetName}Data loaded:`, data);
-	      return data; // Optional: return the data for further chaining
-	    })
-	    .catch(error => {
-	      console.error(`Error loading ${sheetName}.json:`, error);
-	    });
-	}
-
-	function renderTable(data, columns) {
-	  const tableBody = document.querySelector("#tableBody");
-	  tableBody.innerHTML = "";
-	
-	  if (!data || data.length === 0) {
-	    const tr = document.createElement("tr");
-	    tr.innerHTML = `<td colspan="${columns.length}">No entries found for this level.</td>`;  // ✅ Fixed
-	    tableBody.appendChild(tr);
-	    return;
-	  }
-	
-	  data.forEach(row => {
-	    const tr = document.createElement("tr");
-	    columns.forEach(col => {
-	      const td = document.createElement("td");
-	      td.innerHTML = (row[col] || "").replace(/\r?\n/g, "<br>");
-	      tr.appendChild(td);
-	    });
-	    tableBody.appendChild(tr);
-	  });
-	}
-
 	
 });
