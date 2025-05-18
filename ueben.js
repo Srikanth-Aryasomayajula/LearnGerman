@@ -492,65 +492,65 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	// Load maschinenbau.json and fuehrerschein.json
-	async function loadJsonData(sheet_name) {
-		try {
-			let response;
-			if (sheet_name === "Maschinenbau") {
-				response = await fetch("maschinenbau.json");
-			} else if (sheet_name === "Führerschein") {
-				response = await fetch("fuehrerschein.json");
-			} else {
-				throw new Error("Invalid sheet name");
+	function loadFlashcards() {
+		loadButton.addEventListener("click", async () => {
+			const selectedSources = getSelectedValues(checkboxes);
+			if (selectedSources.length === 0) {
+				return alert("Please select at least one topic.");
 			}
 	
-			if (!response.ok) {
-				throw new Error(`Failed to load ${sheet_name}.json`);
+			const allData = [];
+	
+			if (selectedSources.includes("Vokabular")) {
+				levelDropdownContainer.style.display = "flex";
+				secondStartBtn.style.display = "inline-block";
 			}
 	
-			const data = await response.json();
-	
-			if (sheet_name === "Maschinenbau") {
-				maschinenbauData = data;
-			} else if (sheet_name === "Führerschein") {
-				fuehrerscheinData = data;
+			if (selectedSources.includes("Grammatik")) {
+				// code for grammatik test
 			}
 	
-			console.log(`${sheet_name} data loaded:`, data.length, "items");
+			if (selectedSources.includes("Maschinenbau")) {
+				const data = await loadJsonData("Maschinenbau");
+				window.maschinenbauData = data;
+				allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
+			}
 	
-			return data;  // <--- Return the loaded data here!
-		} catch (error) {
-			console.error("Error loading data:", error);
-			alert(`Could not load data for ${sheet_name}.json`);
-			return null;  // Return null on error
-		}
+			if (selectedSources.includes("Führerschein")) {
+				const data = await loadJsonData("Führerschein");
+				window.fuehrerscheinData = data;
+				allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
+			}
+	
+			if (
+				!selectedSources.includes("Vokabular") &&
+				!selectedSources.includes("Grammatik") &&
+				allData.length === 0
+			) {
+				levelDropdownContainer.style.display = "none";
+				secondStartBtn.style.display = "none";
+				startPractice(selectedSources, []);
+			}
+	
+			if (allData.length > 0) {
+				shuffleArray(allData); // randomize order
+				startPracticeMechLicense(allData); // pass all combined entries
+			}
+		});
 	}
 
-	// Function to start practice Maschinenbau and Führerschein
-	function startPracticeMechLicense(sheet_name, data) {
 
-		// Select the appropriate dataset
-		if (sheet_name === "Maschinenbau") {
-			data = window.maschinenbauData || [];
-			console.log("Maschinenbau data loaded");
-			console.log(data);
-		} else if (sheet_name === "Führerschein") {
-			data = window.fuehrerscheinData || [];
-			console.log("Führerschein data loaded");
-		} else {
-			console.error("Invalid sheet name:", sheet_name);
-			practiceArea.innerHTML = "Invalid sheet name.";
+	// Function to start practice Maschinenbau and Führerschein
+	function startPracticeMechLicense(data) {
+		if (!Array.isArray(data) || data.length === 0) {
+			practiceArea.innerHTML = "No data loaded.";
 			return;
 		}
-
-		// Check if data exists and render it
-		if (data.length > 0) {
-			filteredData = data.sort(() => 0.5 - Math.random());
-			currentIndex = 0;
-			renderPracticeFlashcardMechLic(filteredData[currentIndex],sheet_name);
-		} else {
-			practiceArea.innerHTML = "No data loaded.";
-		}
-
+	
+		filteredData = data.sort(() => 0.5 - Math.random());
+		currentIndex = 0;
+		renderPracticeFlashcardMechLic(filteredData[currentIndex], filteredData[currentIndex].sheet_name);
+	
 		// Hide dropdowns
 		levelDropdownContainer.style.display = "none";
 		secondStartBtn.style.display = "none";
