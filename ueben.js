@@ -48,30 +48,32 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Select the topic of practice
 	function loadFlashcards() {
 		loadButton.addEventListener("click", async () => {
-			const selectedRadio = document.querySelector('#sourceSelector input[type="radio"]:checked');
-			if (!selectedRadio) {
-				return alert("Please select a topic.");
+			const selectedSources = document.querySelector('#sourceSelector input[type="radio"]:checked');
+			if (selectedSources.length === 0) {
+				return alert("Please select at least one topic.");
 			}
 	
-			const selectedSource = selectedRadio.value;
-	
-			if (selectedSource === "Vokabular") {
+			if (selectedSources.includes("Vokabular")) {
 				levelDropdownContainer.style.display = "flex";
 				secondStartBtn.style.display = "inline-block";
-			} else if (selectedSource === "Grammatik") {
+			} else if (selectedSources.includes("Grammatik")) {
 				// code for grammatik test
-			} else if (selectedSource === "Maschinenbau") {
-				const data = await loadJsonData("Maschinenbau");
-				window.maschinenbauData = data;
-				startPracticeMechLicense("Maschinenbau");
-			} else if (selectedSource === "Führerschein") {
-				const data = await loadJsonData("Führerschein");
-				window.fuehrerscheinData = data;
-				startPracticeMechLicense("Führerschein");
+			} else if (selectedSources.includes("Maschinenbau")) {
+				(async () => {
+					const data = await loadJsonData("Maschinenbau");
+					window.maschinenbauData = data;
+					startPracticeMechLicense("Maschinenbau");
+				})();
+			} else if (selectedSources.includes("Führerschein")) {
+				(async () => {
+					const data = await loadJsonData("Führerschein");
+					window.fuehrerscheinData = data;
+					startPracticeMechLicense("Führerschein");
+				})();
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
-				startPractice([selectedSource], []);
+				startPractice(selectedSources, []);
 			}
 		});
 	}
