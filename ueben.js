@@ -518,6 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		if (sheet_name === "Maschinenbau") {
 			data = window.maschinenbauData || [];
 			console.log("Maschinenbau data loaded");
+			console.log(data);
 		} else if (sheet_name === "Führerschein") {
 			data = window.fuehrerscheinData || [];
 			console.log("Führerschein data loaded");
