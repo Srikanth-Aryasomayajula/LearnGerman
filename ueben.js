@@ -167,11 +167,11 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 
-	function getSelectedValues(checkboxes) {
-		return Array.from(checkboxes)
-			.filter(cb => cb.checked)
-			.map(cb => cb.value);
+	function getSelectedValues(radioButtons) {
+		const selected = Array.from(radioButtons).find(rb => rb.checked);
+		return selected ? [selected.value] : [];
 	}
+
 
 	function getSelectedLevels(checkboxes) {
 		return Array.from(checkboxes)
