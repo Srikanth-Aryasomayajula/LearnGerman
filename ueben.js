@@ -59,8 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
 				// code for grammatik test
 			} else if (selectedSources.includes("Maschinenbau")) {
 				// code for Maschinenbau test
+				loadJsonData(Maschinenbau);
 			} else if (selectedSources.includes("Führerschein")) {
 				// code for Führerschein test
+				loadJsonData(Führerschein);
 			} else {
 				levelDropdownContainer.style.display = "none";
 				secondStartBtn.style.display = "none";
@@ -476,5 +478,35 @@ document.addEventListener("DOMContentLoaded", () => {
 	  fuehrerschein: ["German", "English", "Action to be done during Exam"]
 	};
 
+	// Load maschinenbau.json and fuehrerschein.json
+	async function loadJsonData(sheet_name) {
+		try {
+			let response;
+			if (sheet_name === "Maschinenbau") {
+				response = await fetch("maschinenbau.json");
+			} else if (sheet_name === "Führerschein") {
+				response = await fetch("fuehrerschein.json");
+			} else {
+				throw new Error("Invalid sheet name");
+			}
+	
+			if (!response.ok) {
+				throw new Error(`Failed to load ${sheet_name}.json`);
+			}
+	
+			const data = await response.json();
+	
+			if (sheet_name === "Maschinenbau") {
+				maschinenbauData = data;
+			} else if (sheet_name === "Führerschein") {
+				fuehrerscheinData = data;
+			}
+	
+			console.log(`${sheet_name} data loaded:`, data.length, "items");
+		} catch (error) {
+			console.error("Error loading data:", error);
+			alert(`Could not load data for ${sheet_name}.json`);
+		}
+	}
 	
 });
