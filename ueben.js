@@ -49,62 +49,50 @@ document.addEventListener("DOMContentLoaded", () => {
 function loadFlashcards() {
 	loadButton.addEventListener("click", async () => {
 		const selectedSources = getSelectedValues(checkboxes);
-
 		if (selectedSources.length === 0) {
 			return alert("Please select at least one topic.");
 		}
 
+		const allData = [];
+
 		if (selectedSources.includes("Vokabular")) {
-			// Show dropdown and second start button, wait for secondStartBtn click
 			levelDropdownContainer.style.display = "flex";
 			secondStartBtn.style.display = "inline-block";
-
-			// Attach handler for secondStartBtn (only once)
-			secondStartBtn.onclick = async () => {
-				const allData = [];
-
-				for (const source of selectedSources) {
-					if (source === "Maschinenbau") {
-						const data = await loadJsonData("Maschinenbau");
-						window.maschinenbauData = data;
-						allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
-					} else if (source === "Führerschein") {
-						const data = await loadJsonData("Führerschein");
-						window.fuehrerscheinData = data;
-						allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
-					}
-				}
-
-				// Start practice for Vokabular separately
-				startPractice(selectedSources, allData);
-				levelDropdownContainer.style.display = "none";
-				secondStartBtn.style.display = "none";
-			};
-
-			// Exit early, wait for secondStartBtn
-			return;
 		}
 
-		// If Vokabular is not selected at all
-		const allData = [];
-		for (const source of selectedSources) {
-			if (source === "Maschinenbau") {
-				const data = await loadJsonData("Maschinenbau");
-				window.maschinenbauData = data;
-				allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
-			} else if (source === "Führerschein") {
-				const data = await loadJsonData("Führerschein");
-				window.fuehrerscheinData = data;
-				allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
-			}
+		if (selectedSources.includes("Grammatik")) {
+			// code for grammatik test
+		}
+
+		if (selectedSources.includes("Maschinenbau")) {
+			const data = await loadJsonData("Maschinenbau");
+			window.maschinenbauData = data;
+			allData.push(...data.map(entry => ({ ...entry, sheet_name: "Maschinenbau" })));
+		}
+
+		if (selectedSources.includes("Führerschein")) {
+			const data = await loadJsonData("Führerschein");
+			window.fuehrerscheinData = data;
+			allData.push(...data.map(entry => ({ ...entry, sheet_name: "Führerschein" })));
+		}
+
+		if (
+			!selectedSources.includes("Vokabular") &&
+			!selectedSources.includes("Grammatik") &&
+			allData.length === 0
+		) {
+			levelDropdownContainer.style.display = "none";
+			secondStartBtn.style.display = "none";
+			startPractice(selectedSources, []);
 		}
 
 		if (allData.length > 0) {
-			shuffleArray(allData);
-			startPracticeMechLicense("Maschinenbau", allData); // pick appropriate sheet name
+			shuffleArray(allData); // randomize order
+			startPracticeMechLicense(allData); // pass all combined entries
 		}
 	});
 }
+
 
 
 
