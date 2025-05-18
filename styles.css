@@ -394,6 +394,10 @@ body {
   color: #333;
 }
 
+.flashcard-table tr.hidden-answer {
+  display: none; /* Hide the row */
+}
+
 .flashcard-progress {
   text-align: center;
   margin-top: 0.5rem;
