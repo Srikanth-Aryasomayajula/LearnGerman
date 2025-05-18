@@ -118,7 +118,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		tableBody.innerHTML = "";  // Clear the table body
 		const table = document.getElementById("vocabTable");
 		table.style.display = "none";  // Hide the table
-		flashcardContainer.style.display = "none";
+		flashcardContainer.style.display = "none"; // Hide the flashcards
+
+		// Hide the iframe
+		const iframe = document.getElementById("vocabIframe");
+		if (iframe) {
+			iframe.src = ""; // Optionally clear the src
+			iframe.style.display = "none";
+		}
 		
 		dropdownHeader.textContent = "Select Level(s)";  // Reset dropdown header text
 	}
