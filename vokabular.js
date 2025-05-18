@@ -89,6 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			return;
 		}
 
+		clearSelection();
+		
 		const filteredData = allData.filter(row =>
 			selectedLevels.includes((row["Level"] || "").trim())
 		);
@@ -108,13 +110,17 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// Clear selection
-	clearBtn.addEventListener("click", () => {
+	clearBtn.addEventListener("click", clearSelection);
+
+	// Function to clear selection
+	function clearSelection() {
 		checkboxes.forEach(cb => cb.checked = false);
 		tableBody.innerHTML = "";  // Clear the table body
 		const table = document.getElementById("vocabTable");
 		table.style.display = "none";  // Hide the table
 		dropdownHeader.textContent = "Select Level(s)";  // Reset dropdown header text
-	});
+	}
+	
 
   	// Fetch and parse JSON from pre-converted file
 	function fetchExcelData() {
