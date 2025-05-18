@@ -586,11 +586,9 @@ document.addEventListener("DOMContentLoaded", () => {
 						td.innerHTML = `<span class="blank-line" style="display: inline-block; min-width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							  <br>${createOptionsHTML(blankId, correctPhrase, options)}`;
 					} else {
-						const hiddenDiv = document.createElement("div");
-						hiddenDiv.className = "hidden-answer";
-						hiddenDiv.textContent = value;
-						hiddenDiv.style.display = "none";
-						td.appendChild(hiddenDiv);
+						tr.classList.add("hidden-answer");
+						tr.style.display = "none";
+						td.textContent = value;
 					}
 				} else {
 						td.innerHTML = value.replace(/\r?\n/g, "<br>");
