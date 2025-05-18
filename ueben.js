@@ -368,6 +368,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			radioGroups.forEach(groupName => {
 				const checked = document.querySelector(`input[name='${groupName}']:checked`);
 				const inputs = document.querySelectorAll(`input[name='${groupName}']`);
+				console.log(inputs);
+				console.log(typeof inputs);
 				if (checked) {
 					const isCorrect = checked.dataset.correct === "true";
 					const answerCell = checked.closest("td");
