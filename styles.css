@@ -35,7 +35,6 @@ body {
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
-
   border: 2px solid #aaa;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -47,7 +46,7 @@ body {
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 1rem;
-  width: 1000px;
+  width: auto;
   height: 600px;
   max-width: 100%;
   border-radius: 8px;
