@@ -335,6 +335,7 @@ body {
   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
   box-sizing: border-box;
   text-align: left;
+  overflow-x: auto;
 }
 
 .flashcard p {
