@@ -894,10 +894,10 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 		  ...getMergeConfigsGram().flatMap(config => config.text),
 		]);
 	
-		const otherAnswers = selected
-		  .filter(s => !(s.row === i && s.col === j))
-		  .map(s => s.value.trim())
-		  .filter(val => !excludedSet.has(val));
+		const otherAnswers = shuffleArray(candidateCells
+			  .filter(s => !(s.row === i && s.col === j) && !excludedSet.has(s.value.trim()))
+			  .map(s => s.value.trim()))
+			  .slice(0, 3);
 	
 	    const options = shuffleArray([correctAnswer, ...otherAnswers].slice(0, 4));
 	
