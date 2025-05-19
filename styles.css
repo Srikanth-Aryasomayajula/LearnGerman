@@ -45,7 +45,7 @@ body {
 .right-column{
   width: 60%;
   height: 70%;
-  background-color: #ffffff; /* White like a card */
+  /* background-color: #ffffff; /* White like a card */
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -58,16 +58,15 @@ body {
 .how-to-use-main {
   background-color: #fff;
   border: 1px solid #ccc;
-  padding: 1rem;
-  width: 50%;
-  height: 70%;
-  max-width: 100%;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
   border-radius: 8px;
-  margin: 1rem auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  text-align: justify;
-  overflow-x: auto;
+  font-family: inherit;
+  color: #333;
 }
 
 .contact-form {
