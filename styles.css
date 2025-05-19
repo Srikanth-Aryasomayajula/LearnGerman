@@ -31,6 +31,7 @@ body {
 
 .sidebar {
   width: 25%;
+  height: 70%;
   background-color: #ffffff; /* White like a card */
   padding: 20px;
   box-sizing: border-box;
@@ -46,8 +47,8 @@ body {
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 1rem;
-  width: 400px;
-  height: 600px;
+  width: 50%;
+  height: 70%;
   max-width: 100%;
   border-radius: 8px;
   margin: 0;
