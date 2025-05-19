@@ -28,9 +28,8 @@
     </div>
 
     <!-- Right column (main content + contact form) -->
-    <div class="right-column" style="display: flex; flex-direction: column; gap: 2rem; width: 75%;">
-      
-      <section class="how-to-use-main">
+    <main class="how-to-use-main">
+      <div>
         <h1 class="main-title" align="center">Willkommen beim Deutschlernen</h1>
         <p>
           Explore the menus – <strong>Vokabular</strong> (select your level), <strong>Grammatik</strong>, 
@@ -43,22 +42,23 @@
           Consistent practice and exposure to real-world vocabulary will boost your confidence quickly.<br>
           Viel Erfolg – and enjoy learning!
         </p>
-      </section>
-  
+      </div>
+    </main>
+          <!-- Contact form placed below main content -->
       <form class="contact-form" action="https://formspree.io/f/mvgayrbv" method="POST">
         <h2 class="form-title">Kontaktformular</h2>
+
         <label for="name">Ihr Name:</label>
         <input type="text" id="name" name="name" required>
-        
+
         <label for="email">Ihre E-Mail:</label>
         <input type="email" id="email" name="email" required>
-        
+
         <label for="message">Ihre Nachricht:</label>
         <textarea id="message" name="message" rows="6" required></textarea>
-        
+
         <button type="submit" class="menu-button">Absenden</button>
       </form>
-    </div>
   </div>
 
   <div id="footer-placeholder"></div>
