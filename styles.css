@@ -401,7 +401,7 @@ body {
 
 .flashcard-gram .flashcard-table th,
 .flashcard-gram .flashcard-table td {
-  min-width: 100px; /* Avoid overly narrow columns */
+  min-width: 150px; /* Avoid overly narrow columns */
 }
 
 .button-wrapper {
