@@ -53,11 +53,11 @@ body {
 
 .sidebar a {
   display: block;
-  background-color: #007BFF; /* Bootstrap-like blue */
+  background-color: #E89949; 
   color: white;
   text-decoration: none;
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
+  padding: 0;
+  border-radius: 50px;
   text-align: center;
   font-weight: 500;
   transition: background-color 0.2s ease;
