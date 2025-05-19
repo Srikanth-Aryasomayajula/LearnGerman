@@ -39,7 +39,7 @@ body {
   border: 21x solid #ccc;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin: 0 2rem; /* Adds spacing around it */
+  margin: 0 auto; /* Adds spacing around it */
 }
 
 .right-column {
