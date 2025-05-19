@@ -1103,7 +1103,12 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 		{ text: ["Konjuktiv II (I would come if…. Form) Conjugation"], matchPartial: false, direction: "row", span: 8, style: styleCenter() },
 	    { text: [`Ich hätte gern`], matchPartial: true, direction: "row", span: 11, style: styleCenter() },
 	    { text: [`Note: "möchten"`], matchPartial: true, direction: "row", span: 11, style: styleCenter() },
-	    { text: [`Verb Kojuktion (`], matchPartial: true, direction: "row", span: 11, style: styleCenter() }
+	    { text: [`Verb Kojuktion (Präsens) for Modal Verben and Auxillary/Passive Verbs`], matchPartial: false, direction: "row", span: 11, style: styleCenter() },
+		{ text: [`Verb Kojuktion (Präteritum) for Modal Verben and Auxillary/Passive Verbs`], matchPartial: false, direction: "row", span: 11, style: styleCenter() },  
+	    { text: [`Verb Kojuktion (Perfekt) for Modal Verben and Auxillary/Passive Verbs`], matchPartial: false, direction: "row", span: 11, style: styleCenter() },
+ 	    { text: [`Verb Kojuktion (Plusquamperfekt) for Modal Verben and Auxillary/Passive Verbs`], matchPartial: false, direction: "row", span: 11, style: styleCenter() },
+		{ text: [`Verb Kojuktion (Futur I) for Modal Verben and Auxillary/Passive Verbs`], matchPartial: false, direction: "row", span: 11, style: styleCenter() }, 
+		{ text: [`Verb Kojuktion (Futur II) for Modal Verben and Auxillary/Passive Verbs`], matchPartial: false, direction: "row", span: 11, style: styleCenter() }  
 	  ];
 	}
 	
