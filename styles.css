@@ -53,10 +53,10 @@ body {
 
 .sidebar a {
   display: block;
-  background-color: #E89949; 
+  background-color: #58C1F9; 
   color: white;
   text-decoration: none;
-  padding: 0;
+  padding: 1rem auto;
   border-radius: 50px;
   text-align: center;
   font-weight: 500;
