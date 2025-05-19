@@ -70,6 +70,7 @@ body {
 .right-column {
   width: 70%;
   height: 70%;
+  text-align: justify;
   background-color: transparent; /* fully transparent */
   padding: 0;                   /* no padding */
   box-sizing: border-box;
@@ -86,6 +87,7 @@ body {
   border: 1px solid #ccc;
   padding: 1.5rem;
   width: 100%;
+  text-align: justify;
   max-width: 600px;
   margin: 0 0 2rem 2rem;
   border-radius: 8px;
