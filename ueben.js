@@ -60,6 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
 				(async function main() {
 					  const data = await fetchDataGram("grammatik.json");
 					  const tables = prepareDataGram(data);
+					  console.log (data);
+					  console.log (tables);
 					  generateStyledFlashcardFromRandomTableGram(tables);
 				})();
 			} else if (selectedSources.includes("Maschinenbau")) {
