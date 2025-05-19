@@ -359,21 +359,6 @@ body {
   margin-top: 1rem;
 }
 
-.button-wrapper {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  margin-bottom: 40px;
-}
-
-.progress-indicator {
-  margin-top: 1rem;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
 .flashcard-table {
   width: 100%;
   border-collapse: collapse;
@@ -402,6 +387,31 @@ body {
   text-align: center;
   margin-top: 0.5rem;
   font-weight: bold;
+}
+
+.flashcard-gram {
+  overflow-x: auto;
+}
+
+.flashcard-gram .flashcard-table {
+  table-layout: auto; /* Allow flexible column widths */
+  width: max-content; /* Let table grow horizontally */
+  max-width: 100%;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 40px;
+}
+
+.progress-indicator {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 #sourceSelector {
