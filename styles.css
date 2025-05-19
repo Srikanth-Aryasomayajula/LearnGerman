@@ -392,14 +392,14 @@ body {
 .flashcard-gram {
   overflow-x: auto;
   width: auto;              /* Let it size based on content */
-  max-width: 100%;          /* Prevent it from overflowing its container */
+  max-width: calc(100vw - 100px);  /* Allow up to full screen width minus 50px per side */
   display: inline-block;    /* Shrink-wrap to content width */
 }
 
 .flashcard-gram .flashcard-table {
   table-layout: auto;       /* Natural column sizing */
   width: auto;              /* Natural table width */
-  max-width: calc(100vw - 100px);        
+  max-width: none;        
 }
 
 .flashcard-gram .flashcard-table th,
