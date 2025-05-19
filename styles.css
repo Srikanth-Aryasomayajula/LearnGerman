@@ -391,12 +391,15 @@ body {
 
 .flashcard-gram {
   overflow-x: auto;
+  width: auto;              /* Let it size based on content */
+  max-width: 100%;          /* Prevent it from overflowing its container */
+  display: inline-block;    /* Shrink-wrap to content width */
 }
 
 .flashcard-gram .flashcard-table {
-  table-layout: auto; /* Allow flexible column widths */
-  width: max-content; /* Let table grow horizontally */
-  max-width: 100%;
+  table-layout: auto;       /* Natural column sizing */
+  width: auto;              /* Natural table width */
+  max-width: none;          /* Remove width restriction */
 }
 
 .flashcard-gram .flashcard-table th,
