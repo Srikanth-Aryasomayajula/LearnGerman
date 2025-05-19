@@ -732,6 +732,35 @@ iframe {
     padding: 6px 12px;
   }
 
+  .content-wrapper {
+    flex-direction: column; /* stack vertically */
+  }
+
+    .how-to-use-main {
+    order: 1; /* Willkommen box first */
+    margin: 0 0 1rem 0; /* adjust margins for vertical */
+    max-width: 100%;
+  }
+
+  .sidebar {
+    order: 2; /* Audio sources second */
+    width: 100%;
+    margin: 0 0 1rem 0;
+    max-height: none; /* remove fixed height if any */
+  }
+
+  .contact-form {
+    order: 3; /* Contact form last */
+    width: 100%;
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .right-column {
+    width: 100%;
+    padding: 0;
+  }
+  
   .vocab-table {
     overflow-x: auto;
     display: block;
