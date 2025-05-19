@@ -19,6 +19,35 @@ body {
   border-radius: 8px;
 }
 
+.sidebar {
+  width: 25%;
+  background-color: #ffffff; /* White like a card */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  border: 2px solid #aaa;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 20px; /* Adds spacing around it */
+  height: 90%; /* Keeps it proportional */
+}
+
+.how-to-use-main {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  width: 1000px;
+  height: 600px;
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1rem auto;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  text-align: left;
+  overflow-x: auto;
+}
+
 .navbar {
   display: flex;
   align-items: center;
