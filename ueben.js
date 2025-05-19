@@ -790,15 +790,22 @@ document.addEventListener("DOMContentLoaded", () => {
 	
 	  boldWordsInTable(tbody, getBoldWords());
 	  mergeMultipleCells(tbody, getMergeConfigsGram());
+
+
+
+		
+
+		practiceArea.innerHTML = "";
+
+		const container = document.createElement("div");
+		container.className = "flashcard-container";
+
+		const card = document.createElement("div");
+		card.className = "flashcard";
+
 	  const flashcardTable = insertBlanksIntoStyledTable(tbody, copiedTable, tableNumber);
 	  flashcardTable.className = "flashcard-table";
-	
-	
-	  const container = document.getElementById("flashcard-container");
-	  container.innerHTML = "";
-	  
-	  const card = document.createElement("div");
-	  card.className = "flashcard";
+
 	  
 		card.appendChild(flashcardTable);
 		
