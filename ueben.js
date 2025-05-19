@@ -978,7 +978,8 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 	      const correctAnswerSpan = document.createElement("div");
 	      correctAnswerSpan.textContent = `Answer: ${correctInput.dataset.answer}`;
 	      correctAnswerSpan.style.color = "blue";
-	      correctInput.parentNode.appendChild(correctAnswerSpan);
+	      const parentContainer = group[0].closest("td") || group[0].parentNode;
+	      parentContainer.appendChild(correctAnswerSpan);
 	    }
 	  }
 	
