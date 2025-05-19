@@ -1026,7 +1026,7 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 	    "you (pl.,inf.)", "ihr", "Ihr", "you (form.)/they", "Sie/sie", "sie/sie", "sie", "Sie", "würden form can also be used for these",
 		"Grammatische Merkmale", "Endungen typischer Wörter", "Beispiele (Akkusativ)", "Typische Wörter",
 		  "Spezielle Fälle / Titel", "Ausnahmen", "Kein Adjektiv", "bestimmte Artikel", "unbestimmte Artikel",
-		  "Negation/Pers. Pron.", "Kein Artikel"
+		  "Negation/Pers. Pron.", "Kein Artikel", "—"
 	  ];
 	}
 	
