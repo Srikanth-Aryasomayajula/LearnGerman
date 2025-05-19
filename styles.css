@@ -399,7 +399,7 @@ body {
 .flashcard-gram .flashcard-table {
   table-layout: auto;       /* Natural column sizing */
   width: auto;              /* Natural table width */
-  max-width: none;          /* Remove width restriction */
+  max-width: calc(100vw - 100px);        
 }
 
 .flashcard-gram .flashcard-table th,
