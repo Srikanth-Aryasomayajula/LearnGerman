@@ -43,7 +43,7 @@ body {
 }
 
 .right-column {
-  width: 75%;
+  width: 70%;
   height: 70%;
   background-color: transparent; /* fully transparent */
   padding: 0;                   /* no padding */
@@ -130,6 +130,17 @@ body {
 
 .contact-form .menu-button:hover {
   background-color: #0056b3;
+}
+
+.required-star {
+  color: red;
+  margin-left: 2px;
+}
+
+.required-note {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 }
 
 .navbar {
