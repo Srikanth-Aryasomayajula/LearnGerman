@@ -1024,8 +1024,8 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 	
 	function getExcludedPronouns() {
 	  return [
-	    "I", "ich", "you", "you (inf.)", "du", "he/she/it", "er/sie/es", "er/es", "we", "wir",
-	    "you (pl.,inf.)", "ihr", "you (form.)/they", "Sie/sie", "sie/sie", "würden form can also be used for these"
+	    "I", "ich", "Ich", "you", "you (inf.)", "du", "Du", "he/she/it", "er/sie/es", "er/es", "we", "wir", "Wir",
+	    "you (pl.,inf.)", "ihr", "Ihr", "you (form.)/they", "Sie/sie", "sie/sie", "würden form can also be used for these"
 	  ];
 	}
 	
