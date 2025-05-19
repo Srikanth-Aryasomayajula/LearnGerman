@@ -42,18 +42,19 @@ body {
   margin: 20px; /* Adds spacing around it */
 }
 
-.right-column{
+.right-column {
   width: 60%;
   height: 70%;
-  /* background-color: #ffffff; /* White like a card */
-  padding: 20px;
+  background-color: transparent; /* fully transparent */
+  padding: 0;                   /* no padding */
   box-sizing: border-box;
   overflow-y: auto;
-  border: 21x solid #ccc;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  /* margin: 20px; /* Adds spacing around it */
+  border: none;                /* no border */
+  box-shadow: none;            /* no shadow */
+  border-radius: 0;            /* no rounding */
+  margin: 0;                   /* no margin */
 }
+
 
 .how-to-use-main {
   background-color: #fff;
