@@ -769,50 +769,46 @@ document.addEventListener("DOMContentLoaded", () => {
 	  return table.map(row => row.filter((_, i) => !isEmptyCol[i]));
 	}
 	
-	function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = null) {
-	  const randomIndex = currentIndex !== null ? currentIndex : Math.floor(Math.random() * allTables.length);
-	  const tableData = allTables[randomIndex];
-	  const tableNumber = currentIndex !== null ? currentIndex + 1 : 1;
-	  const copiedTable = tableData.map(row => [...row]);
+function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = null) {
+  const randomIndex = currentIndex !== null ? currentIndex : Math.floor(Math.random() * allTables.length);
+  const tableData = allTables[randomIndex];
+  const tableNumber = currentIndex !== null ? currentIndex + 1 : 1;
+  const copiedTable = tableData.map(row => [...row]);
+
+  const table = document.createElement("table");
+  const tbody = document.createElement("tbody");
+
+  copiedTable.forEach(row => {
+    const tr = document.createElement("tr");
+    row.forEach(cell => {
+      const td = document.createElement("td");
+      td.innerHTML = cell.replace(/\n/g, "<br>");
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+
+  boldWordsInTable(tbody, getBoldWords());
+  mergeMultipleCells(tbody, getMergeConfigsGram());
+  const flashcardTable = insertBlanksIntoStyledTable(tbody, copiedTable, tableNumber);
+  flashcardTable.className = "flashcard-table";
+
+
+	const practiceArea = document.getElementById("practiceArea");
+	practiceArea.innerHTML = "";
 	
-	  const table = document.createElement("table");
-	  const tbody = document.createElement("tbody");
+	const container = document.createElement("div");
+	container.className = "flashcard-container";
 	
-	  copiedTable.forEach(row => {
-	    const tr = document.createElement("tr");
-	    row.forEach(cell => {
-	      const td = document.createElement("td");
-	      td.innerHTML = cell.replace(/\n/g, "<br>");
-	      tr.appendChild(td);
-	    });
-	    tbody.appendChild(tr);
-	  });
+	const card = document.createElement("div");
+	card.className = "flashcard";
 	
-	  table.appendChild(tbody);
-	
-	  boldWordsInTable(tbody, getBoldWords());
-	  mergeMultipleCells(tbody, getMergeConfigsGram());
+	card.appendChild(flashcardTable);
+	container.appendChild(card);
+	practiceArea.appendChild(container);
 
-
-
-		
-
-		practiceArea.innerHTML = "";
-
-		const container = document.createElement("div");
-		container.className = "flashcard-container";
-
-		const card = document.createElement("div");
-		card.className = "flashcard";
-
-	  const flashcardTable = insertBlanksIntoStyledTable(tbody, copiedTable, tableNumber);
-	  flashcardTable.className = "flashcard-table";
-
-	  
-		card.appendChild(flashcardTable);
-		
-		container.innerHTML = "";
-		container.appendChild(card);
 	  
 	
 		// Navigation Buttons
@@ -935,7 +931,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 	
 	function evaluateTextInputsGram() {
-	  const inputs = document.querySelectorAll("input[type=radio]");
+	  const inputs = document.querySelectorAll("input[type='radio']:not([name='category'])");
 	  const grouped = {};
 	
 	  inputs.forEach(input => {
