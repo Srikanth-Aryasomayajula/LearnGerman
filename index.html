@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <script defer src="script.js"></script>
-
-  <!-- Auto-redirect to vokabular.html in 10 seconds -->
   <!-- <meta http-equiv="refresh" content="10; URL=vokabular.html" /> -->
 </head>
 
@@ -29,42 +27,41 @@
       </ul>
     </div>
 
-    <!-- Right column (main flashcard) -->
+    <!-- Right column (main content + contact form) -->
     <main class="how-to-use-main">
       <div>
-        <h1 class="main-title" align = "center">Willkommen beim Deutschlernen</h1>
-          <p>
-            Explore the menus – <strong>Vokabular</strong> (select your level), <strong>Grammatik</strong>, 
-            <strong>Maschinenbau</strong>, and <strong>Führerschein</strong> to learn German using interactive flashcards.<br> 
-            Practice your skills in the <strong>Üben</strong> section.<br>
-            It's easy to use and fun to learn!
-          </p>
-          
-          <p>
-            Whether you're a complete beginner or brushing up advanced skills, this site is designed to support your journey.<br>
-            Consistent practice and exposure to real-world vocabulary will boost your confidence quickly.<br>
-            Viel Erfolg – and enjoy learning!
-          </p>
+        <h1 class="main-title" align="center">Willkommen beim Deutschlernen</h1>
+        <p>
+          Explore the menus – <strong>Vokabular</strong> (select your level), <strong>Grammatik</strong>, 
+          <strong>Maschinenbau</strong>, and <strong>Führerschein</strong> to learn German using interactive flashcards.<br> 
+          Practice your skills in the <strong>Üben</strong> section.<br>
+          It's easy to use and fun to learn!
+        </p>
+        <p>
+          Whether you're a complete beginner or brushing up advanced skills, this site is designed to support your journey.<br>
+          Consistent practice and exposure to real-world vocabulary will boost your confidence quickly.<br>
+          Viel Erfolg – and enjoy learning!
+        </p>
       </div>
-      </main>
-        <!-- modify this form HTML and place wherever you want your form -->
-        <form class="contact-form" action="https://formspree.io/f/mvgayrbv" method="POST">
-            <h2 class="form-title">Kontaktformular</h2>
-          
-            <label for="name">Ihr Name:</label>
-            <input type="text" id="name" name="name" required>
-          
-            <label for="email">Ihre E-Mail:</label>
-            <input type="email" id="email" name="email" required>
-          
-            <label for="message">Ihre Nachricht:</label>
-            <textarea id="message" name="message" rows="6" required></textarea>
-          
-            <button type="submit" class="menu-button">Absenden</button>
-        </form>
+
+      <!-- Contact form placed below main content -->
+      <form class="contact-form" action="https://formspree.io/f/mvgayrbv" method="POST">
+        <h2 class="form-title">Kontaktformular</h2>
+
+        <label for="name">Ihr Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Ihre E-Mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Ihre Nachricht:</label>
+        <textarea id="message" name="message" rows="6" required></textarea>
+
+        <button type="submit" class="menu-button">Absenden</button>
+      </form>
+    </main>
   </div>
 
   <div id="footer-placeholder"></div>
 </body>
-
 </html>
