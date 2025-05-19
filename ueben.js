@@ -1023,7 +1023,7 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 	function getExcludedPronouns() {
 	  return [
 	    "I", "ich", "Ich", "you", "you (inf.)", "du", "Du", "he/she/it", "er/sie/es", "er/es", "we", "wir", "Wir",
-	    "you (pl.,inf.)", "ihr", "Ihr", "you (form.)/they", "Sie/sie", "sie/sie", "würden form can also be used for these",
+	    "you (pl.,inf.)", "ihr", "Ihr", "you (form.)/they", "Sie/sie", "sie/sie", "sie", "Sie", "würden form can also be used for these",
 		"Grammatische Merkmale", "Endungen typischer Wörter", "Beispiele (Akkusativ)", "Typische Wörter",
 		  "Spezielle Fälle / Titel", "Ausnahmen", "Kein Adjektiv", "bestimmte Artikel", "unbestimmte Artikel",
 		  "Negation/Pers. Pron.", "Kein Artikel"
