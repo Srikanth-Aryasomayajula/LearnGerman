@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					const correctAnswerSpan = document.createElement("div");
 					correctAnswerSpan.textContent = `Answer: ${correctInput.dataset.correctAnswer}`;
 					correctAnswerSpan.style.color = "blue";
-					answerCell.appendChild(correctAnswerSpan);
+					inputs[0].parentNode.appendChild(correctAnswerSpan);
 				}
 			});
 
