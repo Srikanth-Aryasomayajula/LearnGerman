@@ -40,7 +40,19 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin: 20px; /* Adds spacing around it */
-  height: 90%; /* Keeps it proportional */
+}
+
+.right-column{
+  width: 60%;
+  height: 70%;
+  background-color: #ffffff; /* White like a card */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border: 21x solid #ccc;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin: 20px; /* Adds spacing around it */
 }
 
 .how-to-use-main {
