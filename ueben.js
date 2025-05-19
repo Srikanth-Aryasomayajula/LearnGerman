@@ -821,6 +821,7 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 		prevBtn.textContent = "Previous";
 		prevBtn.id = "prevBtn";
 		prevBtn.className = "loadPracticeBtn";
+		prevBtn.style.display = "none";
 		prevBtn.addEventListener("click", () => {
 		  currentIndex = (currentIndex - 1 + allTables.length) % allTables.length;
 		  generateStyledFlashcardFromRandomTableGram(allTables, currentIndex);
@@ -836,6 +837,7 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 		nextBtn.textContent = "Next";
 		nextBtn.id = "nextBtn";
 		nextBtn.className = "loadPracticeBtn";
+		nextBtn.style.display = "none";
 		nextBtn.addEventListener("click", () => {
 		  currentIndex = (currentIndex + 1) % allTables.length;
 		  generateStyledFlashcardFromRandomTableGram(allTables, currentIndex);
