@@ -803,7 +803,7 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 	container.className = "flashcard-container";
 	
 	const card = document.createElement("div");
-	card.className = "flashcard";
+	card.className = "flashcard flashcard-gram";
 	
 	card.appendChild(flashcardTable);
 	container.appendChild(card);
