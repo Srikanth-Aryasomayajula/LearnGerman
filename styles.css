@@ -42,6 +42,31 @@ body {
   margin: 0 auto; /* Adds spacing around it */
 }
 
+.sidebar ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 1rem;
+}
+
+.sidebar a {
+  display: block;
+  background-color: #007BFF; /* Bootstrap-like blue */
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar a:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
 .right-column {
   width: 70%;
   height: 70%;
