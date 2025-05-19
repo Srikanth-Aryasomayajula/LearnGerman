@@ -399,6 +399,11 @@ body {
   max-width: 100%;
 }
 
+.flashcard-gram .flashcard-table th,
+.flashcard-gram .flashcard-table td {
+  min-width: 100px; /* Avoid overly narrow columns */
+}
+
 .button-wrapper {
   display: flex;
   justify-content: center;
