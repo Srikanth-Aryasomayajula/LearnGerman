@@ -1014,7 +1014,7 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 	    "Plural", "Remarks", "Type", "Case", "(O-FUDGE-bis)", "(MAN-VS-BAGZ)", "Wechsel",
 	    "(displacement vs position)", "(UÜ VIZ. HAAN)", "Präsenz", "Singular", "MV - Singular",
 	    "MV - Plural", "NS - Singular", "NS - Plural", "NS mit MV - Sin.", "NS mit MV - Pl.",
-	    "Präteritum", "Perfekt", "Plusquamperfekt", "Futur I", "Futur II", "Kriterien", "Beispiele",
+	    "Präteritum", "Perfekt", "Plusquamperfekt", "Futur I", "Futur II", "Kriterium", "Beispiele",
 		"Würde-Form + Infinitiv for regelmäßig Präteritum", "Unregelmäßig Präteritum",
 		"Modalverben im Konjunktiv (Modalverb [finites Verb] + Infinitiv)" 
 	  ];
@@ -1023,7 +1023,9 @@ function generateStyledFlashcardFromRandomTableGram(allTables, currentIndex = nu
 	function getExcludedPronouns() {
 	  return [
 	    "I", "ich", "Ich", "you", "you (inf.)", "du", "Du", "he/she/it", "er/sie/es", "er/es", "we", "wir", "Wir",
-	    "you (pl.,inf.)", "ihr", "Ihr", "you (form.)/they", "Sie/sie", "sie/sie", "würden form can also be used for these"
+	    "you (pl.,inf.)", "ihr", "Ihr", "you (form.)/they", "Sie/sie", "sie/sie", "würden form can also be used for these",
+		"Grammatische Merkmale", "Endungen typischer Wörter", "Beispiele (Akkusativ)", "Typische Wörter",
+		  "Spezielle Fälle / Titel", "Ausnahmen"
 	  ];
 	}
 	
