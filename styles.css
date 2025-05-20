@@ -910,6 +910,7 @@ iframe {
 
 .content-wrapper {
   width: 100vw;
+  padding: 0;
 }
 
 .sidebar {
