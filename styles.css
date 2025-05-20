@@ -908,7 +908,11 @@ iframe {
     padding: 6px 12px;
   }
 
-  .how-to-use-main {
+.right-column {
+  width: 50%;
+}
+  
+.how-to-use-main {
   width: 100%;
   text-align: justify;
   max-width: 70%;
