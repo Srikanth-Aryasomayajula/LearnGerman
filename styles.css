@@ -53,8 +53,7 @@ body {
 }
 
 .sidebar a {
-  width: 100%;
-  padding: 6px 12px;
+  display: inline-block;
   background-color: #4d7071; 
   color: white;
   text-decoration: none;
@@ -62,7 +61,12 @@ body {
   border-radius: 15px;
   text-align: center;
   font-weight: 500;
-  transition: background-color 0.2s ease;    
+  transition: background-color 0.2s ease;
+
+  min-width: 100px;        /* Minimum width for smallest buttons */
+  max-width: 100%;         /* Prevents overflow */
+  width: 100%;             /* Uniform width based on longest button */
+  box-sizing: border-box;  /* Includes padding in width calculation */
 }
 
 .sidebar a:hover {
