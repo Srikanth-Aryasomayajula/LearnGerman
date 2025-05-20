@@ -909,22 +909,10 @@ iframe {
   }
 
 .content-wrapper {
-  width: 100%;
+  width: 80%;
 }
   
-.right-column {
-/* test */
-}
-  
-.how-to-use-main {
-  text-align: justify;
-  margin: 0 0 70% 70%;
-}
 
-.contact-form {
-  text-align: justify;
-  margin: 0 0 70% 70%;
-}
 }
 
 @media (hover: none) {
