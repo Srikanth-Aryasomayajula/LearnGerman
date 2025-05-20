@@ -374,7 +374,30 @@ document.addEventListener("DOMContentLoaded", () => {
 	    iframe.style.display = "block";
 	  }
 	}
-		
+
+	// Footer positions adjustment
+	function adjustFooterPosition() {
+	  const footer = document.querySelector('.site-footer');
+	  const bodyHeight = document.body.scrollHeight;
+	  const windowHeight = window.innerHeight;
+	
+	  if (bodyHeight < windowHeight) {
+	    footer.style.position = 'absolute';
+	    footer.style.bottom = '0';
+	    footer.style.left = '0';
+	  } else {
+	    footer.style.position = 'relative';
+	  }
+	}
+	
+	// Call on load
+	adjustFooterPosition();
+	
+	// Also call again after dynamic content is added
+	displayTableBtn.addEventListener("click", () => {
+	  // your existing logic...
+	  setTimeout(adjustFooterPosition, 100); // Delay ensures DOM is updated
+	});
 });
 
 // Close menu when clicking outside
