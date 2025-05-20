@@ -706,10 +706,10 @@ iframe {
   border-top: 1px solid #ddd;
   background-color: #f9f9f9;
   width: 100%;
-  position: relative;
-  bottom: auto;
-  left: auto;
-  z-index: 1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
 }
 
 /* Responsive layout for mobile */
@@ -860,11 +860,13 @@ iframe {
   width: calc(100vw - 30px);
 }
   
-  /* Fixed footer at the bottom */
-  .site-footer {
-    font-size: 8px;
-    padding: 3px 0;
-  }
+.site-footer {
+  font-size: 8px;
+  padding: 3px 0;
+  position: relative;
+  bottom: auto;
+  left: auto;
+  z-index: 1;
 }
 
 @media (hover: none) {
