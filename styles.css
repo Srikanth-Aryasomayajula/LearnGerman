@@ -909,18 +909,18 @@ iframe {
   }
 
 .right-column {
-  width: 50%;
+  max-width: 50%;
 }
   
 .how-to-use-main {
-  width: 85%;
+  max-width: 85%;
   text-align: justify;
   max-width: 70%;
   margin: 0 0 70% 70%;
 }
 
 .contact-form {
-  width: 85%;
+  max-width: 85%;
   text-align: justify;
   max-width: 70%;
   margin: 0 0 70% 70%;
