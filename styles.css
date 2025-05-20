@@ -909,20 +909,16 @@ iframe {
   }
 
 .right-column {
-  max-width: 50%;
+/* test */
 }
   
 .how-to-use-main {
-  max-width: 85%;
   text-align: justify;
-  max-width: 70%;
   margin: 0 0 70% 70%;
 }
 
 .contact-form {
-  max-width: 85%;
   text-align: justify;
-  max-width: 70%;
   margin: 0 0 70% 70%;
 }
 }
