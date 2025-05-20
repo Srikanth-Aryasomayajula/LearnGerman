@@ -912,7 +912,9 @@ iframe {
   width: 100vw;
 }
   
-
+.right-column {
+  width: 50%;
+}
 }
 
 @media (hover: none) {
