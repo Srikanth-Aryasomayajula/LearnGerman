@@ -955,7 +955,11 @@ iframe {
   text-align: center;
   width: auto;
 }
-  
+
+.flashcard {
+  padding: 0.8rem;
+  width: 95%;
+}
 }
 
 @media (hover: none) {
