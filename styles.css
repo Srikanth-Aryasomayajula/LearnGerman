@@ -727,14 +727,7 @@ iframe {
   }
 
   .site-logo {
-    position: relative; /* optional: makes it more responsive in flow */
-    width: 80%;
-    height: 80%;
-    max-width: none;
-    max-height: none;
-    left: 0;
-    top: 0;
-    transform: none;
+    transform: translateY(-50%) scale(0.9); /* scale down uniformly */
   }
   
   .main-title {
