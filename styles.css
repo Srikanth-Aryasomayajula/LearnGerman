@@ -727,7 +727,7 @@ iframe {
   }
 
   .site-logo {
-    transform: translateY(-50%) scale(0.9); /* scale down uniformly */
+    transform: translateY(-50%) scaleX(1.35) scaleY(0.9);
   }
   
   .main-title {
