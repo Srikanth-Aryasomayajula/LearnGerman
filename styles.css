@@ -1034,9 +1034,3 @@ iframe {
   left: auto;
   z-index: 1;
 }
-
-@media (hover: none) {
-  .menu-button:hover {
-    background-color: #2563eb;
-  }
-}
