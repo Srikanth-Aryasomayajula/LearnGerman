@@ -201,8 +201,6 @@ body {
   color: #1f2937;  /* Similar to text-gray-800 */
   
   min-height: 100vh;  /* Ensure the section fills the viewport */
-  display: flex;
-  flex-direction: column;
 }
 
 .toggle-menu {
