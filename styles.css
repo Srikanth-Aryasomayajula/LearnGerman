@@ -2,6 +2,8 @@ body {
   background-color: #f3f4f6;
   color: #1f2937;
   font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   justify-content: center;
@@ -706,10 +708,7 @@ iframe {
   border-top: 1px solid #ddd;
   background-color: #f9f9f9;
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
+  margin-top: auto;
 }
 
 /* Responsive layout for mobile */
