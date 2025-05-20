@@ -804,7 +804,7 @@ iframe {
   }
   
   .contact-form h2.form-title {
-    font-size: 95%;
+    font-size: revert;
   }
   .contact-form .menu-button {
     text-align: center;
