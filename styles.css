@@ -907,6 +907,22 @@ iframe {
     font-size: 16px;
     padding: 6px 12px;
   }
+
+  .how-to-use-main {
+  padding: 70%;
+  width: 100%;
+  text-align: justify;
+  max-width: 70%;
+  margin: 0 0 70% 70%;
+}
+
+.contact-form {
+  padding: 70%;
+  width: 100%;
+  text-align: justify;
+  max-width: 70%;
+  margin: 0 0 70% 70%;
+}
 }
 
 @media (hover: none) {
