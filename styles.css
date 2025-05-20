@@ -871,9 +871,13 @@ iframe {
   z-index: 1;
 }
 
-/* Responsive layout for mobile */
-@media (max-width: 767px) {
+/* Responsive layout for smaller laptop and some tablets */
+@media (min-width: 768px) and (max-width: 1281px) {
     /* Only for mobile and tablet */
+  .toggle-menu {
+    display: block;
+  }
+  
   .menu-container {
     visibility: hidden;
     opacity: 0;
