@@ -708,7 +708,7 @@ iframe {
   border-top: 1px solid #ddd;
   background-color: #f9f9f9;
   width: 100%;
-  margin-top: auto;
+  position: relative; /* Not fixed */
 }
 
 /* Responsive layout for mobile */
