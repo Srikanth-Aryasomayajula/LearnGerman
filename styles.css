@@ -782,6 +782,11 @@ iframe {
     max-height: none; /* remove fixed height if any */
   }
 
+  .sidebar a {
+    width: 100%;
+    max-width: max-content;
+  }
+
   .contact-form {
     order: 3; /* Contact form last */
     width: 100%;
