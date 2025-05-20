@@ -870,7 +870,7 @@ iframe {
   left: auto;
   z-index: 1;
 }
-
+}
 /* Responsive layout for smaller laptop and some tablets */
 @media (min-width: 768px) and (max-width: 1281px) {
     /* Only for mobile and tablet */
