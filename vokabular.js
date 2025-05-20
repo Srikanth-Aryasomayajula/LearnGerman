@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	  setTimeout(adjustFooterPosition, 100); // Delay ensures DOM is updated
-	});
+	
 });
 
 // Close menu when clicking outside
