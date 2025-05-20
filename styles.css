@@ -53,8 +53,7 @@ body {
 }
 
 .sidebar a {
-  display: block;
-  width: auto;
+  display: inline-block;
   background-color: #4d7071; 
   color: white;
   text-decoration: none;
