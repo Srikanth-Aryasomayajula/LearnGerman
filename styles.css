@@ -922,6 +922,11 @@ iframe {
 .right-column {
   width: 60%;
 }
+
+.how-to-use-main {
+  margin: 0;
+}
+  
 }
 
 @media (hover: none) {
