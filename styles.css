@@ -911,6 +911,10 @@ iframe {
 .content-wrapper {
   width: 100vw;
 }
+
+.sidebar {
+  margin: 0 0; 
+}
   
 .right-column {
   width: 50%;
