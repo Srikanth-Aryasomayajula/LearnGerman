@@ -199,6 +199,10 @@ body {
 .bg-text {
   background-color: #f3f4f6;  /* Similar to bg-gray-100 */
   color: #1f2937;  /* Similar to text-gray-800 */
+  
+  min-height: 100vh;  /* Ensure the section fills the viewport */
+  display: flex;
+  flex-direction: column;
 }
 
 .toggle-menu {
@@ -707,7 +711,7 @@ iframe {
   border-top: 1px solid #ddd;
   background-color: #f9f9f9;
   width: 100%;
-
+  position: relative;
   bottom: 0;
   left: 0;
   z-index: 100;
