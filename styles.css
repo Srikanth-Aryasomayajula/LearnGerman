@@ -764,7 +764,7 @@ iframe {
     flex-direction: column; /* stack vertically */
   }
 
-    .how-to-use-main {
+  .how-to-use-main {
     order: 1; /* Willkommen box first */
     margin: 0 0 1rem 0; /* adjust margins for vertical */
     max-width: 100%;
@@ -910,10 +910,12 @@ iframe {
 
 .right-column {
   width: 50%;
+  margin: 30%;
 }
   
 .how-to-use-main {
   width: 100%;
+  margin: 30%;
   text-align: justify;
   max-width: 70%;
   margin: 0 0 70% 70%;
@@ -921,6 +923,7 @@ iframe {
 
 .contact-form {
   width: 100%;
+  margin: 30%;
   text-align: justify;
   max-width: 70%;
   margin: 0 0 70% 70%;
