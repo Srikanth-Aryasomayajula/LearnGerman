@@ -37,7 +37,7 @@ body {
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
-  border: 21x solid #ccc;
+  border: 1px solid #ccc;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin: 0 auto; /* Adds spacing around it */
@@ -926,7 +926,10 @@ iframe {
 .how-to-use-main {
   margin: 0;
 }
-  
+
+.contact-form {
+  margin: 0;
+}
 }
 
 @media (hover: none) {
