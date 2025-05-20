@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	let shuffledFlashcards = [];
 	let currentFlashcardIndex = 0;
 
+	adjustFooterPosition();
+	
 	// Call this function to load the excel data
 	fetchExcelData();
 
@@ -389,13 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	    footer.style.position = 'relative';
 	  }
 	}
-	
-	// Call on load
-	adjustFooterPosition();
-	
-	// Also call again after dynamic content is added
-	displayTableBtn.addEventListener("click", () => {
-	  // your existing logic...
+
 	  setTimeout(adjustFooterPosition, 100); // Delay ensures DOM is updated
 	});
 });
