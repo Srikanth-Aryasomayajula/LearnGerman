@@ -908,6 +908,10 @@ iframe {
     padding: 6px 12px;
   }
 
+.content-wrapper {
+  width: 50%;
+}
+  
 .right-column {
 /* test */
 }
