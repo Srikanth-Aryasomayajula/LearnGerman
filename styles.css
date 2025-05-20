@@ -915,6 +915,8 @@ iframe {
 
 .sidebar {
   margin: 0 0 0 20px;
+  font-size: 90%;
+  width: 30%;
 }
   
 .right-column {
