@@ -53,7 +53,8 @@ body {
 }
 
 .sidebar a {
-  display: inline-block;
+  width: 100%;
+  padding: 6px 12px;
   background-color: #4d7071; 
   color: white;
   text-decoration: none;
@@ -61,7 +62,7 @@ body {
   border-radius: 15px;
   text-align: center;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;    
 }
 
 .sidebar a:hover {
