@@ -785,6 +785,11 @@ iframe {
     max-width: 100%;
   }
 
+  .contact-form .menu-button {
+    text-align: center;
+    width: auto;
+  }
+  
   .right-column {
     width: 100%;
     padding: 0;
@@ -930,6 +935,10 @@ iframe {
 
 .contact-form {
   margin: 20px 0 0 0;
+}
+  
+.contact-form h2.form-title {
+  font-size: 80%;
 }
   
 .contact-form .menu-button {
