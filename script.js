@@ -6,9 +6,23 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('navbar-placeholder').innerHTML = data;
 
       const toggleBtn = document.getElementById("menuToggleBtn");
-      if (toggleBtn) {
+      const menu = document.getElementById("menuContainer");
+
+      // Toggle menu when clicking the button
+      if (toggleBtn && menu) {
         toggleBtn.addEventListener("click", () => {
-          document.getElementById("menuContainer").classList.toggle("show-menu");
+          menu.classList.toggle("show-menu");
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (event) => {
+          if (
+            menu.classList.contains('show-menu') &&
+            !menu.contains(event.target) &&
+            !toggleBtn.contains(event.target)
+          ) {
+            menu.classList.remove('show-menu');
+          }
         });
       }
     });
