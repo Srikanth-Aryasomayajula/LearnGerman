@@ -17,8 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	let shuffledFlashcards = [];
 	let currentFlashcardIndex = 0;
 
-	adjustFooterPosition();
-	
 	// Call this function to load the excel data
 	fetchExcelData();
 
@@ -376,23 +374,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	    iframe.style.display = "block";
 	  }
 	}
-
-	// Footer positions adjustment
-	function adjustFooterPosition() {
-	  const footer = document.querySelector('.site-footer');
-	  const bodyHeight = document.body.scrollHeight;
-	  const windowHeight = window.innerHeight;
-	
-	  if (bodyHeight < windowHeight) {
-	    footer.style.position = 'absolute';
-	    footer.style.bottom = '0';
-	    footer.style.left = '0';
-	  } else {
-	    footer.style.position = 'relative';
-	  }
-	}
-
-	  setTimeout(adjustFooterPosition, 100); // Delay ensures DOM is updated
 	
 });
 
