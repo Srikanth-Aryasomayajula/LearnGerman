@@ -145,6 +145,7 @@ body {
 }
 
 .contact-form .menu-button {
+  display: block;
   margin: 1.5rem auto 0 auto;
   background-color: #007BFF;
   color: white;
