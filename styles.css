@@ -782,10 +782,6 @@ iframe {
     max-height: none; /* remove fixed height if any */
   }
 
-  .sidebar a {
-    max-width: max-content;
-  }
-
   .contact-form {
     order: 3; /* Contact form last */
     width: 100%;
@@ -794,7 +790,7 @@ iframe {
   }
   
   .contact-form h2.form-title {
-    font-size: 80%;
+    font-size: 100%;
   }
   .contact-form .menu-button {
     text-align: center;
